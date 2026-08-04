@@ -65,6 +65,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
   bool _hasCar = true;
 
   WeatherResult? get _selectedWeather =>
+      _forecast.middayResult(_selectedDay == Day.today ? _forecast.today : _forecast.tomorrow);
+
+  List<HourlyPoint> get _selectedHourly =>
       _selectedDay == Day.today ? _forecast.today : _forecast.tomorrow;
 
   RecommendationResult? _result;
@@ -272,21 +275,33 @@ class _PlannerScreenState extends State<PlannerScreen> {
   }
 
   Widget _buildWeatherSummary() {
-    final weather = _selectedWeather;
-    if (weather == null) {
+    final hourly = _selectedHourly;
+    if (hourly.isEmpty) {
       return const Text('Väder ej tillgängligt just nu.');
     }
-    final dayLabel = _selectedDay == Day.today ? 'Idag' : 'Imorgon';
-    final reasonLabel = switch (weather.indoorReason) {
-      IndoorReason.rain => ' · risk för regn',
-      IndoorReason.cold => ' · kallt',
-      IndoorReason.heat => ' · varmt',
-      IndoorReason.none => '',
-    };
-    return Text(
-      '$dayLabel mitt på dagen: ${weather.temperatureC.round()}°C '
-      '(känns som ${weather.apparentTemperatureC.round()}°C)$reasonLabel',
-      style: Theme.of(context).textTheme.bodyMedium,
+    // No fixed height: IntrinsicHeight lets the Row (and this scroll view)
+    // size to its content, so larger text-scale settings grow the row
+    // instead of overflowing a hard-coded box.
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            for (final point in hourly)
+              SizedBox(
+                width: 56,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('${point.time.hour}'),
+                    Icon(iconForCondition(point.condition), size: 24),
+                    Text('${point.temperatureC.round()}°'),
+                  ],
+                ),
+              ),
+          ],
+        ),
+      ),
     );
   }
 

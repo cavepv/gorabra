@@ -20,6 +20,10 @@ void main() {
 
     expect(find.text('Görabra'), findsOneWidget);
     expect(find.text('Spinna'), findsOneWidget);
+    // Flutter's test HTTP binding always returns 400 for any request, so
+    // the weather fetch fails deterministically — the hourly graph's
+    // unavailable-fallback message is what should render here.
+    expect(find.text('Väder ej tillgängligt just nu.'), findsOneWidget);
 
     await tester.tap(find.text('Spinna'));
     await tester.pumpAndSettle();
