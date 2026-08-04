@@ -6,52 +6,119 @@ import 'package:http/http.dart' as http;
 const double _gothenburgLat = 57.7089;
 const double _gothenburgLon = 11.9746;
 
-/// Result of today's weather lookup, or null if the lookup failed (see
-/// weather-lookup spec: fallback treats weather as unknown and skips the
-/// weather filter tier entirely).
+/// Why a day was classified as indoor-favoring (or none, if outdoor-favoring).
+enum IndoorReason { none, rain, cold, heat }
+
+/// Result of a single day's midday weather lookup, or null if that day's
+/// forecast couldn't be fetched (see weather-lookup spec: fallback treats
+/// weather as unknown and skips the weather filter tier entirely).
 class WeatherResult {
   final double temperatureC;
-  final bool isIndoorFavoring;
+  final double apparentTemperatureC;
+  final IndoorReason indoorReason;
+
+  bool get isIndoorFavoring => indoorReason != IndoorReason.none;
 
   const WeatherResult({
     required this.temperatureC,
-    required this.isIndoorFavoring,
+    required this.apparentTemperatureC,
+    required this.indoorReason,
   });
 }
 
-/// Fetches today's current weather for Gothenburg from Open-Meteo (free,
-/// no API key required) and classifies it as indoor- or outdoor-favoring.
+/// Today's and tomorrow's midday weather, each independently nullable if
+/// that day's forecast entry was missing or the whole fetch failed.
+class WeatherForecast {
+  final WeatherResult? today;
+  final WeatherResult? tomorrow;
+
+  const WeatherForecast({this.today, this.tomorrow});
+}
+
+/// Fetches midday (12:00) forecast weather for Gothenburg today and
+/// tomorrow from Open-Meteo (free, no API key required), and classifies
+/// each day as indoor- or outdoor-favoring.
 class WeatherLookup {
-  static Future<WeatherResult?> fetchToday() async {
+  static Future<WeatherForecast> fetchForecast() async {
+    // `timezone=Europe/Stockholm` makes Open-Meteo return `hourly.time`
+    // strings already in local time, so picking "today/tomorrow at 12:00"
+    // is a string match — no manual DST/UTC-offset math needed.
     final uri = Uri.parse(
       'https://api.open-meteo.com/v1/forecast'
       '?latitude=$_gothenburgLat&longitude=$_gothenburgLon'
-      '&current=temperature_2m,precipitation',
+      '&hourly=temperature_2m,apparent_temperature,precipitation'
+      '&forecast_days=2&timezone=Europe%2FStockholm',
     );
     try {
       final response = await http.get(uri).timeout(const Duration(seconds: 8));
-      if (response.statusCode != 200) return null;
+      if (response.statusCode != 200) return const WeatherForecast();
       final json = jsonDecode(response.body) as Map<String, dynamic>;
-      final current = json['current'] as Map<String, dynamic>;
-      final temp = (current['temperature_2m'] as num).toDouble();
-      final precipitation = (current['precipitation'] as num).toDouble();
-      return WeatherResult(
-        temperatureC: temp,
-        isIndoorFavoring: _classify(temp, precipitation),
+      final hourly = json['hourly'] as Map<String, dynamic>;
+      final times = (hourly['time'] as List).cast<String>();
+      final temps = (hourly['temperature_2m'] as List);
+      final apparentTemps = (hourly['apparent_temperature'] as List);
+      final precipitations = (hourly['precipitation'] as List);
+
+      // Derive both date labels from the response itself (Stockholm-local,
+      // since `timezone=Europe/Stockholm` was requested) rather than the
+      // device clock — a device set to a different timezone would
+      // otherwise mislabel or miss both "today" and "tomorrow".
+      final firstDate = DateTime.parse(times.first.substring(0, 10));
+      final today = _dateLabel(firstDate);
+      final tomorrow = _dateLabel(firstDate.add(const Duration(days: 1)));
+
+      return WeatherForecast(
+        today: _middayResult(times, temps, apparentTemps, precipitations, today),
+        tomorrow: _middayResult(times, temps, apparentTemps, precipitations, tomorrow),
       );
     } catch (_) {
       // Network failure, timeout, or malformed response: caller falls back
-      // to skipping the weather filter tier entirely.
-      return null;
+      // to skipping the weather filter tier entirely for both days.
+      return const WeatherForecast();
     }
   }
 
-  /// Rain or extreme temperature favors indoor; clear/mild weather favors
-  /// outdoor. Thresholds are a simple, defensible heuristic — not a
-  /// meteorological model.
-  static bool _classify(double temperatureC, double precipitationMm) {
-    if (precipitationMm > 0.2) return true;
-    if (temperatureC < 2 || temperatureC > 28) return true;
-    return false;
+  static String _dateLabel(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  static WeatherResult? _middayResult(
+    List<String> times,
+    List temps,
+    List apparentTemps,
+    List precipitations,
+    String dateLabel,
+  ) {
+    final index = times.indexOf('${dateLabel}T12:00');
+    if (index == -1) return null;
+    final rawTemp = temps[index];
+    final rawPrecipitation = precipitations[index];
+    // A gap in Open-Meteo's hourly series (null value) for this specific
+    // entry only takes this one day out — it must not throw and take down
+    // the sibling day's otherwise-good result via the outer catch.
+    if (rawTemp == null || rawPrecipitation == null) return null;
+    final temp = (rawTemp as num).toDouble();
+    final rawApparent = apparentTemps[index];
+    // Fall back to raw temperature if Open-Meteo omits apparent_temperature
+    // for this entry.
+    final apparentTemp = rawApparent == null ? temp : (rawApparent as num).toDouble();
+    final precipitation = (rawPrecipitation as num).toDouble();
+    return WeatherResult(
+      temperatureC: temp,
+      apparentTemperatureC: apparentTemp,
+      indoorReason: _classify(apparentTemp, precipitation),
+    );
+  }
+
+  /// Rain or extreme apparent (feels-like) temperature favors indoor;
+  /// clear/mild apparent temperature favors outdoor. Using apparent
+  /// temperature (Open-Meteo's built-in wind chill + humidity blend)
+  /// instead of raw air temperature matters in Gothenburg, where wind is a
+  /// significant factor. Thresholds are a simple, defensible heuristic —
+  /// not a full meteorological model.
+  static IndoorReason _classify(double apparentTemperatureC, double precipitationMm) {
+    if (precipitationMm > 0.2) return IndoorReason.rain;
+    if (apparentTemperatureC < 2) return IndoorReason.cold;
+    if (apparentTemperatureC > 28) return IndoorReason.heat;
+    return IndoorReason.none;
   }
 }

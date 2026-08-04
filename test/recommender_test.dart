@@ -51,7 +51,7 @@ void main() {
       final result = ActivityRecommender(random: null).recommend(
         catalog: catalog,
         prefs: prefs,
-        weather: const WeatherResult(temperatureC: 20, isIndoorFavoring: false),
+        weather: const WeatherResult(temperatureC: 20, apparentTemperatureC: 20, indoorReason: IndoorReason.none),
       );
 
       expect(result.isClosestMatch, isFalse);
@@ -72,7 +72,7 @@ void main() {
       final result = ActivityRecommender(random: null).recommend(
         catalog: catalog,
         prefs: prefs,
-        weather: const WeatherResult(temperatureC: 20, isIndoorFavoring: false),
+        weather: const WeatherResult(temperatureC: 20, apparentTemperatureC: 20, indoorReason: IndoorReason.none),
       );
 
       expect(result.isClosestMatch, isTrue);
@@ -100,7 +100,7 @@ void main() {
       final result = ActivityRecommender(random: null).recommend(
         catalog: catalog,
         prefs: prefs,
-        weather: const WeatherResult(temperatureC: 20, isIndoorFavoring: false),
+        weather: const WeatherResult(temperatureC: 20, apparentTemperatureC: 20, indoorReason: IndoorReason.none),
       );
 
       expect(result.isClosestMatch, isTrue);

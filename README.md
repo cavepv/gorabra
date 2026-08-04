@@ -11,13 +11,16 @@ weather, age-appropriateness, budget, or transport.
 ## How it works
 
 1. Fill in kid age, interest tags, budget level, and whether you have a car.
-2. Görabra fetches today's Gothenburg weather (via
-   [Open-Meteo](https://open-meteo.com/), free, no API key).
+2. Toggle between "Idag" (today) and "Imorgon" (tomorrow) — Görabra fetches
+   Gothenburg's midday forecast for both days in one call (via
+   [Open-Meteo](https://open-meteo.com/), free, no API key), and shows the
+   selected day's temperature, feels-like temperature, and rain/heat/cold
+   indicator right next to the results.
 3. The recommender hard-filters a curated ~21-activity Gothenburg catalog by
-   age, weather (indoor/outdoor), cost vs. budget, and transport
-   reachability — relaxing filters progressively (interests → weather →
-   age) if the pool is empty, so you never see zero results. Cost and
-   transport are never relaxed.
+   age, weather (indoor/outdoor for the selected day), cost vs. budget, and
+   transport reachability — relaxing filters progressively (interests →
+   weather → age) if the pool is empty, so you never see zero results. Cost
+   and transport are never relaxed.
 4. Activities that match your own interests, are good for meeting other
    families, or are tagged as good physical activity get better odds — but
    never override the hard filters.
@@ -32,8 +35,10 @@ weather, age-appropriateness, budget, or transport.
   network call).
 - `assets/data/activities.json` — the curated Gothenburg activity dataset,
   hand-maintained (no live places/maps API).
-- `lib/services/weather_lookup.dart` — Open-Meteo client + indoor/outdoor
-  classification, with a null-safe fallback if the fetch fails.
+- `lib/services/weather_lookup.dart` — Open-Meteo client fetching midday
+  forecasts for today and tomorrow (feels-like/apparent temperature,
+  accounting for Gothenburg's wind) with indoor/outdoor classification and
+  a null-safe per-day fallback if a fetch or entry is unavailable.
 - `lib/services/recommender.dart` — the filter/relaxation/scoring logic;
   the one piece of real branching logic in the app, covered by
   `test/recommender_test.dart`.

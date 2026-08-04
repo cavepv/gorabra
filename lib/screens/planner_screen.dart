@@ -51,15 +51,21 @@ class PlannerScreen extends StatefulWidget {
   State<PlannerScreen> createState() => _PlannerScreenState();
 }
 
+enum Day { today, tomorrow }
+
 class _PlannerScreenState extends State<PlannerScreen> {
   List<Activity>? _catalog;
-  WeatherResult? _weather;
+  WeatherForecast _forecast = const WeatherForecast();
+  Day _selectedDay = Day.today;
 
   int _kidAge = 4;
   final Set<String> _selectedInterests = {};
   final Set<String> _selectedParentInterests = {};
   Cost _budget = Cost.medium;
   bool _hasCar = true;
+
+  WeatherResult? get _selectedWeather =>
+      _selectedDay == Day.today ? _forecast.today : _forecast.tomorrow;
 
   RecommendationResult? _result;
   bool _loading = false;
@@ -90,9 +96,16 @@ class _PlannerScreenState extends State<PlannerScreen> {
     // Fetched independently of the catalog so a slow/failed network call
     // never blocks the (instantly-available, bundled) catalog from
     // displaying — see weather-lookup spec's no-block-on-failure requirement.
-    final weather = await WeatherLookup.fetchToday();
+    final forecast = await WeatherLookup.fetchForecast();
     if (!mounted) return;
-    setState(() => _weather = weather);
+    setState(() {
+      _forecast = forecast;
+      // If the user already spun while weather was still loading (or
+      // absent), that result was computed without the weather filter tier
+      // — clear it so a newly-arrived forecast doesn't sit next to a
+      // stale recommendation it wasn't actually used for.
+      _result = null;
+    });
   }
 
   void _spin() {
@@ -111,7 +124,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
     final result = ActivityRecommender().recommend(
       catalog: _catalog!,
       prefs: prefs,
-      weather: _weather,
+      weather: _selectedWeather,
     );
     setState(() {
       _result = result;
@@ -160,6 +173,20 @@ class _PlannerScreenState extends State<PlannerScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SegmentedButton<Day>(
+          segments: const [
+            ButtonSegment(value: Day.today, label: Text('Idag')),
+            ButtonSegment(value: Day.tomorrow, label: Text('Imorgon')),
+          ],
+          selected: {_selectedDay},
+          onSelectionChanged: (s) => setState(() {
+            _selectedDay = s.first;
+            _result = null;
+          }),
+        ),
+        const SizedBox(height: 8),
+        _buildWeatherSummary(),
+        const SizedBox(height: 16),
         Text('Barnets ålder: $_kidAge', style: Theme.of(context).textTheme.titleMedium),
         Slider(
           value: _kidAge.toDouble(),
@@ -241,6 +268,25 @@ class _PlannerScreenState extends State<PlannerScreen> {
           }),
         ),
       ],
+    );
+  }
+
+  Widget _buildWeatherSummary() {
+    final weather = _selectedWeather;
+    if (weather == null) {
+      return const Text('Väder ej tillgängligt just nu.');
+    }
+    final dayLabel = _selectedDay == Day.today ? 'Idag' : 'Imorgon';
+    final reasonLabel = switch (weather.indoorReason) {
+      IndoorReason.rain => ' · risk för regn',
+      IndoorReason.cold => ' · kallt',
+      IndoorReason.heat => ' · varmt',
+      IndoorReason.none => '',
+    };
+    return Text(
+      '$dayLabel mitt på dagen: ${weather.temperatureC.round()}°C '
+      '(känns som ${weather.apparentTemperatureC.round()}°C)$reasonLabel',
+      style: Theme.of(context).textTheme.bodyMedium,
     );
   }
 
