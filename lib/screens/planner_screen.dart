@@ -64,6 +64,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
   Cost _budget = Cost.medium;
   bool _hasCar = true;
 
+  final ScrollController _hourlyScrollController = ScrollController();
+  // Guards against re-scrolling on every rebuild (e.g. picking an interest
+  // chip) — only auto-scroll once per fresh forecast/day so it doesn't
+  // fight a user who has manually scrolled the strip elsewhere.
+  bool _scrolledToCurrentHour = false;
+
   WeatherResult? get _selectedWeather =>
       _forecast.middayResult(_selectedDay == Day.today ? _forecast.today : _forecast.tomorrow);
 
@@ -79,6 +85,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
     super.initState();
     _loadCatalog();
     _loadWeather();
+  }
+
+  @override
+  void dispose() {
+    _hourlyScrollController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadCatalog() async {
@@ -108,6 +120,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
       // — clear it so a newly-arrived forecast doesn't sit next to a
       // stale recommendation it wasn't actually used for.
       _result = null;
+      _scrolledToCurrentHour = false;
     });
   }
 
@@ -203,6 +216,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           onSelectionChanged: (s) => setState(() {
             _selectedDay = s.first;
             _result = null;
+            _scrolledToCurrentHour = false;
           }),
         ),
         const SizedBox(height: 8),
@@ -329,6 +343,30 @@ class _PlannerScreenState extends State<PlannerScreen> {
       return const Text('Väder ej tillgängligt just nu.');
     }
     final now = DateTime.now();
+    final currentIndex = hourly.indexWhere(
+      (point) =>
+          _selectedDay == Day.today &&
+          point.time.year == now.year &&
+          point.time.month == now.month &&
+          point.time.day == now.day &&
+          point.time.hour == now.hour,
+    );
+    if (currentIndex != -1 && !_scrolledToCurrentHour) {
+      _scrolledToCurrentHour = true;
+      // Scroll after this frame so the strip's viewport size is known;
+      // each column is a fixed 56px wide (see _buildHourlyColumn).
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_hourlyScrollController.hasClients) return;
+        final viewportWidth = _hourlyScrollController.position.viewportDimension;
+        final target = (currentIndex * _hourlyColumnWidth - viewportWidth / 2 + _hourlyColumnWidth / 2)
+            .clamp(0.0, _hourlyScrollController.position.maxScrollExtent);
+        _hourlyScrollController.animateTo(
+          target,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      });
+    }
     // No fixed height: IntrinsicHeight lets the Row (and this scroll view)
     // size to its content, so larger text-scale settings grow the row
     // instead of overflowing a hard-coded box.
@@ -339,6 +377,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           _buildHourlyLegendColumn(),
           Expanded(
             child: SingleChildScrollView(
+              controller: _hourlyScrollController,
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
@@ -361,10 +400,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
     );
   }
 
+  static const _hourlyColumnWidth = 56.0;
+
   Widget _buildHourlyColumn(HourlyPoint point, {required bool isCurrentHour}) {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      width: 56,
+      width: _hourlyColumnWidth,
       padding: const EdgeInsets.symmetric(vertical: 4),
       decoration: isCurrentHour
           ? BoxDecoration(
