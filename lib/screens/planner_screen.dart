@@ -230,47 +230,58 @@ class _PlannerScreenState extends State<PlannerScreen> {
           label: const Text('Lägg till barn'),
         ),
         const SizedBox(height: 8),
-        Text('Barnets intressen', style: Theme.of(context).textTheme.titleMedium),
-        Wrap(
-          spacing: 8,
-          children: kidInterestTags.map((tag) {
-            final selected = _selectedInterests.contains(tag);
-            return FilterChip(
-              label: Text(tag),
-              selected: selected,
-              onSelected: (v) => setState(() {
-                if (v) {
-                  _selectedInterests.add(tag);
-                } else {
-                  _selectedInterests.remove(tag);
-                }
-                _result = null;
-              }),
-            );
-          }).toList(),
+        ExpansionTile(
+          title: Text('Barnets intressen', style: Theme.of(context).textTheme.titleMedium),
+          tilePadding: EdgeInsets.zero,
+          childrenPadding: const EdgeInsets.only(bottom: 8),
+          children: [
+            Wrap(
+              spacing: 8,
+              children: kidInterestTags.map((tag) {
+                final selected = _selectedInterests.contains(tag);
+                return FilterChip(
+                  label: Text(tag),
+                  selected: selected,
+                  onSelected: (v) => setState(() {
+                    if (v) {
+                      _selectedInterests.add(tag);
+                    } else {
+                      _selectedInterests.remove(tag);
+                    }
+                    _result = null;
+                  }),
+                );
+              }).toList(),
+            ),
+          ],
         ),
-        const SizedBox(height: 8),
-        Text(
-          'Ditt intresse (bonus, filtrerar inte bort något)',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        Wrap(
-          spacing: 8,
-          children: parentInterestTags.map((tag) {
-            final selected = _selectedParentInterests.contains(tag);
-            return FilterChip(
-              label: Text(tag),
-              selected: selected,
-              onSelected: (v) => setState(() {
-                if (v) {
-                  _selectedParentInterests.add(tag);
-                } else {
-                  _selectedParentInterests.remove(tag);
-                }
-                _result = null;
-              }),
-            );
-          }).toList(),
+        ExpansionTile(
+          title: Text(
+            'Ditt intresse (bonus, filtrerar inte bort något)',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          tilePadding: EdgeInsets.zero,
+          childrenPadding: const EdgeInsets.only(bottom: 8),
+          children: [
+            Wrap(
+              spacing: 8,
+              children: parentInterestTags.map((tag) {
+                final selected = _selectedParentInterests.contains(tag);
+                return FilterChip(
+                  label: Text(tag),
+                  selected: selected,
+                  onSelected: (v) => setState(() {
+                    if (v) {
+                      _selectedParentInterests.add(tag);
+                    } else {
+                      _selectedParentInterests.remove(tag);
+                    }
+                    _result = null;
+                  }),
+                );
+              }).toList(),
+            ),
+          ],
         ),
         const SizedBox(height: 8),
         Text('Budget', style: Theme.of(context).textTheme.titleMedium),
