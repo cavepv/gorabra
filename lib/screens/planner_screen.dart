@@ -279,28 +279,118 @@ class _PlannerScreenState extends State<PlannerScreen> {
     if (hourly.isEmpty) {
       return const Text('Väder ej tillgängligt just nu.');
     }
+    final now = DateTime.now();
     // No fixed height: IntrinsicHeight lets the Row (and this scroll view)
     // size to its content, so larger text-scale settings grow the row
     // instead of overflowing a hard-coded box.
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            for (final point in hourly)
-              SizedBox(
-                width: 56,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('${point.time.hour}'),
-                    Icon(iconForCondition(point.condition), size: 24),
-                    Text('${point.temperatureC.round()}°'),
-                  ],
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _buildHourlyLegendColumn(),
+          Expanded(
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  for (final point in hourly)
+                    _buildHourlyColumn(
+                      point,
+                      isCurrentHour:
+                          _selectedDay == Day.today &&
+                          point.time.year == now.year &&
+                          point.time.month == now.month &&
+                          point.time.day == now.day &&
+                          point.time.hour == now.hour,
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHourlyColumn(HourlyPoint point, {required bool isCurrentHour}) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      width: 56,
+      padding: const EdgeInsets.symmetric(vertical: 4),
+      decoration: isCurrentHour
+          ? BoxDecoration(
+              color: colorScheme.primaryContainer,
+              borderRadius: BorderRadius.circular(8),
+            )
+          : null,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          // Hour: small and muted so it reads as a label, not a value.
+          Expanded(
+            child: Center(
+              child: Text(
+                point.time.hour.toString().padLeft(2, '0'),
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: isCurrentHour
+                      ? colorScheme.onPrimaryContainer
+                      : colorScheme.onSurfaceVariant,
+                  fontWeight: isCurrentHour ? FontWeight.bold : null,
                 ),
               ),
-          ],
-        ),
+            ),
+          ),
+          Expanded(
+            child: Center(
+              child: Icon(
+                iconForCondition(point.condition),
+                size: 24,
+                color: colorForCondition(point.condition),
+              ),
+            ),
+          ),
+          // Temp: bold and larger — the number people actually scan for.
+          Expanded(
+            child: Center(
+              child: Text(
+                '${point.temperatureC.round()}°',
+                style: Theme.of(
+                  context,
+                ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Fixed (non-scrolling) legend identifying what each row in the hourly
+  /// strip means, so "08" / icon / "18°" reads unambiguously without
+  /// needing to infer it from the scrolled-away header.
+  ///
+  /// Each marker is centered in an Expanded third of the shared row height
+  /// (matching the three Expanded bands in each hourly column) rather than
+  /// given a fixed pixel size, so the legend stays aligned with the hourly
+  /// rows even when text-scale accessibility settings grow the hourly
+  /// column's text but not these icons.
+  Widget _buildHourlyLegendColumn() {
+    final mutedStyle = Theme.of(context).textTheme.labelSmall?.copyWith(
+      color: Theme.of(context).colorScheme.onSurfaceVariant,
+    );
+    return Padding(
+      padding: const EdgeInsets.only(right: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Expanded(child: Center(child: Icon(Icons.schedule, size: 16, color: mutedStyle?.color))),
+          const Expanded(
+            child: Center(child: Icon(Icons.cloud_outlined, size: 24, color: Colors.transparent)),
+          ),
+          Expanded(
+            child: Center(child: Icon(Icons.thermostat, size: 16, color: mutedStyle?.color)),
+          ),
+        ],
       ),
     );
   }

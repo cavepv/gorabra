@@ -71,6 +71,26 @@ IconData iconForCondition(WeatherCondition condition) {
   }
 }
 
+/// Icon color for a broad weather condition, matching yr.no's palette
+/// (yellow sun, grey cloud/fog, blue rain/snow, dark thunderstorm) so
+/// icons read at a glance instead of all sharing one theme color.
+Color colorForCondition(WeatherCondition condition) {
+  switch (condition) {
+    case WeatherCondition.clear:
+      return const Color(0xFFFFC107);
+    case WeatherCondition.cloudy:
+    case WeatherCondition.fog:
+      return const Color(0xFF9E9E9E);
+    case WeatherCondition.rain:
+    case WeatherCondition.snow:
+      return const Color(0xFF4FC3F7);
+    case WeatherCondition.thunderstorm:
+      return const Color(0xFF5C6BC0);
+    case WeatherCondition.unknown:
+      return const Color(0xFF9E9E9E);
+  }
+}
+
 /// Result of a single hourly entry's indoor/outdoor classification — used
 /// by the recommender, derived from a day's midday (12:00) [HourlyPoint].
 class WeatherResult {
