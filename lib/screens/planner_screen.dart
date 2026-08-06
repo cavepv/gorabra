@@ -58,7 +58,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
   WeatherForecast _forecast = const WeatherForecast();
   Day _selectedDay = Day.today;
 
-  int _kidAge = 4;
+  final List<int> _kidAges = [4];
   final Set<String> _selectedInterests = {};
   final Set<String> _selectedParentInterests = {};
   Cost _budget = Cost.medium;
@@ -111,6 +111,24 @@ class _PlannerScreenState extends State<PlannerScreen> {
     });
   }
 
+  static const _maxKids = 4;
+
+  void _addKid() {
+    if (_kidAges.length >= _maxKids) return;
+    setState(() {
+      _kidAges.add(4);
+      _result = null;
+    });
+  }
+
+  void _removeKid(int index) {
+    if (_kidAges.length <= 1) return;
+    setState(() {
+      _kidAges.removeAt(index);
+      _result = null;
+    });
+  }
+
   void _spin() {
     if (_catalog == null) return;
     setState(() {
@@ -118,7 +136,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
       _result = null; // clear stale results while the new pick is computed
     });
     final prefs = UserPreferences(
-      kidAge: _kidAge,
+      kidAges: _kidAges,
       kidInterests: _selectedInterests.toList(),
       parentInterests: _selectedParentInterests.toList(),
       budget: _budget,
@@ -190,17 +208,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
         const SizedBox(height: 8),
         _buildWeatherSummary(),
         const SizedBox(height: 16),
-        Text('Barnets ålder: $_kidAge', style: Theme.of(context).textTheme.titleMedium),
-        Slider(
-          value: _kidAge.toDouble(),
-          min: 0,
-          max: 12,
-          divisions: 12,
-          label: '$_kidAge',
-          onChanged: (v) => setState(() {
-            _kidAge = v.round();
-            _result = null;
-          }),
+        Text('Barnens åldrar', style: Theme.of(context).textTheme.titleMedium),
+        for (var i = 0; i < _kidAges.length; i++) _buildKidAgeRow(i),
+        TextButton.icon(
+          onPressed: _kidAges.length >= _maxKids ? null : _addKid,
+          icon: const Icon(Icons.add),
+          label: const Text('Lägg till barn'),
         ),
         const SizedBox(height: 8),
         Text('Barnets intressen', style: Theme.of(context).textTheme.titleMedium),
@@ -270,6 +283,42 @@ class _PlannerScreenState extends State<PlannerScreen> {
             _result = null;
           }),
         ),
+      ],
+    );
+  }
+
+  /// One removable age-slider row for a single kid (see design.md: reuses
+  /// the same slider style as the original single-kid input, just repeated
+  /// per kid in `_kidAges`).
+  Widget _buildKidAgeRow(int index) {
+    final age = _kidAges[index];
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Barn ${index + 1}: $age år'),
+              Slider(
+                value: age.toDouble(),
+                min: 0,
+                max: 12,
+                divisions: 12,
+                label: '$age',
+                onChanged: (v) => setState(() {
+                  _kidAges[index] = v.round();
+                  _result = null;
+                }),
+              ),
+            ],
+          ),
+        ),
+        if (_kidAges.length > 1)
+          IconButton(
+            icon: const Icon(Icons.close),
+            tooltip: 'Ta bort barn ${index + 1}',
+            onPressed: () => _removeKid(index),
+          ),
       ],
     );
   }

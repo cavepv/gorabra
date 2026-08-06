@@ -5,19 +5,19 @@ import 'weather_lookup.dart';
 
 /// User inputs collected once per session (see planner-ui spec).
 class UserPreferences {
-  final int kidAge;
+  final List<int> kidAges;
   final List<String> kidInterests;
   final List<String> parentInterests;
   final Cost budget;
   final bool hasCar;
 
-  const UserPreferences({
-    required this.kidAge,
+  UserPreferences({
+    required this.kidAges,
     required this.kidInterests,
     this.parentInterests = const [],
     required this.budget,
     required this.hasCar,
-  });
+  }) : assert(kidAges.isNotEmpty, 'kidAges must have at least one entry');
 }
 
 /// Result of a recommendation request: 1-3 activities plus whether filters
@@ -66,7 +66,7 @@ class ActivityRecommender {
         weather == null || a.indoor == weather.isIndoorFavoring;
 
     bool matchesAge(Activity a) =>
-        prefs.kidAge >= a.minAge && prefs.kidAge <= a.maxAge;
+        prefs.kidAges.every((age) => age >= a.minAge && age <= a.maxAge);
 
     // Try progressively relaxed filter combinations, in the locked order:
     // full filters -> drop interests -> drop weather -> drop age -> base only.

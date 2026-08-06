@@ -43,7 +43,7 @@ void main() {
         _activity(id: 'b', interests: ['art'], indoor: true),
       ];
       final prefs = UserPreferences(
-        kidAge: 5,
+        kidAges: [5],
         kidInterests: ['animals'],
         budget: Cost.low,
         hasCar: true,
@@ -64,7 +64,7 @@ void main() {
         _activity(id: 'a', interests: ['music'], indoor: false, minAge: 1, maxAge: 12),
       ];
       final prefs = UserPreferences(
-        kidAge: 5,
+        kidAges: [5],
         kidInterests: ['animals'], // no activity matches this interest
         budget: Cost.low,
         hasCar: true,
@@ -92,7 +92,7 @@ void main() {
         ),
       ];
       final prefs = UserPreferences(
-        kidAge: 2, // outside age range even after other relaxations
+        kidAges: [2], // outside age range even after other relaxations
         kidInterests: ['animals'],
         budget: Cost.low,
         hasCar: true,
@@ -114,7 +114,7 @@ void main() {
         _activity(id: 'carOnly', transportModes: [TransportMode.car]),
       ];
       final prefs = UserPreferences(
-        kidAge: 5,
+        kidAges: [5],
         kidInterests: [],
         budget: Cost.free,
         hasCar: false,
@@ -127,6 +127,47 @@ void main() {
 
       expect(result.activities, isEmpty);
       expect(result.isClosestMatch, isTrue);
+    });
+
+    test('multi-kid age: only an activity covering every kid\'s age matches', () {
+      final catalog = [
+        _activity(id: 'coversBoth', minAge: 5, maxAge: 10),
+        _activity(id: 'coversOne', minAge: 3, maxAge: 6),
+      ];
+      final prefs = UserPreferences(
+        kidAges: [5, 7],
+        kidInterests: [],
+        budget: Cost.low,
+        hasCar: true,
+      );
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.isClosestMatch, isFalse);
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'coversBoth');
+    });
+
+    test('multi-kid age with no overlap falls back to age-relaxed pool', () {
+      final catalog = [_activity(id: 'a', minAge: 4, maxAge: 6)];
+      final prefs = UserPreferences(
+        kidAges: [3, 12], // no activity range spans both
+        kidInterests: [],
+        budget: Cost.low,
+        hasCar: true,
+      );
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.isClosestMatch, isTrue);
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'a');
     });
   });
 }
