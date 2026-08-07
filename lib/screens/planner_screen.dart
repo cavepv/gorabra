@@ -169,7 +169,31 @@ class _PlannerScreenState extends State<PlannerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Görabra')),
+      appBar: AppBar(
+        centerTitle: true,
+        toolbarHeight: 80,
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.lightbulb_rounded, color: Colors.amber),
+              const SizedBox(width: 8),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text('Görabra'),
+                  Text(
+                    'Vad hittar vi på idag?',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
       body: _loadError != null
           ? Center(
               child: Column(
