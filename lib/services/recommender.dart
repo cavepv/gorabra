@@ -11,12 +11,18 @@ class UserPreferences {
   final Cost budget;
   final bool hasCar;
 
+  /// When true, hard-filters to `homeOnly` activities only (never
+  /// relaxed, same tier as cost/transport). When false, excludes
+  /// `homeOnly` activities from normal "go somewhere" suggestions.
+  final bool stayHome;
+
   UserPreferences({
     required this.kidAges,
     required this.kidInterests,
     this.parentInterests = const [],
     required this.budget,
     required this.hasCar,
+    this.stayHome = false,
   }) : assert(kidAges.isNotEmpty, 'kidAges must have at least one entry');
 }
 
@@ -36,10 +42,11 @@ class RecommendationResult {
 /// Filters the activity catalog and randomly picks 1-3 suggestions.
 ///
 /// Filter tiers (see design.md): interests → cost/budget → transport/car →
-/// weather → age. Cost and transport are hard filters that are never
-/// relaxed; interests, weather, and age are relaxed in that order if the
-/// pool is empty. parentInterest/social/physicalActivity only affect the
-/// odds of being picked, never exclude an activity.
+/// stayHome/homeOnly → weather → age. Cost, transport, and stayHome are hard
+/// filters that are never relaxed; interests, weather, and age are relaxed
+/// in that order if the pool is empty. parentInterest/social/
+/// physicalActivity only affect the odds of being picked, never exclude an
+/// activity.
 class ActivityRecommender {
   final Random _random;
 
@@ -50,12 +57,13 @@ class ActivityRecommender {
     required UserPreferences prefs,
     required WeatherResult? weather,
   }) {
-    // Cost and transport are never relaxed — this is the floor every
-    // candidate pool must satisfy.
+    // Cost, transport, and stayHome are never relaxed — this is the floor
+    // every candidate pool must satisfy.
     final base = catalog.where((a) {
       final withinBudget = a.cost.index <= prefs.budget.index;
       final reachable = prefs.hasCar || a.transportModes.any((m) => m != TransportMode.car);
-      return withinBudget && reachable;
+      final homeMatch = prefs.stayHome ? a.homeOnly : !a.homeOnly;
+      return withinBudget && reachable && homeMatch;
     }).toList();
 
     bool matchesInterests(Activity a) =>

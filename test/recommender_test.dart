@@ -14,6 +14,7 @@ Activity _activity({
   List<String> benefits = const [],
   Cost cost = Cost.free,
   List<TransportMode> transportModes = const [TransportMode.walk],
+  bool homeOnly = false,
 }) {
   return Activity(
     id: id,
@@ -32,6 +33,7 @@ Activity _activity({
     distanceKm: 1.0,
     transportModes: transportModes,
     cost: cost,
+    homeOnly: homeOnly,
   );
 }
 
@@ -168,6 +170,50 @@ void main() {
       expect(result.isClosestMatch, isTrue);
       expect(result.activities, hasLength(1));
       expect(result.activities.first.id, 'a');
+    });
+
+    test('stayHome false: homeOnly activities are excluded from the pool', () {
+      final catalog = [
+        _activity(id: 'outing', homeOnly: false),
+        _activity(id: 'homeActivity', homeOnly: true),
+      ];
+      final prefs = UserPreferences(
+        kidAges: [5],
+        kidInterests: [],
+        budget: Cost.low,
+        hasCar: true,
+        stayHome: false,
+      );
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'outing');
+    });
+
+    test('stayHome true: hard-filters to homeOnly pool, never relaxed', () {
+      final catalog = [
+        _activity(id: 'outing', homeOnly: false),
+        _activity(id: 'homeActivity', homeOnly: true, interests: ['lek']),
+      ];
+      final prefs = UserPreferences(
+        kidAges: [5],
+        kidInterests: ['unmatched-interest'], // should relax, but stay home-only
+        budget: Cost.low,
+        hasCar: true,
+        stayHome: true,
+      );
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'homeActivity');
     });
   });
 }

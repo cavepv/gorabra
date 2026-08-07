@@ -52,6 +52,11 @@ class Activity {
   /// Cost tier — hard filter vs. user's budget input.
   final Cost cost;
 
+  /// Stay-at-home activity — hard filter vs. user's `stayHome` input,
+  /// never relaxed (same tier as cost/transport). Defaults to false for
+  /// existing "go somewhere" activities. See activity-recommender spec.
+  final bool homeOnly;
+
   const Activity({
     required this.id,
     required this.name,
@@ -69,6 +74,7 @@ class Activity {
     required this.distanceKm,
     required this.transportModes,
     required this.cost,
+    this.homeOnly = false,
   });
 
   factory Activity.fromJson(Map<String, dynamic> json) {
@@ -91,6 +97,7 @@ class Activity {
           .map((e) => _transportModeFromJson(e as String))
           .toList(),
       cost: _costFromJson(json['cost'] as String),
+      homeOnly: json['homeOnly'] as bool? ?? false,
     );
   }
 }

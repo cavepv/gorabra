@@ -12,7 +12,8 @@ weather, age-appropriateness, budget, or transport.
 
 1. Fill in one or more kids' ages (add up to 4 via "+ Lägg till barn"),
    interest tags (yours and the kids', each collapsible/expandable), budget
-   level, and whether you have a car.
+   level, whether you have a car, and whether you want to stay home today
+   ("Stanna hemma").
 2. Toggle between "Idag" (today) and "Imorgon" (tomorrow) — Görabra fetches
    Gothenburg's full 24-hour forecast for both days in one call (via
    [Open-Meteo](https://open-meteo.com/), free, no API key), and shows the
@@ -20,17 +21,18 @@ weather, age-appropriateness, budget, or transport.
    temperature, and muted hour label for every hour, with the current hour
    highlighted and auto-scrolled into view, so you can see how the day's
    weather changes at a glance.
-3. The recommender hard-filters a curated ~21-activity Gothenburg catalog by
+3. The recommender hard-filters a curated ~30-activity Gothenburg catalog by
    age (must suit every kid in the group), weather (indoor/outdoor, derived
-   from the selected day's midday forecast), cost vs. budget, and transport
-   reachability — relaxing filters progressively (interests → weather →
-   age) if the pool is empty, so you never see zero results. Cost and
-   transport are never relaxed.
+   from the selected day's midday forecast), cost vs. budget, transport
+   reachability, and home/away mode ("Stanna hemma" limits results to
+   stay-at-home activities) — relaxing filters progressively (interests →
+   weather → age) if the pool is empty, so you never see zero results.
+   Cost, transport, and home/away mode are never relaxed.
 4. Activities that match your own interests, are good for meeting other
    families, or are tagged as good physical activity get better odds — but
    never override the hard filters.
-5. Tap "Spinna" for 1-3 random suggestions from the matching pool; "Spinna
-   igen" re-rolls without re-entering your inputs.
+5. Tap "Föreslå" for 1-3 random suggestions from the matching pool;
+   "Föreslå igen" re-rolls without re-entering your inputs.
 
 ## Project structure
 

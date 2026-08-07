@@ -63,6 +63,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
   final Set<String> _selectedParentInterests = {};
   Cost _budget = Cost.medium;
   bool _hasCar = true;
+  bool _stayHome = false;
 
   final ScrollController _hourlyScrollController = ScrollController();
   // Guards against re-scrolling on every rebuild (e.g. picking an interest
@@ -142,7 +143,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
     });
   }
 
-  void _spin() {
+  Future<void> _spin() async {
     if (_catalog == null) return;
     setState(() {
       _loading = true;
@@ -154,12 +155,17 @@ class _PlannerScreenState extends State<PlannerScreen> {
       parentInterests: _selectedParentInterests.toList(),
       budget: _budget,
       hasCar: _hasCar,
+      stayHome: _stayHome,
     );
+    // recommend() is synchronous (no network/IO) — a short artificial delay
+    // gives the loading spinner below something to actually show.
+    await Future.delayed(const Duration(milliseconds: 300));
     final result = ActivityRecommender().recommend(
       catalog: _catalog!,
       prefs: prefs,
       weather: _selectedWeather,
     );
+    if (!mounted) return;
     setState(() {
       _result = result;
       _loading = false;
@@ -217,8 +223,14 @@ class _PlannerScreenState extends State<PlannerScreen> {
                 const SizedBox(height: 16),
                 FilledButton.icon(
                   onPressed: _loading ? null : _spin,
-                  icon: const Icon(Icons.casino),
-                  label: Text(_result == null ? 'Spinna' : 'Spinna igen'),
+                  icon: _loading
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.casino),
+                  label: Text(_result == null ? 'Föreslå' : 'Föreslå igen'),
                 ),
                 const SizedBox(height: 24),
                 if (_result != null) _buildResults(_result!),
@@ -306,6 +318,17 @@ class _PlannerScreenState extends State<PlannerScreen> {
               }).toList(),
             ),
           ],
+        ),
+        const SizedBox(height: 8),
+        SwitchListTile(
+          contentPadding: EdgeInsets.zero,
+          title: const Text('Stanna hemma'),
+          subtitle: const Text('Visa bara aktiviteter man kan göra hemma'),
+          value: _stayHome,
+          onChanged: (v) => setState(() {
+            _stayHome = v;
+            _result = null;
+          }),
         ),
         const SizedBox(height: 8),
         Text('Budget', style: Theme.of(context).textTheme.titleMedium),
