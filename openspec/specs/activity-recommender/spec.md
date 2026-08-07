@@ -7,7 +7,9 @@ kid ages) within the activity's `[minAge, maxAge]` range; `indoor` matching
 today's weather classification (when known); `cost` within the user's
 stated `budget`; at least one of the activity's `transportModes` being
 reachable given the user's `hasCar` input (if `hasCar` is false, activities
-whose only `transportModes` entry is `car` are excluded); and the
+whose only `transportModes` entry is `car` are excluded — this check does
+not apply to `homeOnly` activities, which are always reachable regardless
+of `hasCar`); and the
 activity's `homeOnly` flag matching the user's `stayHome` input (when
 `stayHome` is true, only `homeOnly: true` activities pass; when `stayHome`
 is false, only `homeOnly: false` activities pass).
@@ -23,6 +25,11 @@ is false, only `homeOnly: false` activities pass).
 - **WHEN** the user sets `stayHome: true`
 - **THEN** the candidate pool contains only activities with
   `homeOnly: true`, regardless of weather, interests, or age relaxation
+
+#### Scenario: hasCar has no effect on home activities
+- **WHEN** the user sets `stayHome: true`
+- **THEN** the `hasCar` input does not exclude any `homeOnly` activity,
+  since there is nowhere to drive to when staying home
 
 #### Scenario: default mode excludes home-only activities
 - **WHEN** the user sets `stayHome: false` (the default)

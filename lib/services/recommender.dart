@@ -46,7 +46,8 @@ class RecommendationResult {
 /// filters that are never relaxed; interests, weather, and age are relaxed
 /// in that order if the pool is empty. parentInterest/social/
 /// physicalActivity only affect the odds of being picked, never exclude an
-/// activity.
+/// activity. transport/hasCar never excludes a `homeOnly` activity — there's
+/// nowhere to drive to when staying home.
 class ActivityRecommender {
   final Random _random;
 
@@ -61,7 +62,9 @@ class ActivityRecommender {
     // every candidate pool must satisfy.
     final base = catalog.where((a) {
       final withinBudget = a.cost.index <= prefs.budget.index;
-      final reachable = prefs.hasCar || a.transportModes.any((m) => m != TransportMode.car);
+      // hasCar never affects home activities — there's nowhere to drive to.
+      final reachable =
+          a.homeOnly || prefs.hasCar || a.transportModes.any((m) => m != TransportMode.car);
       final homeMatch = prefs.stayHome ? a.homeOnly : !a.homeOnly;
       return withinBudget && reachable && homeMatch;
     }).toList();

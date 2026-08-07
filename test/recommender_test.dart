@@ -215,5 +215,45 @@ void main() {
       expect(result.activities, hasLength(1));
       expect(result.activities.first.id, 'homeActivity');
     });
+
+    test('stayHome true: hasCar has no effect on home activity results', () {
+      final catalog = [
+        _activity(
+          id: 'homeActivity',
+          homeOnly: true,
+          transportModes: [TransportMode.car], // shouldn't matter when home
+        ),
+      ];
+      final prefsNoCar = UserPreferences(
+        kidAges: [5],
+        kidInterests: [],
+        budget: Cost.low,
+        hasCar: false,
+        stayHome: true,
+      );
+      final prefsWithCar = UserPreferences(
+        kidAges: [5],
+        kidInterests: [],
+        budget: Cost.low,
+        hasCar: true,
+        stayHome: true,
+      );
+
+      final resultNoCar = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefsNoCar,
+        weather: null,
+      );
+      final resultWithCar = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefsWithCar,
+        weather: null,
+      );
+
+      expect(resultNoCar.activities, hasLength(1));
+      expect(resultWithCar.activities, hasLength(1));
+      expect(resultNoCar.activities.first.id, 'homeActivity');
+      expect(resultWithCar.activities.first.id, 'homeActivity');
+    });
   });
 }
