@@ -28,7 +28,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "high"
+    "cost": "high",
+    "lat": 57.6944,
+    "lng": 11.9925
   },
   {
     "id": "slottsskogen",
@@ -60,7 +62,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.6863,
+    "lng": 11.9407
   },
   {
     "id": "universeum",
@@ -90,7 +94,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "high"
+    "cost": "high",
+    "lat": 57.6968,
+    "lng": 11.9838
   },
   {
     "id": "delsjon",
@@ -121,7 +127,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.6895,
+    "lng": 12.043
   },
   {
     "id": "botaniska",
@@ -153,7 +161,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.6835,
+    "lng": 11.9469
   },
   {
     "id": "maritiman",
@@ -183,7 +193,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "medium"
+    "cost": "medium",
+    "lat": 57.7075,
+    "lng": 11.9662
   },
   {
     "id": "vasterasparken",
@@ -212,7 +224,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.692,
+    "lng": 11.968
   },
   {
     "id": "konstmuseum",
@@ -241,7 +255,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "low"
+    "cost": "low",
+    "lat": 57.6969,
+    "lng": 11.9865
   },
   {
     "id": "brudarebacken",
@@ -270,7 +286,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.685,
+    "lng": 11.944
   },
   {
     "id": "biosfaren",
@@ -298,7 +316,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "low"
+    "cost": "low",
+    "lat": 57.6975,
+    "lng": 11.985
   },
   {
     "id": "alvsborgsbron",
@@ -326,7 +346,9 @@
     "transportModes": [
       "bike"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.6825,
+    "lng": 11.9075
   },
   {
     "id": "kubik",
@@ -353,7 +375,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "medium"
+    "cost": "medium",
+    "lat": 57.6554,
+    "lng": 12.0134
   },
   {
     "id": "stadsbiblioteket",
@@ -382,7 +406,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.6971,
+    "lng": 11.9866
   },
   {
     "id": "friluftsmuseet",
@@ -412,7 +438,9 @@
       "bike",
       "publicTransit"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.6875,
+    "lng": 11.943
   },
   {
     "id": "gunnebo",
@@ -441,7 +469,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "low"
+    "cost": "low",
+    "lat": 57.6167,
+    "lng": 12.0167
   },
   {
     "id": "paddan",
@@ -469,7 +499,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "high"
+    "cost": "high",
+    "lat": 57.7028,
+    "lng": 11.9668
   },
   {
     "id": "keillers",
@@ -501,7 +533,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.715,
+    "lng": 11.955
   },
   {
     "id": "skatehallen",
@@ -528,7 +562,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "low"
+    "cost": "low",
+    "lat": 57.755,
+    "lng": 12.035
   },
   {
     "id": "jarntorget",
@@ -555,7 +591,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "low"
+    "cost": "low",
+    "lat": 57.6975,
+    "lng": 11.953
   },
   {
     "id": "ostraskogen",
@@ -585,7 +623,9 @@
       "bike",
       "car"
     ],
-    "cost": "free"
+    "cost": "free",
+    "lat": 57.73,
+    "lng": 12.03
   },
   {
     "id": "gothenburg-opera-kids",
@@ -615,7 +655,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "high"
+    "cost": "high",
+    "lat": 57.7057,
+    "lng": 11.9746
   },
   {
     "id": "kuddefort",

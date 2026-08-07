@@ -57,6 +57,13 @@ class Activity {
   /// existing "go somewhere" activities. See activity-recommender spec.
   final bool homeOnly;
 
+  /// Manually estimated coordinates, null for `homeOnly` activities (a
+  /// stay-at-home activity has no fixed place to measure distance to).
+  /// Used by the optional distance-radius filter — hard filter, never
+  /// relaxed, and never applied to `homeOnly` activities.
+  final double? lat;
+  final double? lng;
+
   const Activity({
     required this.id,
     required this.name,
@@ -75,6 +82,8 @@ class Activity {
     required this.transportModes,
     required this.cost,
     this.homeOnly = false,
+    this.lat,
+    this.lng,
   });
 
   factory Activity.fromJson(Map<String, dynamic> json) {
@@ -98,6 +107,8 @@ class Activity {
           .toList(),
       cost: _costFromJson(json['cost'] as String),
       homeOnly: json['homeOnly'] as bool? ?? false,
+      lat: (json['lat'] as num?)?.toDouble(),
+      lng: (json['lng'] as num?)?.toDouble(),
     );
   }
 }

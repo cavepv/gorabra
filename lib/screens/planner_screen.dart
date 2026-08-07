@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/activity.dart';
 import '../models/activity_catalog.dart';
+import '../services/location_lookup.dart';
 import '../services/recommender.dart';
 import '../services/weather_lookup.dart';
 
@@ -45,7 +46,13 @@ const parentInterestTags = [
 /// Single screen: input form (5.1), spin/result display (5.2), re-spin
 /// (5.3), and closest-matches labeling (5.4).
 class PlannerScreen extends StatefulWidget {
-  const PlannerScreen({super.key});
+  /// Injectable position fetcher — defaults to real GPS via
+  /// [LocationLookup], overridable in tests (mirrors the `Random? random`
+  /// seam already used in [ActivityRecommender]).
+  final Future<UserPosition?> Function() positionFetcher;
+
+  const PlannerScreen({super.key, Future<UserPosition?> Function()? positionFetcher})
+    : positionFetcher = positionFetcher ?? LocationLookup.getCurrentPosition;
 
   @override
   State<PlannerScreen> createState() => _PlannerScreenState();
@@ -64,6 +71,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
   Cost _budget = Cost.medium;
   bool _hasCar = true;
   bool _stayHome = false;
+
+  bool _useMyPosition = false;
+  double _maxDistanceKm = 5;
+  UserPosition? _userPosition;
+  bool _locatingPosition = false;
+  String? _locationError;
 
   final ScrollController _hourlyScrollController = ScrollController();
   // Guards against re-scrolling on every rebuild (e.g. picking an interest
@@ -143,12 +156,34 @@ class _PlannerScreenState extends State<PlannerScreen> {
     });
   }
 
+  Future<void> _toggleUseMyPosition(bool value) async {
+    setState(() {
+      _useMyPosition = value;
+      _result = null;
+      _locationError = null;
+    });
+    if (!value) return;
+
+    setState(() => _locatingPosition = true);
+    final position = await widget.positionFetcher();
+    if (!mounted) return;
+    setState(() {
+      _locatingPosition = false;
+      _userPosition = position;
+      if (position == null) {
+        _locationError = 'Kunde inte hämta din position.';
+        _useMyPosition = false; // fall back: filter stays off
+      }
+    });
+  }
+
   Future<void> _spin() async {
     if (_catalog == null) return;
     setState(() {
       _loading = true;
       _result = null; // clear stale results while the new pick is computed
     });
+    final useDistanceFilter = _useMyPosition && _userPosition != null && !_stayHome;
     final prefs = UserPreferences(
       kidAges: _kidAges,
       kidInterests: _selectedInterests.toList(),
@@ -156,6 +191,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
       budget: _budget,
       hasCar: _hasCar,
       stayHome: _stayHome,
+      maxDistanceKm: useDistanceFilter ? _maxDistanceKm : null,
+      userLat: useDistanceFilter ? _userPosition!.lat : null,
+      userLng: useDistanceFilter ? _userPosition!.lng : null,
     );
     // recommend() is synchronous (no network/IO) — a short artificial delay
     // gives the loading spinner below something to actually show.
@@ -354,6 +392,42 @@ class _PlannerScreenState extends State<PlannerScreen> {
             _hasCar = v;
             _result = null;
           }),
+        ),
+        const SizedBox(height: 8),
+        ExpansionTile(
+          title: Text('Avstånd', style: Theme.of(context).textTheme.titleMedium),
+          subtitle: _stayHome
+              ? const Text('Gäller inte när ni stannar hemma')
+              : null,
+          tilePadding: EdgeInsets.zero,
+          childrenPadding: const EdgeInsets.only(bottom: 8),
+          children: [
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Använd min position'),
+              subtitle: _locatingPosition
+                  ? const Text('Hämtar position…')
+                  : _locationError != null
+                  ? Text(_locationError!)
+                  : null,
+              value: _useMyPosition,
+              onChanged: _stayHome ? null : (v) => _toggleUseMyPosition(v),
+            ),
+            Slider(
+              value: _maxDistanceKm,
+              min: 1,
+              max: 50,
+              divisions: 49,
+              label: '${_maxDistanceKm.round()} km',
+              onChanged: (_stayHome || !_useMyPosition || _userPosition == null)
+                  ? null
+                  : (v) => setState(() {
+                      _maxDistanceKm = v;
+                      _result = null;
+                    }),
+            ),
+            Text('Max ${_maxDistanceKm.round()} km bort'),
+          ],
         ),
       ],
     );

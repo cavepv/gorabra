@@ -12,8 +12,9 @@ weather, age-appropriateness, budget, or transport.
 
 1. Fill in one or more kids' ages (add up to 4 via "+ Lägg till barn"),
    interest tags (yours and the kids', each collapsible/expandable), budget
-   level, whether you have a car, and whether you want to stay home today
-   ("Stanna hemma").
+   level, whether you have a car, whether you want to stay home today
+   ("Stanna hemma"), and optionally an "Avstånd" (distance) filter based
+   on your current position and a 1-50km radius slider.
 2. Toggle between "Idag" (today) and "Imorgon" (tomorrow) — Görabra fetches
    Gothenburg's full 24-hour forecast for both days in one call (via
    [Open-Meteo](https://open-meteo.com/), free, no API key), and shows the
@@ -24,10 +25,14 @@ weather, age-appropriateness, budget, or transport.
 3. The recommender hard-filters a curated ~30-activity Gothenburg catalog by
    age (must suit every kid in the group), weather (indoor/outdoor, derived
    from the selected day's midday forecast), cost vs. budget, transport
-   reachability, and home/away mode ("Stanna hemma" limits results to
-   stay-at-home activities) — relaxing filters progressively (interests →
-   weather → age) if the pool is empty, so you never see zero results.
-   Cost, transport, and home/away mode are never relaxed.
+   reachability, home/away mode ("Stanna hemma" limits results to
+   stay-at-home activities), and — if enabled — a real-GPS distance radius
+   (via [geolocator](https://pub.dev/packages/geolocator), haversine
+   distance against each activity's coordinates) — relaxing filters
+   progressively (interests → weather → age) if the pool is empty, so you
+   never see zero results. Cost, transport, home/away mode, and the
+   distance radius are never relaxed. The distance filter (and "har ni
+   bil") have no effect while "Stanna hemma" is active.
 4. Activities that match your own interests, are good for meeting other
    families, or are tagged as good physical activity get better odds — but
    never override the hard filters.

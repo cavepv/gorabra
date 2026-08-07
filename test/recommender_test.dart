@@ -15,6 +15,8 @@ Activity _activity({
   Cost cost = Cost.free,
   List<TransportMode> transportModes = const [TransportMode.walk],
   bool homeOnly = false,
+  double? lat,
+  double? lng,
 }) {
   return Activity(
     id: id,
@@ -34,6 +36,8 @@ Activity _activity({
     transportModes: transportModes,
     cost: cost,
     homeOnly: homeOnly,
+    lat: lat,
+    lng: lng,
   );
 }
 
@@ -254,6 +258,100 @@ void main() {
       expect(resultWithCar.activities, hasLength(1));
       expect(resultNoCar.activities.first.id, 'homeActivity');
       expect(resultWithCar.activities.first.id, 'homeActivity');
+    });
+
+    test('distance filter: excludes activities outside the radius', () {
+      final catalog = [
+        _activity(id: 'near', lat: 57.71, lng: 11.98), // ~0.3km from user
+        _activity(id: 'far', lat: 58.41, lng: 15.62), // ~230km from user (Linköping)
+      ];
+      final prefs = UserPreferences(
+        kidAges: [5],
+        kidInterests: [],
+        budget: Cost.low,
+        hasCar: true,
+        maxDistanceKm: 10,
+        userLat: 57.7089,
+        userLng: 11.9746,
+      );
+
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'near');
+    });
+
+    test('distance filter: never relaxed even if it empties the pool', () {
+      final catalog = [
+        _activity(id: 'far', interests: ['animals'], lat: 58.41, lng: 15.62),
+      ];
+      final prefs = UserPreferences(
+        kidAges: [5],
+        kidInterests: ['animals'],
+        budget: Cost.low,
+        hasCar: true,
+        maxDistanceKm: 10,
+        userLat: 57.7089,
+        userLng: 11.9746,
+      );
+
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.activities, isEmpty);
+    });
+
+    test('distance filter: homeOnly activities are exempt regardless of distance', () {
+      final catalog = [
+        _activity(id: 'home', homeOnly: true, lat: null, lng: null),
+      ];
+      final prefs = UserPreferences(
+        kidAges: [5],
+        kidInterests: [],
+        budget: Cost.low,
+        hasCar: true,
+        stayHome: true,
+        maxDistanceKm: 5,
+        userLat: 57.7089,
+        userLng: 11.9746,
+      );
+
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'home');
+    });
+
+    test('distance filter off when maxDistanceKm is null', () {
+      final catalog = [
+        _activity(id: 'far', lat: 58.41, lng: 15.62),
+      ];
+      final prefs = UserPreferences(
+        kidAges: [5],
+        kidInterests: [],
+        budget: Cost.low,
+        hasCar: true,
+      );
+
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'far');
     });
   });
 }

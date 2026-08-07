@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:gorabra/main.dart';
+import 'package:gorabra/services/location_lookup.dart';
 
 void main() {
   testWidgets('Planner form loads and can spin for suggestions', (
@@ -15,7 +16,12 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(800, 2400));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
-    await tester.pumpWidget(const GorabraApp());
+    // Real GPS isn't available in the widget-test environment (no platform
+    // channel reply ever arrives), so inject a fake fetcher instead of
+    // letting PlannerScreen fall through to the real geolocator plugin.
+    await tester.pumpWidget(
+      GorabraApp(positionFetcher: () async => const UserPosition(lat: 57.7089, lng: 11.9746)),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Görabra'), findsOneWidget);
@@ -51,5 +57,29 @@ void main() {
     final hasNoMatchAfterToggle =
         find.text('Inga aktiviteter matchar dina val just nu.').evaluate().isNotEmpty;
     expect(hasResultAfterToggle || hasNoMatchAfterToggle, isTrue);
+
+    // Turn "Stanna hemma" back off so the distance section is enabled, then
+    // expand it and toggle "Använd min position" with the injected fake
+    // fetcher above — should resolve to a position (no error) and enable
+    // the distance slider.
+    await tester.ensureVisible(find.text('Stanna hemma'));
+    await tester.tap(find.text('Stanna hemma'));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Avstånd'));
+    await tester.tap(find.text('Avstånd'));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Använd min position'));
+    await tester.tap(find.text('Använd min position'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Kunde inte hämta din position.'), findsNothing);
+    final sliderFinder = find.descendant(
+      of: find.byType(ExpansionTile),
+      matching: find.byType(Slider),
+    );
+    final slider = tester.widget<Slider>(sliderFinder);
+    expect(slider.onChanged, isNotNull);
   });
 }

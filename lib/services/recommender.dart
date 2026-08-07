@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../models/activity.dart';
+import 'distance.dart';
 import 'weather_lookup.dart';
 
 /// User inputs collected once per session (see planner-ui spec).
@@ -16,6 +17,13 @@ class UserPreferences {
   /// `homeOnly` activities from normal "go somewhere" suggestions.
   final bool stayHome;
 
+  /// Optional distance-radius filter: when non-null, hard-filters (never
+  /// relaxed) to activities within `maxDistanceKm` of `userLat`/`userLng`.
+  /// `homeOnly` activities are always exempt, same as the `hasCar` filter.
+  final double? maxDistanceKm;
+  final double? userLat;
+  final double? userLng;
+
   UserPreferences({
     required this.kidAges,
     required this.kidInterests,
@@ -23,6 +31,9 @@ class UserPreferences {
     required this.budget,
     required this.hasCar,
     this.stayHome = false,
+    this.maxDistanceKm,
+    this.userLat,
+    this.userLng,
   }) : assert(kidAges.isNotEmpty, 'kidAges must have at least one entry');
 }
 
@@ -42,12 +53,13 @@ class RecommendationResult {
 /// Filters the activity catalog and randomly picks 1-3 suggestions.
 ///
 /// Filter tiers (see design.md): interests → cost/budget → transport/car →
-/// stayHome/homeOnly → weather → age. Cost, transport, and stayHome are hard
-/// filters that are never relaxed; interests, weather, and age are relaxed
-/// in that order if the pool is empty. parentInterest/social/
-/// physicalActivity only affect the odds of being picked, never exclude an
-/// activity. transport/hasCar never excludes a `homeOnly` activity — there's
-/// nowhere to drive to when staying home.
+/// stayHome/homeOnly → distance radius → weather → age. Cost, transport,
+/// stayHome, and distance radius are hard filters that are never relaxed;
+/// interests, weather, and age are relaxed in that order if the pool is
+/// empty. parentInterest/social/physicalActivity only affect the odds of
+/// being picked, never exclude an activity. transport/hasCar and the
+/// distance radius never exclude a `homeOnly` activity — there's nowhere
+/// to drive to (or measure distance to) when staying home.
 class ActivityRecommender {
   final Random _random;
 
@@ -58,15 +70,16 @@ class ActivityRecommender {
     required UserPreferences prefs,
     required WeatherResult? weather,
   }) {
-    // Cost, transport, and stayHome are never relaxed — this is the floor
-    // every candidate pool must satisfy.
+    // Cost, transport, stayHome, and distance radius are never relaxed —
+    // this is the floor every candidate pool must satisfy.
     final base = catalog.where((a) {
       final withinBudget = a.cost.index <= prefs.budget.index;
       // hasCar never affects home activities — there's nowhere to drive to.
       final reachable =
           a.homeOnly || prefs.hasCar || a.transportModes.any((m) => m != TransportMode.car);
       final homeMatch = prefs.stayHome ? a.homeOnly : !a.homeOnly;
-      return withinBudget && reachable && homeMatch;
+      final withinDistance = _matchesDistance(a, prefs);
+      return withinBudget && reachable && homeMatch && withinDistance;
     }).toList();
 
     bool matchesInterests(Activity a) =>
@@ -101,6 +114,19 @@ class ActivityRecommender {
     // Even the cost/transport-only base pool is empty (e.g. no activities
     // fit the budget/car constraints at all) — nothing to suggest.
     return const RecommendationResult(activities: [], isClosestMatch: true);
+  }
+
+  /// `homeOnly` activities are always exempt (no fixed place to measure
+  /// distance to). If the radius filter is off (`maxDistanceKm` null) or
+  /// missing coordinates, every activity passes.
+  bool _matchesDistance(Activity a, UserPreferences prefs) {
+    if (a.homeOnly) return true;
+    if (prefs.maxDistanceKm == null || prefs.userLat == null || prefs.userLng == null) {
+      return true;
+    }
+    if (a.lat == null || a.lng == null) return true;
+    final distance = haversineKm(prefs.userLat!, prefs.userLng!, a.lat!, a.lng!);
+    return distance <= prefs.maxDistanceKm!;
   }
 
   /// Boosts parentInterest/social/physicalActivity matches by duplicating
