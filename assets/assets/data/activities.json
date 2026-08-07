@@ -6,16 +6,31 @@
     "minAge": 2,
     "maxAge": 12,
     "indoor": false,
-    "interests": ["äventyr", "djur", "lek"],
-    "parentInterest": ["nostalgi"],
+    "interests": [
+      "äventyr",
+      "djur",
+      "lek"
+    ],
+    "parentInterest": [
+      "nostalgi"
+    ],
     "social": true,
-    "benefits": ["physicalActivity", "socialEmotional"],
+    "benefits": [
+      "physicalActivity",
+      "socialEmotional"
+    ],
     "benefitNote": "Att gå och springa mellan attraktioner hela dagen ger mängder av naturlig rörelse, och kön/väntan tränar barnens tålamod och turtagning.",
     "openingHours": "11:00–20:00 (säsong, kontrollera lisebeg.se för exakta datum)",
     "location": "Örgrytevägen 5, centrala Göteborg",
     "distanceKm": 1.5,
-    "transportModes": ["walk", "publicTransit", "car"],
-    "cost": "high"
+    "transportModes": [
+      "walk",
+      "publicTransit",
+      "car"
+    ],
+    "cost": "high",
+    "lat": 57.6944,
+    "lng": 11.9925
   },
   {
     "id": "slottsskogen",
@@ -24,16 +39,32 @@
     "minAge": 1,
     "maxAge": 10,
     "indoor": false,
-    "interests": ["djur", "natur", "lek"],
-    "parentInterest": ["natur"],
+    "interests": [
+      "djur",
+      "natur",
+      "lek"
+    ],
+    "parentInterest": [
+      "natur"
+    ],
     "social": true,
-    "benefits": ["physicalActivity", "cognitive"],
+    "benefits": [
+      "physicalActivity",
+      "cognitive"
+    ],
     "benefitNote": "Fri lek i naturmiljö stärker grovmotorik och ger barn utrymme att utforska i egen takt — rekommenderas av barnhälsovården för daglig utomhusvistelse.",
     "openingHours": "Alltid öppet (park), djurparksdelen 09:00–17:00",
     "location": "Slottsskogen, Göteborg",
     "distanceKm": 2.5,
-    "transportModes": ["walk", "bike", "publicTransit", "car"],
-    "cost": "free"
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "cost": "free",
+    "lat": 57.6863,
+    "lng": 11.9407
   },
   {
     "id": "universeum",
@@ -42,16 +73,30 @@
     "minAge": 3,
     "maxAge": 12,
     "indoor": true,
-    "interests": ["djur", "vetenskap", "äventyr"],
-    "parentInterest": ["vetenskap"],
+    "interests": [
+      "djur",
+      "vetenskap",
+      "äventyr"
+    ],
+    "parentInterest": [
+      "vetenskap"
+    ],
     "social": false,
-    "benefits": ["cognitive"],
+    "benefits": [
+      "cognitive"
+    ],
     "benefitNote": "Interaktiva utställningar uppmuntrar nyfikenhet och tidigt naturvetenskapligt tänkande genom eget utforskande, vilket stärker barns problemlösningsförmåga.",
     "openingHours": "10:00–17:00 (vardagar), 10:00–18:00 (helg)",
     "location": "Södra vägen 50, Göteborg",
     "distanceKm": 2.0,
-    "transportModes": ["walk", "publicTransit", "car"],
-    "cost": "high"
+    "transportModes": [
+      "walk",
+      "publicTransit",
+      "car"
+    ],
+    "cost": "high",
+    "lat": 57.6968,
+    "lng": 11.9838
   },
   {
     "id": "delsjon",
@@ -60,16 +105,31 @@
     "minAge": 2,
     "maxAge": 12,
     "indoor": false,
-    "interests": ["natur", "vatten", "friluftsliv"],
-    "parentInterest": ["natur", "motion"],
+    "interests": [
+      "natur",
+      "vatten",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "natur",
+      "motion"
+    ],
     "social": false,
-    "benefits": ["physicalActivity"],
+    "benefits": [
+      "physicalActivity"
+    ],
     "benefitNote": "Promenad i naturterräng är en av de mest rekommenderade formerna av daglig fysisk aktivitet för barn — bygger uthållighet och balans på ojämnt underlag.",
     "openingHours": "Alltid öppet",
     "location": "Delsjön, Göteborg",
     "distanceKm": 6.0,
-    "transportModes": ["bike", "publicTransit", "car"],
-    "cost": "free"
+    "transportModes": [
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "cost": "free",
+    "lat": 57.6895,
+    "lng": 12.043
   },
   {
     "id": "botaniska",
@@ -78,16 +138,32 @@
     "minAge": 1,
     "maxAge": 10,
     "indoor": false,
-    "interests": ["natur", "lek"],
-    "parentInterest": ["natur", "trädgård"],
+    "interests": [
+      "natur",
+      "lek"
+    ],
+    "parentInterest": [
+      "natur",
+      "trädgård"
+    ],
     "social": false,
-    "benefits": ["physicalActivity", "cognitive"],
+    "benefits": [
+      "physicalActivity",
+      "cognitive"
+    ],
     "benefitNote": "Att gå långa sträckor i varierad terräng utomhus bygger uthållighet, och den lugna miljön ger utrymme för sinnesintryck och nyfiket utforskande.",
     "openingHours": "09:00–20:00 (sommar)",
     "location": "Carl Skottsbergs gata 22A, Göteborg",
     "distanceKm": 3.0,
-    "transportModes": ["walk", "bike", "publicTransit", "car"],
-    "cost": "free"
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "cost": "free",
+    "lat": 57.6835,
+    "lng": 11.9469
   },
   {
     "id": "maritiman",
@@ -96,16 +172,30 @@
     "minAge": 3,
     "maxAge": 12,
     "indoor": false,
-    "interests": ["äventyr", "fordon"],
-    "parentInterest": ["historia", "sjöfart"],
+    "interests": [
+      "äventyr",
+      "fordon"
+    ],
+    "parentInterest": [
+      "historia",
+      "sjöfart"
+    ],
     "social": false,
-    "benefits": ["physicalActivity", "motorSkills"],
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
     "benefitNote": "Klättring i trappor och trånga utrymmen ombord tränar kroppsuppfattning och grovmotorik på ett sätt vanlig lek sällan gör.",
     "openingHours": "10:00–17:00 (säsong)",
     "location": "Packhusplatsen 12, Göteborg",
     "distanceKm": 1.0,
-    "transportModes": ["walk", "publicTransit"],
-    "cost": "medium"
+    "transportModes": [
+      "walk",
+      "publicTransit"
+    ],
+    "cost": "medium",
+    "lat": 57.7075,
+    "lng": 11.9662
   },
   {
     "id": "vasterasparken",
@@ -114,16 +204,29 @@
     "minAge": 1,
     "maxAge": 8,
     "indoor": false,
-    "interests": ["vatten", "lek"],
+    "interests": [
+      "vatten",
+      "lek"
+    ],
     "parentInterest": [],
     "social": true,
-    "benefits": ["physicalActivity", "socialEmotional"],
+    "benefits": [
+      "physicalActivity",
+      "socialEmotional"
+    ],
     "benefitNote": "Vattenlek stimulerar sinnena och grovmotorik, och den populära mötesplatsen ger naturliga tillfällen för barn att öva socialt samspel med andra barn.",
     "openingHours": "Alltid öppet",
     "location": "Näckrosdammen, Göteborg",
     "distanceKm": 2.7,
-    "transportModes": ["walk", "bike", "publicTransit", "car"],
-    "cost": "free"
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "cost": "free",
+    "lat": 57.692,
+    "lng": 11.968
   },
   {
     "id": "konstmuseum",
@@ -132,16 +235,29 @@
     "minAge": 4,
     "maxAge": 12,
     "indoor": true,
-    "interests": ["konst", "skapande"],
-    "parentInterest": ["konst"],
+    "interests": [
+      "konst",
+      "skapande"
+    ],
+    "parentInterest": [
+      "konst"
+    ],
     "social": false,
-    "benefits": ["cognitive", "motorSkills"],
+    "benefits": [
+      "cognitive",
+      "motorSkills"
+    ],
     "benefitNote": "Eget skapande med olika material stärker finmotorik och ger barn ett kreativt uttryckssätt utöver ord.",
     "openingHours": "11:00–17:00 (tis–sön)",
     "location": "Götaplatsen, Göteborg",
     "distanceKm": 2.2,
-    "transportModes": ["walk", "publicTransit"],
-    "cost": "low"
+    "transportModes": [
+      "walk",
+      "publicTransit"
+    ],
+    "cost": "low",
+    "lat": 57.6969,
+    "lng": 11.9865
   },
   {
     "id": "brudarebacken",
@@ -150,16 +266,29 @@
     "minAge": 1,
     "maxAge": 9,
     "indoor": false,
-    "interests": ["lek", "vatten"],
+    "interests": [
+      "lek",
+      "vatten"
+    ],
     "parentInterest": [],
     "social": true,
-    "benefits": ["physicalActivity", "motorSkills"],
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
     "benefitNote": "Klättring och balans på lekplatsutrustning i varierande höjd och svårighetsgrad bygger grovmotorik och riskbedömningsförmåga i trygg miljö.",
     "openingHours": "Alltid öppet",
     "location": "Slottsskogen, Göteborg",
     "distanceKm": 2.6,
-    "transportModes": ["walk", "bike", "publicTransit", "car"],
-    "cost": "free"
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "cost": "free",
+    "lat": 57.685,
+    "lng": 11.944
   },
   {
     "id": "biosfaren",
@@ -168,16 +297,28 @@
     "minAge": 3,
     "maxAge": 10,
     "indoor": true,
-    "interests": ["djur", "vetenskap"],
-    "parentInterest": ["natur"],
+    "interests": [
+      "djur",
+      "vetenskap"
+    ],
+    "parentInterest": [
+      "natur"
+    ],
     "social": false,
-    "benefits": ["cognitive"],
+    "benefits": [
+      "cognitive"
+    ],
     "benefitNote": "Storbildsfilmer om natur och djur väcker nyfikenhet på ett sätt som stimulerar tidig naturvetenskaplig förståelse.",
     "openingHours": "10:00–16:00 (helg)",
     "location": "Korsvägen, Göteborg",
     "distanceKm": 2.3,
-    "transportModes": ["walk", "publicTransit"],
-    "cost": "low"
+    "transportModes": [
+      "walk",
+      "publicTransit"
+    ],
+    "cost": "low",
+    "lat": 57.6975,
+    "lng": 11.985
   },
   {
     "id": "alvsborgsbron",
@@ -186,16 +327,28 @@
     "minAge": 5,
     "maxAge": 12,
     "indoor": false,
-    "interests": ["fordon", "friluftsliv"],
-    "parentInterest": ["motion"],
+    "interests": [
+      "fordon",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "motion"
+    ],
     "social": false,
-    "benefits": ["physicalActivity", "motorSkills"],
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
     "benefitNote": "Cykling i eget tempo bygger balans, uthållighet och koordination — en av de bäst dokumenterade formerna av barns fysiska aktivitet.",
     "openingHours": "Alltid öppet",
     "location": "Älvsborgsbron, Göteborg",
     "distanceKm": 4.0,
-    "transportModes": ["bike"],
-    "cost": "free"
+    "transportModes": [
+      "bike"
+    ],
+    "cost": "free",
+    "lat": 57.6825,
+    "lng": 11.9075
   },
   {
     "id": "kubik",
@@ -204,16 +357,27 @@
     "minAge": 1,
     "maxAge": 10,
     "indoor": true,
-    "interests": ["lek", "äventyr"],
+    "interests": [
+      "lek",
+      "äventyr"
+    ],
     "parentInterest": [],
     "social": true,
-    "benefits": ["physicalActivity", "socialEmotional"],
+    "benefits": [
+      "physicalActivity",
+      "socialEmotional"
+    ],
     "benefitNote": "Studsande och klättrande lek inomhus ger fysisk aktivitet även på dagar då vädret annars skulle hindra rörelse, och bollhavet uppmuntrar socialt samspel.",
     "openingHours": "10:00–18:00",
     "location": "Mölndal (strax utanför centrala Göteborg)",
     "distanceKm": 8.0,
-    "transportModes": ["publicTransit", "car"],
-    "cost": "medium"
+    "transportModes": [
+      "publicTransit",
+      "car"
+    ],
+    "cost": "medium",
+    "lat": 57.6554,
+    "lng": 12.0134
   },
   {
     "id": "stadsbiblioteket",
@@ -222,16 +386,29 @@
     "minAge": 1,
     "maxAge": 6,
     "indoor": true,
-    "interests": ["läsning", "lugn"],
-    "parentInterest": ["läsning"],
+    "interests": [
+      "läsning",
+      "lugn"
+    ],
+    "parentInterest": [
+      "läsning"
+    ],
     "social": true,
-    "benefits": ["cognitive", "socialEmotional"],
+    "benefits": [
+      "cognitive",
+      "socialEmotional"
+    ],
     "benefitNote": "Högläsning och sagostunder stärker tidig språkutveckling och ger en lugn, social stund tillsammans med andra barnfamiljer.",
     "openingHours": "10:00–19:00 (vardagar), sagostund enligt schema",
     "location": "Götaplatsen 3, Göteborg",
     "distanceKm": 2.1,
-    "transportModes": ["walk", "publicTransit"],
-    "cost": "free"
+    "transportModes": [
+      "walk",
+      "publicTransit"
+    ],
+    "cost": "free",
+    "lat": 57.6971,
+    "lng": 11.9866
   },
   {
     "id": "friluftsmuseet",
@@ -240,16 +417,30 @@
     "minAge": 1,
     "maxAge": 8,
     "indoor": false,
-    "interests": ["djur", "natur"],
-    "parentInterest": ["natur"],
+    "interests": [
+      "djur",
+      "natur"
+    ],
+    "parentInterest": [
+      "natur"
+    ],
     "social": false,
-    "benefits": ["physicalActivity", "cognitive"],
+    "benefits": [
+      "physicalActivity",
+      "cognitive"
+    ],
     "benefitNote": "Närkontakt med lantbruksdjur ger konkret, sinnlig inlärning om djur och natur som kompletterar bilder och böcker.",
     "openingHours": "Alltid öppet",
     "location": "Slottsskogen, Göteborg",
     "distanceKm": 2.8,
-    "transportModes": ["walk", "bike", "publicTransit"],
-    "cost": "free"
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit"
+    ],
+    "cost": "free",
+    "lat": 57.6875,
+    "lng": 11.943
   },
   {
     "id": "gunnebo",
@@ -258,16 +449,29 @@
     "minAge": 2,
     "maxAge": 12,
     "indoor": false,
-    "interests": ["natur", "historia"],
-    "parentInterest": ["historia", "trädgård"],
+    "interests": [
+      "natur",
+      "historia"
+    ],
+    "parentInterest": [
+      "historia",
+      "trädgård"
+    ],
     "social": false,
-    "benefits": ["physicalActivity"],
+    "benefits": [
+      "physicalActivity"
+    ],
     "benefitNote": "Stora öppna parkmarker uppmuntrar spontan spring- och rörelselek, en enkel men effektiv källa till daglig fysisk aktivitet.",
     "openingHours": "Parken alltid öppen, slottet 11:00–16:00 (säsong)",
     "location": "Mölndal (strax utanför centrala Göteborg)",
     "distanceKm": 9.0,
-    "transportModes": ["publicTransit", "car"],
-    "cost": "low"
+    "transportModes": [
+      "publicTransit",
+      "car"
+    ],
+    "cost": "low",
+    "lat": 57.6167,
+    "lng": 12.0167
   },
   {
     "id": "paddan",
@@ -275,17 +479,29 @@
     "description": "Sightseeingtur med båt genom Göteborgs kanaler och ut i hamnen — ett lugnt, sittande äventyr som fascinerar de flesta barn.",
     "minAge": 2,
     "maxAge": 10,
-    "interests": ["vatten", "äventyr"],
-    "parentInterest": ["sjöfart"],
+    "interests": [
+      "vatten",
+      "äventyr"
+    ],
+    "parentInterest": [
+      "sjöfart"
+    ],
     "social": false,
-    "benefits": ["cognitive"],
+    "benefits": [
+      "cognitive"
+    ],
     "benefitNote": "Att se staden från vattnet ger barn ett nytt geografiskt perspektiv och väcker frågor om hur staden hänger ihop.",
     "indoor": false,
     "openingHours": "10:00–17:00 (säsong)",
     "location": "Kungsportsplatsen, Göteborg",
     "distanceKm": 1.2,
-    "transportModes": ["walk", "publicTransit"],
-    "cost": "high"
+    "transportModes": [
+      "walk",
+      "publicTransit"
+    ],
+    "cost": "high",
+    "lat": 57.7028,
+    "lng": 11.9668
   },
   {
     "id": "keillers",
@@ -294,16 +510,32 @@
     "minAge": 4,
     "maxAge": 12,
     "indoor": false,
-    "interests": ["natur", "äventyr", "friluftsliv"],
-    "parentInterest": ["natur", "motion"],
+    "interests": [
+      "natur",
+      "äventyr",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "natur",
+      "motion"
+    ],
     "social": false,
-    "benefits": ["physicalActivity", "motorSkills"],
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
     "benefitNote": "Klättring på klippig, ojämn terräng bygger balans och riskbedömning mer effektivt än plan lekplatsmark.",
     "openingHours": "Alltid öppet",
     "location": "Keillers park, Göteborg",
     "distanceKm": 3.5,
-    "transportModes": ["walk", "publicTransit", "car"],
-    "cost": "free"
+    "transportModes": [
+      "walk",
+      "publicTransit",
+      "car"
+    ],
+    "cost": "free",
+    "lat": 57.715,
+    "lng": 11.955
   },
   {
     "id": "skatehallen",
@@ -312,16 +544,27 @@
     "minAge": 3,
     "maxAge": 12,
     "indoor": true,
-    "interests": ["fordon", "äventyr"],
+    "interests": [
+      "fordon",
+      "äventyr"
+    ],
     "parentInterest": [],
     "social": true,
-    "benefits": ["physicalActivity", "motorSkills"],
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
     "benefitNote": "Balansträning på rullande underlag är särskilt effektivt för att bygga kroppskontroll och mod hos barn.",
     "openingHours": "Enligt öppettider för allmän åkning, se hemsida",
     "location": "Bergsjön, Göteborg",
     "distanceKm": 7.0,
-    "transportModes": ["publicTransit", "car"],
-    "cost": "low"
+    "transportModes": [
+      "publicTransit",
+      "car"
+    ],
+    "cost": "low",
+    "lat": 57.755,
+    "lng": 12.035
   },
   {
     "id": "jarntorget",
@@ -330,16 +573,27 @@
     "minAge": 1,
     "maxAge": 8,
     "indoor": false,
-    "interests": ["lek"],
-    "parentInterest": ["fika"],
+    "interests": [
+      "lek"
+    ],
+    "parentInterest": [
+      "fika"
+    ],
     "social": true,
-    "benefits": ["socialEmotional"],
+    "benefits": [
+      "socialEmotional"
+    ],
     "benefitNote": "Vardagliga sociala miljöer som kaféer och torg ger barn övning i att vänta, observera och samspela med vuxna utanför familjen.",
     "openingHours": "Alltid öppet (torget)",
     "location": "Järntorget, Göteborg",
     "distanceKm": 1.8,
-    "transportModes": ["walk", "publicTransit"],
-    "cost": "low"
+    "transportModes": [
+      "walk",
+      "publicTransit"
+    ],
+    "cost": "low",
+    "lat": 57.6975,
+    "lng": 11.953
   },
   {
     "id": "ostraskogen",
@@ -348,16 +602,30 @@
     "minAge": 2,
     "maxAge": 10,
     "indoor": false,
-    "interests": ["natur", "äventyr"],
-    "parentInterest": ["natur", "lugn"],
+    "interests": [
+      "natur",
+      "äventyr"
+    ],
+    "parentInterest": [
+      "natur",
+      "lugn"
+    ],
     "social": false,
-    "benefits": ["physicalActivity", "cognitive"],
+    "benefits": [
+      "physicalActivity",
+      "cognitive"
+    ],
     "benefitNote": "Ostrukturerad lek i skog, utan färdiga lekredskap, är starkt kopplad till kreativitet och problemlösningsförmåga hos små barn.",
     "openingHours": "Alltid öppet",
     "location": "Östra Göteborg",
     "distanceKm": 5.5,
-    "transportModes": ["bike", "car"],
-    "cost": "free"
+    "transportModes": [
+      "bike",
+      "car"
+    ],
+    "cost": "free",
+    "lat": 57.73,
+    "lng": 12.03
   },
   {
     "id": "gothenburg-opera-kids",
@@ -366,15 +634,266 @@
     "minAge": 4,
     "maxAge": 10,
     "indoor": true,
-    "interests": ["musik", "skapande"],
-    "parentInterest": ["kultur", "musik"],
+    "interests": [
+      "musik",
+      "skapande"
+    ],
+    "parentInterest": [
+      "kultur",
+      "musik"
+    ],
     "social": false,
-    "benefits": ["socialEmotional", "cognitive"],
+    "benefits": [
+      "socialEmotional",
+      "cognitive"
+    ],
     "benefitNote": "Att uppleva scenkonst tillsammans ger barn en tidig relation till musik och berättande i en delad, uppmärksam stund.",
     "openingHours": "Enligt föreställningsschema",
     "location": "Christina Nilssons gata, Göteborg",
     "distanceKm": 1.6,
-    "transportModes": ["walk", "publicTransit"],
-    "cost": "high"
+    "transportModes": [
+      "walk",
+      "publicTransit"
+    ],
+    "cost": "high",
+    "lat": 57.7057,
+    "lng": 11.9746
+  },
+  {
+    "id": "kuddefort",
+    "name": "Kuddfort och ficklampsberättelser",
+    "description": "Bygg ett fort av kuddar, filtar och stolar i vardagsrummet, krypa in med ficklampor och hitta på berättelser tillsammans.",
+    "minAge": 2,
+    "maxAge": 10,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "skapande",
+      "äventyr"
+    ],
+    "parentInterest": [
+      "lugn",
+      "nostalgi"
+    ],
+    "social": false,
+    "benefits": [
+      "socialEmotional"
+    ],
+    "benefitNote": "Att bygga och pyssla tillsammans stärker samarbete och ger en trygg, mysig stund utan skärm.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "free",
+    "homeOnly": true
+  },
+  {
+    "id": "koksdisco",
+    "name": "Köksdisco",
+    "description": "Skjut undan köksstolarna, sätt på en spellista och dansa loss med matskedar och grytlock som mikrofoner och trummor.",
+    "minAge": 1,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "musik",
+      "lek"
+    ],
+    "parentInterest": [
+      "musik",
+      "nostalgi"
+    ],
+    "social": false,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Fri dans till musik tränar grovmotorik, rytmkänsla och är ett enkelt sätt att få upp pulsen inomhus.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "free",
+    "homeOnly": true
+  },
+  {
+    "id": "skattjakt-hemma",
+    "name": "Skattjakt inomhus",
+    "description": "Göm ledtrådar i lägenheten eller huset som leder vidare till nästa, med en liten skatt (t.ex. klistermärken) i slutet.",
+    "minAge": 3,
+    "maxAge": 10,
+    "indoor": true,
+    "interests": [
+      "äventyr",
+      "lek"
+    ],
+    "parentInterest": [
+      "kultur"
+    ],
+    "social": false,
+    "benefits": [
+      "problemSolving"
+    ],
+    "benefitNote": "Att lösa ledtrådar och följa spår tränar logiskt tänkande och läsförståelse i sin egen takt.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "free",
+    "homeOnly": true
+  },
+  {
+    "id": "bakdag",
+    "name": "Bakdag: bulle eller kaka",
+    "description": "Baka bullar eller en enkel kaka tillsammans, från att mäta upp ingredienser till att forma och grädda.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "skapande",
+      "lek"
+    ],
+    "parentInterest": [
+      "fika"
+    ],
+    "social": false,
+    "benefits": [
+      "motorSkills"
+    ],
+    "benefitNote": "Mätning, rörning och formning tränar finmotorik och matematiska begrepp som mer/mindre och antal.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "low",
+    "homeOnly": true
+  },
+  {
+    "id": "spelkvall",
+    "name": "Sällskapsspelskväll",
+    "description": "Turas om att välja ett sällskaps- eller kortspel ur hyllan och spela en hel kväll, gärna med enkla turneringsregler.",
+    "minAge": 4,
+    "maxAge": 99,
+    "indoor": true,
+    "interests": [
+      "lek"
+    ],
+    "parentInterest": [
+      "lugn"
+    ],
+    "social": true,
+    "benefits": [
+      "socialEmotional"
+    ],
+    "benefitNote": "Att vänta på sin tur, följa regler och hantera förlust/vinst tränar självreglering och turtagning.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "free",
+    "homeOnly": true
+  },
+  {
+    "id": "hemmabio",
+    "name": "Hemmabiokväll med pyssel",
+    "description": "Gör i ordning popcorn och filtar, visa en film på storbild och ta en pysselpaus i mitten för att rita favoritscenen.",
+    "minAge": 2,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "skapande",
+      "lugn"
+    ],
+    "parentInterest": [
+      "lugn",
+      "kultur"
+    ],
+    "social": false,
+    "benefits": [],
+    "benefitNote": "Ett strukturerat filmavbrott med pyssel ger omväxling till stillasittandet och håller kvar uppmärksamheten.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "low",
+    "homeOnly": true
+  },
+  {
+    "id": "kokskemi",
+    "name": "Köksvetenskap: vulkan och densitetstorn",
+    "description": "Enkla köksexperiment som bikarbonatvulkan i en skål eller ett densitetstorn av sirap, olja och vatten i ett glas.",
+    "minAge": 4,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "vetenskap",
+      "skapande"
+    ],
+    "parentInterest": [
+      "kultur"
+    ],
+    "social": false,
+    "benefits": [
+      "problemSolving"
+    ],
+    "benefitNote": "Att observera reaktioner och lager ger en första, konkret känsla för vetenskapliga begrepp som densitet och kemi.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "low",
+    "homeOnly": true
+  },
+  {
+    "id": "pysselverkstad",
+    "name": "Pysselverkstad av återvunnet material",
+    "description": "Samla toarullar, kartong och tidningar och bygg valfritt — en raket, ett djur eller en robot, sedan måla eller dekorera.",
+    "minAge": 2,
+    "maxAge": 10,
+    "indoor": true,
+    "interests": [
+      "skapande",
+      "konst"
+    ],
+    "parentInterest": [
+      "konst"
+    ],
+    "social": false,
+    "benefits": [
+      "motorSkills"
+    ],
+    "benefitNote": "Att klippa, klistra och forma tränar finmotorik och uppmuntrar fri, öppen kreativitet utan facit.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "free",
+    "homeOnly": true
+  },
+  {
+    "id": "hinderbana-hemma",
+    "name": "Hinderbana i vardagsrummet",
+    "description": "Bygg en hinderbana av kuddar, stolar och tejp på golvet — krypa under, hoppa över och balansera på linjen.",
+    "minAge": 2,
+    "maxAge": 9,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "motion"
+    ],
+    "social": false,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Att krypa, hoppa och balansera tränar grovmotorik och kroppskontroll — bra utlopp för rörelseglada barn inomhus.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "cost": "free",
+    "homeOnly": true
   }
 ]
