@@ -641,6 +641,20 @@ class _PlannerScreenState extends State<PlannerScreen> {
                   const SizedBox(height: 4),
                   Text(activity.description),
                   const SizedBox(height: 8),
+                  if (!activity.homeOnly)
+                    Row(
+                      children: [
+                        Icon(Icons.schedule, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: Text(
+                            '${activity.location} · ${activity.openingHours}',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ),
+                      ],
+                    ),
+                  const SizedBox(height: 8),
                   Text(
                     activity.benefitNote,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
