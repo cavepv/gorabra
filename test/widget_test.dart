@@ -8,8 +8,8 @@ void main() {
   testWidgets('Planner form loads and can spin for suggestions', (
     WidgetTester tester,
   ) async {
-    // The form (age slider, kid/parent interest chips, budget, car switch,
-    // spin button) is taller than the default 800x600 test surface, so it
+    // The form (age slider, interest chips, budget, car switch, spin
+    // button) is taller than the default 800x600 test surface, so it
     // scrolls the "Föreslå" button below the fold. A ListView's offstage
     // children exist in the widget tree but are excluded by finders'
     // default skipOffstage behavior, so grow the surface to fit everything.

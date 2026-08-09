@@ -24,25 +24,6 @@ const kidInterestTags = [
   'äventyr',
 ];
 
-/// Parent-interest tags present in the curated dataset — things a parent
-/// might want to introduce their kids to (scoring boost only, never a
-/// hard filter, see design.md).
-const parentInterestTags = [
-  'fika',
-  'historia',
-  'konst',
-  'kultur',
-  'lugn',
-  'läsning',
-  'motion',
-  'musik',
-  'natur',
-  'nostalgi',
-  'sjöfart',
-  'trädgård',
-  'vetenskap',
-];
-
 /// Single screen: input form (5.1), spin/result display (5.2), re-spin
 /// (5.3), and closest-matches labeling (5.4).
 class PlannerScreen extends StatefulWidget {
@@ -67,7 +48,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
 
   final List<int> _kidAges = [4];
   final Set<String> _selectedInterests = {};
-  final Set<String> _selectedParentInterests = {};
   Cost _budget = Cost.medium;
   bool _hasCar = true;
   bool _stayHome = false;
@@ -202,7 +182,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
     final prefs = UserPreferences(
       kidAges: _kidAges,
       kidInterests: _selectedInterests.toList(),
-      parentInterests: _selectedParentInterests.toList(),
       budget: _budget,
       hasCar: _hasCar,
       stayHome: _stayHome,
@@ -385,34 +364,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
                       _selectedInterests.add(tag);
                     } else {
                       _selectedInterests.remove(tag);
-                    }
-                    _clearResult();
-                  }),
-                );
-              }).toList(),
-            ),
-          ],
-        ),
-        ExpansionTile(
-          title: Text(
-            'Ditt intresse (bonus, filtrerar inte bort något)',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          tilePadding: EdgeInsets.zero,
-          childrenPadding: const EdgeInsets.only(bottom: 8),
-          children: [
-            Wrap(
-              spacing: 8,
-              children: parentInterestTags.map((tag) {
-                final selected = _selectedParentInterests.contains(tag);
-                return FilterChip(
-                  label: Text(tag),
-                  selected: selected,
-                  onSelected: (v) => setState(() {
-                    if (v) {
-                      _selectedParentInterests.add(tag);
-                    } else {
-                      _selectedParentInterests.remove(tag);
                     }
                     _clearResult();
                   }),

@@ -117,9 +117,9 @@ under any circumstance.
 
 ### Requirement: Soft scoring boosts, never exclusion
 The system SHALL boost (not filter) an activity's likelihood of being
-picked when it matches the user's `parentInterest` tags, when `social` is
-true, or when its `benefits` include `physicalActivity`. These signals
-SHALL NOT remove any activity from the candidate pool.
+picked when `social` is true, or when its `benefits` include
+`physicalActivity`. These signals SHALL NOT remove any activity from the
+candidate pool.
 
 #### Scenario: Physical activity nudge
 - **WHEN** the candidate pool contains activities tagged with

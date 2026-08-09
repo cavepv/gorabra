@@ -8,7 +8,6 @@ import 'weather_lookup.dart';
 class UserPreferences {
   final List<int> kidAges;
   final List<String> kidInterests;
-  final List<String> parentInterests;
   final Cost budget;
   final bool hasCar;
 
@@ -27,7 +26,6 @@ class UserPreferences {
   UserPreferences({
     required this.kidAges,
     required this.kidInterests,
-    this.parentInterests = const [],
     required this.budget,
     required this.hasCar,
     this.stayHome = false,
@@ -56,7 +54,7 @@ class RecommendationResult {
 /// stayHome/homeOnly → distance radius → weather → age. Cost, transport,
 /// stayHome, and distance radius are hard filters that are never relaxed;
 /// interests, weather, and age are relaxed in that order if the pool is
-/// empty. parentInterest/social/physicalActivity only affect the odds of
+/// empty. social/physicalActivity only affect the odds of
 /// being picked, never exclude an activity. transport/hasCar and the
 /// distance radius never exclude a `homeOnly` activity — there's nowhere
 /// to drive to (or measure distance to) when staying home.
@@ -105,7 +103,7 @@ class ActivityRecommender {
       final pool = base.where(attempts[i]).toList();
       if (pool.isNotEmpty) {
         return RecommendationResult(
-          activities: _weightedPick(pool, prefs),
+          activities: _weightedPick(pool),
           isClosestMatch: i > 0,
         );
       }
@@ -129,15 +127,14 @@ class ActivityRecommender {
     return distance <= prefs.maxDistanceKm!;
   }
 
-  /// Boosts parentInterest/social/physicalActivity matches by duplicating
+  /// Boosts social/physicalActivity matches by duplicating
   /// them in the sampling pool, then draws up to 3 unique activities.
   /// Simplest mechanism that works for a catalog this small (see design.md);
   /// upgrade to real weighted sampling if the catalog grows significantly.
-  List<Activity> _weightedPick(List<Activity> pool, UserPreferences prefs) {
+  List<Activity> _weightedPick(List<Activity> pool) {
     final weighted = <Activity>[];
     for (final a in pool) {
       var weight = 1;
-      if (a.parentInterest.any(prefs.parentInterests.contains)) weight++;
       if (a.social) weight++;
       if (a.benefits.contains('physicalActivity')) weight++;
       weighted.addAll(List.filled(weight, a));
