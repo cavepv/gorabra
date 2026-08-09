@@ -78,6 +78,8 @@ class _PlannerScreenState extends State<PlannerScreen> {
   bool _locatingPosition = false;
   String? _locationError;
 
+  final GlobalKey _spinButtonKey = GlobalKey();
+
   final ScrollController _hourlyScrollController = ScrollController();
   // Guards against re-scrolling on every rebuild (e.g. picking an interest
   // chip) — only auto-scroll once per fresh forecast/day so it doesn't
@@ -181,7 +183,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
     if (_catalog == null) return;
     setState(() {
       _loading = true;
-      _result = null; // clear stale results while the new pick is computed
+      // Keep showing the previous result while the new pick is computed —
+      // clearing it here shrinks the list and clamps scroll to top, which
+      // fights the scroll-to-results animation once the new result lands.
     });
     final useDistanceFilter = _useMyPosition && _userPosition != null && !_stayHome;
     final prefs = UserPreferences(
@@ -207,6 +211,19 @@ class _PlannerScreenState extends State<PlannerScreen> {
     setState(() {
       _result = result;
       _loading = false;
+    });
+    // Scroll button to top of viewport so it stays reachable for re-spin
+    // while the fresh suggestions below it come into view — avoids users
+    // having to scroll manually to see results.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final buttonContext = _spinButtonKey.currentContext;
+      if (buttonContext == null) return;
+      Scrollable.ensureVisible(
+        buttonContext,
+        alignment: 0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
     });
   }
 
@@ -260,6 +277,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                 _buildForm(),
                 const SizedBox(height: 16),
                 FilledButton.icon(
+                  key: _spinButtonKey,
                   onPressed: _loading ? null : _spin,
                   icon: _loading
                       ? const SizedBox(
