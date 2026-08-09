@@ -83,6 +83,35 @@ form.
   filtered candidate pool, without requiring the input form to be
   re-filled
 
+### Requirement: Spin history navigation
+The system SHALL keep an in-memory, browser-tab-style history of past spin
+results and provide back/forward icon buttons flanking the spin button so
+the user can revisit a previous suggestion set without re-spinning, or
+step forward again. Any change to a filter input (kid ages, interests,
+budget, car, stay-home, distance, position, or the Idag/Imorgon day)
+SHALL clear this history along with the current result.
+
+#### Scenario: No history yet
+- **WHEN** the user has not spun yet, or has just changed a filter input
+- **THEN** both the back and forward buttons are disabled
+
+#### Scenario: Stepping back after multiple spins
+- **WHEN** the user has spun more than once and taps the back button
+- **THEN** the previously shown result set is displayed again, the back
+  button disables once the oldest entry is reached, and the forward
+  button becomes enabled
+
+#### Scenario: Stepping forward
+- **WHEN** the user has stepped back and taps the forward button
+- **THEN** the next-newer result set in history is displayed, and the
+  forward button disables once the newest entry is reached again
+
+#### Scenario: Spinning again after stepping back
+- **WHEN** the user has stepped back to an older result and taps
+  "Föreslå igen"
+- **THEN** any newer history entries beyond that point are discarded, and
+  the freshly computed result becomes the newest history entry
+
 ### Requirement: Closest-matches labeling
 The system SHALL visibly label results as "closest matches" when the
 recommender had to fall back to a relaxed or cost/transport-only filtered

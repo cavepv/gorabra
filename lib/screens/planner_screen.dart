@@ -96,6 +96,17 @@ class _PlannerScreenState extends State<PlannerScreen> {
   bool _loading = false;
   String? _loadError;
 
+  // Back/forward history of past spins (browser-tab semantics: spinning
+  // again after navigating back truncates the abandoned forward entries).
+  final List<RecommendationResult> _history = [];
+  int _historyIndex = -1;
+
+  void _clearResult() {
+    _result = null;
+    _history.clear();
+    _historyIndex = -1;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -135,7 +146,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
       // absent), that result was computed without the weather filter tier
       // — clear it so a newly-arrived forecast doesn't sit next to a
       // stale recommendation it wasn't actually used for.
-      _result = null;
+      _clearResult();
       _scrolledToCurrentHour = false;
     });
   }
@@ -146,7 +157,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
     if (_kidAges.length >= _maxKids) return;
     setState(() {
       _kidAges.add(4);
-      _result = null;
+      _clearResult();
     });
   }
 
@@ -154,14 +165,14 @@ class _PlannerScreenState extends State<PlannerScreen> {
     if (_kidAges.length <= 1) return;
     setState(() {
       _kidAges.removeAt(index);
-      _result = null;
+      _clearResult();
     });
   }
 
   Future<void> _toggleUseMyPosition(bool value) async {
     setState(() {
       _useMyPosition = value;
-      _result = null;
+      _clearResult();
       _locationError = null;
     });
     if (!value) return;
@@ -209,6 +220,10 @@ class _PlannerScreenState extends State<PlannerScreen> {
     );
     if (!mounted) return;
     setState(() {
+      // New spin from any history position drops abandoned forward entries.
+      _history.removeRange(_historyIndex + 1, _history.length);
+      _history.add(result);
+      _historyIndex = _history.length - 1;
       _result = result;
       _loading = false;
     });
@@ -224,6 +239,22 @@ class _PlannerScreenState extends State<PlannerScreen> {
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
+    });
+  }
+
+  void _goBack() {
+    if (_historyIndex <= 0) return;
+    setState(() {
+      _historyIndex--;
+      _result = _history[_historyIndex];
+    });
+  }
+
+  void _goForward() {
+    if (_historyIndex >= _history.length - 1) return;
+    setState(() {
+      _historyIndex++;
+      _result = _history[_historyIndex];
     });
   }
 
@@ -276,17 +307,32 @@ class _PlannerScreenState extends State<PlannerScreen> {
               children: [
                 _buildForm(),
                 const SizedBox(height: 16),
-                FilledButton.icon(
-                  key: _spinButtonKey,
-                  onPressed: _loading ? null : _spin,
-                  icon: _loading
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        )
-                      : const Icon(Icons.casino),
-                  label: Text(_result == null ? 'Föreslå' : 'Föreslå igen'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      onPressed: _historyIndex > 0 ? _goBack : null,
+                      icon: const Icon(Icons.arrow_back),
+                      tooltip: 'Föregående förslag',
+                    ),
+                    FilledButton.icon(
+                      key: _spinButtonKey,
+                      onPressed: _loading ? null : _spin,
+                      icon: _loading
+                          ? const SizedBox(
+                              width: 16,
+                              height: 16,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Icon(Icons.casino),
+                      label: Text(_result == null ? 'Föreslå' : 'Föreslå igen'),
+                    ),
+                    IconButton(
+                      onPressed: _historyIndex < _history.length - 1 ? _goForward : null,
+                      icon: const Icon(Icons.arrow_forward),
+                      tooltip: 'Nästa förslag',
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 24),
                 if (_result != null) _buildResults(_result!),
@@ -307,7 +353,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           selected: {_selectedDay},
           onSelectionChanged: (s) => setState(() {
             _selectedDay = s.first;
-            _result = null;
+            _clearResult();
             _scrolledToCurrentHour = false;
           }),
         ),
@@ -340,7 +386,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                     } else {
                       _selectedInterests.remove(tag);
                     }
-                    _result = null;
+                    _clearResult();
                   }),
                 );
               }).toList(),
@@ -368,7 +414,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                     } else {
                       _selectedParentInterests.remove(tag);
                     }
-                    _result = null;
+                    _clearResult();
                   }),
                 );
               }).toList(),
@@ -383,7 +429,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           value: _stayHome,
           onChanged: (v) => setState(() {
             _stayHome = v;
-            _result = null;
+            _clearResult();
           }),
         ),
         const SizedBox(height: 8),
@@ -398,7 +444,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           selected: {_budget},
           onSelectionChanged: (s) => setState(() {
             _budget = s.first;
-            _result = null;
+            _clearResult();
           }),
         ),
         const SizedBox(height: 8),
@@ -408,7 +454,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           value: _hasCar,
           onChanged: (v) => setState(() {
             _hasCar = v;
-            _result = null;
+            _clearResult();
           }),
         ),
         const SizedBox(height: 8),
@@ -441,7 +487,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                   ? null
                   : (v) => setState(() {
                       _maxDistanceKm = v;
-                      _result = null;
+                      _clearResult();
                     }),
             ),
             Text('Max ${_maxDistanceKm.round()} km bort'),
@@ -471,7 +517,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                 label: '$age',
                 onChanged: (v) => setState(() {
                   _kidAges[index] = v.round();
-                  _result = null;
+                  _clearResult();
                 }),
               ),
             ],
