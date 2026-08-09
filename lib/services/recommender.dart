@@ -8,7 +8,11 @@ import 'weather_lookup.dart';
 class UserPreferences {
   final List<int> kidAges;
   final List<String> kidInterests;
-  final Cost budget;
+
+  /// Max SEK the user wants to spend on the whole outing (flat, not
+  /// scaled by party size) — hard filter, never relaxed. 0 means
+  /// free-only.
+  final int maxBudgetSek;
   final bool hasCar;
 
   /// When true, hard-filters to `homeOnly` activities only (never
@@ -26,7 +30,7 @@ class UserPreferences {
   UserPreferences({
     required this.kidAges,
     required this.kidInterests,
-    required this.budget,
+    required this.maxBudgetSek,
     required this.hasCar,
     this.stayHome = false,
     this.maxDistanceKm,
@@ -71,7 +75,7 @@ class ActivityRecommender {
     // Cost, transport, stayHome, and distance radius are never relaxed —
     // this is the floor every candidate pool must satisfy.
     final base = catalog.where((a) {
-      final withinBudget = a.cost.index <= prefs.budget.index;
+      final withinBudget = a.costSek <= prefs.maxBudgetSek;
       // hasCar never affects home activities — there's nowhere to drive to.
       final reachable =
           a.homeOnly || prefs.hasCar || a.transportModes.any((m) => m != TransportMode.car);

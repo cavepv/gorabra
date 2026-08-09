@@ -12,7 +12,7 @@ Activity _activity({
   List<String> parentInterest = const [],
   bool social = false,
   List<String> benefits = const [],
-  Cost cost = Cost.free,
+  int costSek = 0,
   List<TransportMode> transportModes = const [TransportMode.walk],
   bool homeOnly = false,
   double? lat,
@@ -34,7 +34,7 @@ Activity _activity({
     location: 'Gothenburg',
     distanceKm: 1.0,
     transportModes: transportModes,
-    cost: cost,
+    costSek: costSek,
     homeOnly: homeOnly,
     lat: lat,
     lng: lng,
@@ -51,7 +51,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: ['animals'],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
       );
       final result = ActivityRecommender(random: null).recommend(
@@ -72,7 +72,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: ['animals'], // no activity matches this interest
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
       );
       final result = ActivityRecommender(random: null).recommend(
@@ -94,13 +94,13 @@ void main() {
           indoor: true, // mismatched weather
           minAge: 8, // mismatched age
           maxAge: 12,
-          cost: Cost.low,
+          costSek: 100,
         ),
       ];
       final prefs = UserPreferences(
         kidAges: [2], // outside age range even after other relaxations
         kidInterests: ['animals'],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
       );
       final result = ActivityRecommender(random: null).recommend(
@@ -116,13 +116,13 @@ void main() {
 
     test('cost/transport hard filters are never relaxed', () {
       final catalog = [
-        _activity(id: 'expensive', cost: Cost.high),
+        _activity(id: 'expensive', costSek: 800),
         _activity(id: 'carOnly', transportModes: [TransportMode.car]),
       ];
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: [],
-        budget: Cost.free,
+        maxBudgetSek: 0,
         hasCar: false,
       );
       final result = ActivityRecommender(random: null).recommend(
@@ -143,7 +143,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5, 7],
         kidInterests: [],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
       );
       final result = ActivityRecommender(random: null).recommend(
@@ -162,7 +162,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [3, 12], // no activity range spans both
         kidInterests: [],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
       );
       final result = ActivityRecommender(random: null).recommend(
@@ -184,7 +184,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: [],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
         stayHome: false,
       );
@@ -206,7 +206,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: ['unmatched-interest'], // should relax, but stay home-only
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
         stayHome: true,
       );
@@ -231,14 +231,14 @@ void main() {
       final prefsNoCar = UserPreferences(
         kidAges: [5],
         kidInterests: [],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: false,
         stayHome: true,
       );
       final prefsWithCar = UserPreferences(
         kidAges: [5],
         kidInterests: [],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
         stayHome: true,
       );
@@ -268,7 +268,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: [],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
         maxDistanceKm: 10,
         userLat: 57.7089,
@@ -292,7 +292,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: ['animals'],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
         maxDistanceKm: 10,
         userLat: 57.7089,
@@ -315,7 +315,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: [],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
         stayHome: true,
         maxDistanceKm: 5,
@@ -340,7 +340,7 @@ void main() {
       final prefs = UserPreferences(
         kidAges: [5],
         kidInterests: [],
-        budget: Cost.low,
+        maxBudgetSek: 100,
         hasCar: true,
       );
 

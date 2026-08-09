@@ -4,8 +4,8 @@
 The system SHALL filter the activity catalog down to a candidate pool using
 these hard filters: every kid's age (from the user's list of one to four
 kid ages) within the activity's `[minAge, maxAge]` range; `indoor` matching
-today's weather classification (when known); `cost` within the user's
-stated `budget`; at least one of the activity's `transportModes` being
+today's weather classification (when known); `costSek` at or below the
+user's stated `maxBudgetSek` (0-3000 kr); at least one of the activity's `transportModes` being
 reachable given the user's `hasCar` input (if `hasCar` is false, activities
 whose only `transportModes` entry is `car` are excluded — this check does
 not apply to `homeOnly` activities, which are always reachable regardless
@@ -24,7 +24,7 @@ or radius.
 - **WHEN** the user requests suggestions with one kid age, a budget, and a
   `hasCar` value, and today's weather is known
 - **THEN** the candidate pool contains only activities matching that kid's
-  age range, weather-appropriate indoor/outdoor status, cost within
+  age range, weather-appropriate indoor/outdoor status, cost at or below
   budget, a reachable transport mode, and the requested home/away mode
 
 #### Scenario: stayHome excludes away activities
@@ -77,7 +77,7 @@ The system SHALL relax hard filters in this order if the candidate pool is
 empty: first drop the kid-interests filter, then drop the weather filter,
 then drop the age filter (i.e. the multi-kid age-intersection check from
 the age hard filter) — in that order, stopping as soon as the pool is
-non-empty. The `cost`/`budget`, `transportModes`/`hasCar`,
+non-empty. The `costSek`/`maxBudgetSek`, `transportModes`/`hasCar`,
 `homeOnly`/`stayHome`, and distance-radius filters SHALL NOT be relaxed
 under any circumstance.
 

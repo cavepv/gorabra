@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../models/activity.dart';
 import '../models/activity_catalog.dart';
@@ -48,7 +49,10 @@ class _PlannerScreenState extends State<PlannerScreen> {
 
   final List<int> _kidAges = [4];
   final Set<String> _selectedInterests = {};
-  Cost _budget = Cost.medium;
+  static const _budgetCeilingSek = 3000;
+  int _budgetSek = 300;
+  final TextEditingController _budgetController = TextEditingController(text: '300');
+  final FocusNode _budgetFocusNode = FocusNode();
   bool _hasCar = true;
   bool _stayHome = false;
 
@@ -92,11 +96,18 @@ class _PlannerScreenState extends State<PlannerScreen> {
     super.initState();
     _loadCatalog();
     _loadWeather();
+    // Show "Gratis" instead of a bare "0" once the user taps away — while
+    // focused, leave the field alone so a fresh digit isn't typed after it.
+    _budgetFocusNode.addListener(() {
+      if (!_budgetFocusNode.hasFocus) _syncBudgetDisplay();
+    });
   }
 
   @override
   void dispose() {
     _hourlyScrollController.dispose();
+    _budgetController.dispose();
+    _budgetFocusNode.dispose();
     super.dispose();
   }
 
@@ -149,6 +160,39 @@ class _PlannerScreenState extends State<PlannerScreen> {
     });
   }
 
+  /// Displays "Gratis" instead of a bare "0" when the field isn't
+  /// focused, so the user isn't left staring at a number for free.
+  void _syncBudgetDisplay() {
+    _budgetController.text = _budgetSek == 0 ? 'Gratis' : '$_budgetSek';
+  }
+
+  /// Used by the slider — keeps the textfield's displayed value in sync.
+  void _setBudgetFromSlider(int sek) {
+    setState(() {
+      _budgetSek = sek;
+      _clearResult();
+    });
+    _syncBudgetDisplay();
+  }
+
+  /// Used by the textfield — only rewrites the field's text when the
+  /// typed value had to be clamped, so a normal keystroke never resets
+  /// the cursor mid-edit. Unparseable/empty text (still-typing state,
+  /// e.g. after select-all-delete) leaves `_budgetSek` untouched instead
+  /// of silently applying a 0 kr (free-only) filter behind the user's back.
+  void _setBudgetFromField(String text) {
+    final parsed = int.tryParse(text);
+    if (parsed == null) return;
+    final clamped = parsed.clamp(0, _budgetCeilingSek);
+    setState(() {
+      _budgetSek = clamped;
+      _clearResult();
+    });
+    if (clamped != parsed) {
+      _budgetController.text = '$clamped';
+    }
+  }
+
   Future<void> _toggleUseMyPosition(bool value) async {
     setState(() {
       _useMyPosition = value;
@@ -182,7 +226,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
     final prefs = UserPreferences(
       kidAges: _kidAges,
       kidInterests: _selectedInterests.toList(),
-      budget: _budget,
+      maxBudgetSek: _budgetSek,
       hasCar: _hasCar,
       stayHome: _stayHome,
       maxDistanceKm: useDistanceFilter ? _maxDistanceKm : null,
@@ -385,18 +429,39 @@ class _PlannerScreenState extends State<PlannerScreen> {
         ),
         const SizedBox(height: 8),
         Text('Budget', style: Theme.of(context).textTheme.titleMedium),
-        SegmentedButton<Cost>(
-          segments: const [
-            ButtonSegment(value: Cost.free, label: Text('Gratis')),
-            ButtonSegment(value: Cost.low, label: Text('Låg')),
-            ButtonSegment(value: Cost.medium, label: Text('Medel')),
-            ButtonSegment(value: Cost.high, label: Text('Hög')),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Slider(
+                key: const Key('budgetSlider'),
+                min: 0,
+                max: _budgetCeilingSek.toDouble(),
+                divisions: _budgetCeilingSek ~/ 50,
+                value: _budgetSek.toDouble(),
+                label: _budgetSek == 0 ? 'Gratis' : '$_budgetSek kr',
+                onChanged: (v) => _setBudgetFromSlider(v.round()),
+              ),
+            ),
+            SizedBox(
+              width: 90,
+              child: TextField(
+                key: const Key('budgetField'),
+                controller: _budgetController,
+                focusNode: _budgetFocusNode,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                textAlign: TextAlign.end,
+                decoration: InputDecoration(
+                  suffixText: _budgetSek == 0 ? null : 'kr',
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                  border: const OutlineInputBorder(),
+                ),
+                onChanged: _setBudgetFromField,
+              ),
+            ),
           ],
-          selected: {_budget},
-          onSelectionChanged: (s) => setState(() {
-            _budget = s.first;
-            _clearResult();
-          }),
         ),
         const SizedBox(height: 8),
         SwitchListTile(

@@ -3,16 +3,31 @@
 ### Requirement: Input form for kid age, interests, budget, and car
 The system SHALL provide a form where the user enters one or more kid ages
 (one to four kids, defaulting to a single kid aged 4), selects kid interest
-tags, states a budget (`free`/`low`/`medium`/`high`), indicates whether
-they have a car (`hasCar`), toggles whether to stay home (`stayHome`,
-default off), and optionally enables a distance filter based on their
-current position and a radius slider, before requesting suggestions.
+tags, states a maximum budget in SEK via a slider (0-3000 kr, default 300
+kr, step 50 kr) with an accompanying optional textfield for entering an
+exact amount directly (both controls stay in sync and clamp to the
+0-3000 kr range), indicates whether they have a car (`hasCar`), toggles
+whether to stay home (`stayHome`, default off), and optionally enables a
+distance filter based on their current position and a radius slider,
+before requesting suggestions.
 
 #### Scenario: Completing the input form with one kid
 - **WHEN** the user opens the app for a new session
 - **THEN** a single kid-age row (age slider defaulting to 4) is shown, and
-  they can select one or more interests, choose a budget level, and toggle
-  whether they have a car, before spinning
+  they can select one or more interests, set a budget via the slider or
+  textfield, and toggle whether they have a car, before spinning
+
+#### Scenario: Setting budget via the textfield
+- **WHEN** the user types a number directly into the budget textfield
+- **THEN** the slider moves to reflect that value, and any amount typed
+  outside the 0-3000 kr range is clamped and the textfield updated to show
+  the clamped value
+
+#### Scenario: Budget at the free minimum
+- **WHEN** the budget is set to 0 kr (via the slider or the textfield)
+  and the textfield is not focused
+- **THEN** the textfield displays "Gratis" instead of "0 kr", and typing a
+  digit into the field replaces it with that digit
 
 #### Scenario: Adding a kid
 - **WHEN** the user taps "+ Lägg till barn" with fewer than four kid rows

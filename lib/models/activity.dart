@@ -1,11 +1,5 @@
-/// Cost tier for an activity. Order matters: index is used to compare
-/// against a user's budget (e.g. `low.index <= budget.index`).
-enum Cost { free, low, medium, high }
-
 /// How an activity can be reached.
 enum TransportMode { walk, bike, publicTransit, car }
-
-Cost _costFromJson(String value) => Cost.values.byName(value);
 
 TransportMode _transportModeFromJson(String value) =>
     TransportMode.values.byName(value);
@@ -49,8 +43,9 @@ class Activity {
   /// How this activity can be reached — hard filter vs. user's hasCar input.
   final List<TransportMode> transportModes;
 
-  /// Cost tier — hard filter vs. user's budget input.
-  final Cost cost;
+  /// Cost in SEK for the whole outing (flat, not scaled by party size) —
+  /// hard filter vs. user's budget slider input. 0 means free.
+  final int costSek;
 
   /// Stay-at-home activity — hard filter vs. user's `stayHome` input,
   /// never relaxed (same tier as cost/transport). Defaults to false for
@@ -80,7 +75,7 @@ class Activity {
     required this.location,
     required this.distanceKm,
     required this.transportModes,
-    required this.cost,
+    required this.costSek,
     this.homeOnly = false,
     this.lat,
     this.lng,
@@ -105,7 +100,7 @@ class Activity {
       transportModes: (json['transportModes'] as List)
           .map((e) => _transportModeFromJson(e as String))
           .toList(),
-      cost: _costFromJson(json['cost'] as String),
+      costSek: json['costSek'] as int,
       homeOnly: json['homeOnly'] as bool? ?? false,
       lat: (json['lat'] as num?)?.toDouble(),
       lng: (json['lng'] as num?)?.toDouble(),

@@ -41,8 +41,8 @@ weather, age-appropriateness, budget, or transport.
 
 ## Project structure
 
-- `lib/models/activity.dart` — the activity data model (`Cost`,
-  `TransportMode` enums, `Activity` class).
+- `lib/models/activity.dart` — the activity data model (`TransportMode`
+  enum, `Activity` class with `costSek`).
 - `lib/models/activity_catalog.dart` — loads the bundled JSON catalog (no
   network call).
 - `assets/data/activities.json` — the curated Gothenburg activity dataset,
