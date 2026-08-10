@@ -466,7 +466,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
         const SizedBox(height: 8),
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
-          title: const Text('Har ni bil?'),
+          title: const Text('Tillgång till bil?'),
           value: _hasCar,
           onChanged: (v) => setState(() {
             _hasCar = v;
