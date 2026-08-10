@@ -22,7 +22,7 @@ weather, age-appropriateness, budget, or transport.
    temperature, and muted hour label for every hour, with the current hour
    highlighted and auto-scrolled into view, so you can see how the day's
    weather changes at a glance.
-3. The recommender hard-filters a curated ~30-activity Gothenburg catalog by
+3. The recommender hard-filters a curated ~50-activity Gothenburg catalog by
    age (must suit every kid in the group), weather (indoor/outdoor, derived
    from the selected day's midday forecast), cost vs. budget, transport
    reachability, home/away mode ("Stanna hemma" limits results to
