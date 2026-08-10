@@ -392,7 +392,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
         ),
         const SizedBox(height: 8),
         ExpansionTile(
-          title: Text('Barnets intressen', style: Theme.of(context).textTheme.titleMedium),
+          title: Text('Intressen', style: Theme.of(context).textTheme.titleMedium),
           tilePadding: EdgeInsets.zero,
           childrenPadding: const EdgeInsets.only(bottom: 8),
           children: [
