@@ -233,6 +233,10 @@ class _PlannerScreenState extends State<PlannerScreen> {
       userLat: useDistanceFilter ? _userPosition!.lat : null,
       userLng: useDistanceFilter ? _userPosition!.lng : null,
     );
+    // Snapshot before the delay below — history navigation (back/forward)
+    // isn't gated by `_loading` and could otherwise mutate `_result` while
+    // this spin is "in flight", excluding the wrong activities.
+    final excludeIds = _result?.activities.map((a) => a.id).toSet() ?? const <String>{};
     // recommend() is synchronous (no network/IO) — a short artificial delay
     // gives the loading spinner below something to actually show.
     await Future.delayed(const Duration(milliseconds: 300));
@@ -240,6 +244,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
       catalog: _catalog!,
       prefs: prefs,
       weather: _selectedWeather,
+      excludeIds: excludeIds,
     );
     if (!mounted) return;
     setState(() {

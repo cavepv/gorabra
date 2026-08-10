@@ -353,5 +353,77 @@ void main() {
       expect(result.activities, hasLength(1));
       expect(result.activities.first.id, 'far');
     });
+
+    test('excludeIds: previous spin\'s activities are avoided when alternatives exist', () {
+      final catalog = [
+        _activity(id: 'a'),
+        _activity(id: 'b'),
+        _activity(id: 'c'),
+        _activity(id: 'd'),
+        _activity(id: 'e'),
+      ];
+      final prefs = UserPreferences(kidAges: [5], kidInterests: [], maxBudgetSek: 100, hasCar: true);
+
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+        excludeIds: {'a', 'b'},
+      );
+
+      // 3 non-excluded alternatives exist (c, d, e) so all 3 slots can be
+      // filled without any repeat — a real repeat should never appear here.
+      expect(result.activities, hasLength(3));
+      expect(result.activities.map((a) => a.id), containsAll(['c', 'd', 'e']));
+    });
+
+    test('excludeIds: tops up with a repeat rather than shrinking the result count', () {
+      final catalog = [_activity(id: 'only-one')];
+      final prefs = UserPreferences(kidAges: [5], kidInterests: [], maxBudgetSek: 100, hasCar: true);
+
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+        excludeIds: {'only-one'},
+      );
+
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'only-one');
+    });
+
+    test('excludeIds: default (empty) behaves exactly like no exclusion', () {
+      final catalog = [_activity(id: 'a'), _activity(id: 'b')];
+      final prefs = UserPreferences(kidAges: [5], kidInterests: [], maxBudgetSek: 100, hasCar: true);
+
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.activities, hasLength(2));
+      expect(result.activities.map((a) => a.id), containsAll(['a', 'b']));
+    });
+
+    test('excludeIds: never changes which relaxation tier is selected', () {
+      // Only one activity matches the full (unrelaxed) filter set — even
+      // though excludeIds covers it, tier 0 still "has a match" (the tier
+      // check ignores exclusion), so isClosestMatch must stay false and the
+      // excluded activity is topped back up rather than falling through to
+      // a more-relaxed tier.
+      final catalog = [_activity(id: 'match', interests: ['vatten'])];
+      final prefs = UserPreferences(kidAges: [5], kidInterests: ['vatten'], maxBudgetSek: 100, hasCar: true);
+
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+        excludeIds: {'match'},
+      );
+
+      expect(result.isClosestMatch, isFalse);
+      expect(result.activities.map((a) => a.id), contains('match'));
+    });
   });
 }

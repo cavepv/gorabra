@@ -143,3 +143,31 @@ on a re-spin without changing the user's stated inputs.
 - **WHEN** the user taps "spin" again without changing any input
 - **THEN** the system performs a new random selection from the same
   candidate pool, which may differ from the previous result
+
+### Requirement: Avoid repeating the previous spin's activities
+The system SHALL prefer activities that were not part of the immediately
+previous spin's result when selecting the next spin's suggestions, without
+changing which relaxation tier is used and without reducing the number of
+suggestions shown (1-3) below what the tier's candidate pool can provide.
+If the candidate pool (after exclusion) can't fill all suggestion slots,
+the system SHALL top up with previously shown activities rather than
+showing fewer suggestions or an empty result.
+
+#### Scenario: Enough alternatives exist
+- **WHEN** the candidate pool has enough non-previously-shown activities to
+  fill all suggestion slots
+- **THEN** none of the previous spin's activities appear in the new result
+
+#### Scenario: Not enough alternatives exist
+- **WHEN** the candidate pool (after excluding the previous spin's
+  activities) has fewer activities than needed to fill all suggestion
+  slots
+- **THEN** the system tops up the result with previously shown activities
+  rather than showing fewer than the pool would otherwise allow
+
+#### Scenario: Exclusion never changes the relaxation tier
+- **WHEN** a relaxation tier's candidate pool is non-empty but every
+  activity in it was part of the previous spin's result
+- **THEN** the system still uses that tier's pool (repeating an activity if
+  necessary) rather than falling through to a more-relaxed tier
+

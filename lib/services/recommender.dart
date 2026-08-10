@@ -71,6 +71,7 @@ class ActivityRecommender {
     required List<Activity> catalog,
     required UserPreferences prefs,
     required WeatherResult? weather,
+    Set<String> excludeIds = const {},
   }) {
     // Cost, transport, stayHome, and distance radius are never relaxed —
     // this is the floor every candidate pool must satisfy.
@@ -107,7 +108,7 @@ class ActivityRecommender {
       final pool = base.where(attempts[i]).toList();
       if (pool.isNotEmpty) {
         return RecommendationResult(
-          activities: _weightedPick(pool),
+          activities: _weightedPick(pool, excludeIds: excludeIds),
           isClosestMatch: i > 0,
         );
       }
@@ -135,7 +136,11 @@ class ActivityRecommender {
   /// them in the sampling pool, then draws up to 3 unique activities.
   /// Simplest mechanism that works for a catalog this small (see design.md);
   /// upgrade to real weighted sampling if the catalog grows significantly.
-  List<Activity> _weightedPick(List<Activity> pool) {
+  ///
+  /// [excludeIds] (previous spin's activities) are preferred against, but
+  /// topped up from if the non-excluded pool can't fill all 3 slots — a
+  /// repeat is better than fewer results (see "results are never empty").
+  List<Activity> _weightedPick(List<Activity> pool, {Set<String> excludeIds = const {}}) {
     final weighted = <Activity>[];
     for (final a in pool) {
       var weight = 1;
@@ -147,9 +152,16 @@ class ActivityRecommender {
     weighted.shuffle(_random);
     final picked = <Activity>[];
     for (final a in weighted) {
-      if (picked.contains(a)) continue;
+      if (picked.contains(a) || excludeIds.contains(a.id)) continue;
       picked.add(a);
       if (picked.length == 3) break;
+    }
+    if (picked.length < 3) {
+      for (final a in weighted) {
+        if (picked.contains(a)) continue;
+        picked.add(a);
+        if (picked.length == 3) break;
+      }
     }
     return picked;
   }
