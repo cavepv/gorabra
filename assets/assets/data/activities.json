@@ -28,9 +28,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "high",
     "lat": 57.6944,
-    "lng": 11.9925
+    "lng": 11.9925,
+    "costSek": 150
   },
   {
     "id": "slottsskogen",
@@ -62,9 +62,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free",
     "lat": 57.6863,
-    "lng": 11.9407
+    "lng": 11.9407,
+    "costSek": 0
   },
   {
     "id": "universeum",
@@ -94,9 +94,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "high",
     "lat": 57.6968,
-    "lng": 11.9838
+    "lng": 11.9838,
+    "costSek": 220
   },
   {
     "id": "delsjon",
@@ -127,9 +127,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free",
     "lat": 57.6895,
-    "lng": 12.043
+    "lng": 12.043,
+    "costSek": 0
   },
   {
     "id": "botaniska",
@@ -161,9 +161,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free",
     "lat": 57.6835,
-    "lng": 11.9469
+    "lng": 11.9469,
+    "costSek": 0
   },
   {
     "id": "maritiman",
@@ -193,9 +193,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "medium",
     "lat": 57.7075,
-    "lng": 11.9662
+    "lng": 11.9662,
+    "costSek": 120
   },
   {
     "id": "vasterasparken",
@@ -224,9 +224,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free",
     "lat": 57.692,
-    "lng": 11.968
+    "lng": 11.968,
+    "costSek": 0
   },
   {
     "id": "konstmuseum",
@@ -255,9 +255,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "low",
     "lat": 57.6969,
-    "lng": 11.9865
+    "lng": 11.9865,
+    "costSek": 80
   },
   {
     "id": "brudarebacken",
@@ -286,9 +286,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free",
     "lat": 57.685,
-    "lng": 11.944
+    "lng": 11.944,
+    "costSek": 0
   },
   {
     "id": "biosfaren",
@@ -316,9 +316,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "low",
     "lat": 57.6975,
-    "lng": 11.985
+    "lng": 11.985,
+    "costSek": 90
   },
   {
     "id": "alvsborgsbron",
@@ -346,9 +346,9 @@
     "transportModes": [
       "bike"
     ],
-    "cost": "free",
     "lat": 57.6825,
-    "lng": 11.9075
+    "lng": 11.9075,
+    "costSek": 0
   },
   {
     "id": "kubik",
@@ -375,9 +375,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "medium",
     "lat": 57.6554,
-    "lng": 12.0134
+    "lng": 12.0134,
+    "costSek": 150
   },
   {
     "id": "stadsbiblioteket",
@@ -406,9 +406,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "free",
     "lat": 57.6971,
-    "lng": 11.9866
+    "lng": 11.9866,
+    "costSek": 0
   },
   {
     "id": "friluftsmuseet",
@@ -438,9 +438,9 @@
       "bike",
       "publicTransit"
     ],
-    "cost": "free",
     "lat": 57.6875,
-    "lng": 11.943
+    "lng": 11.943,
+    "costSek": 0
   },
   {
     "id": "gunnebo",
@@ -469,9 +469,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "low",
     "lat": 57.6167,
-    "lng": 12.0167
+    "lng": 12.0167,
+    "costSek": 100
   },
   {
     "id": "paddan",
@@ -499,9 +499,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "high",
     "lat": 57.7028,
-    "lng": 11.9668
+    "lng": 11.9668,
+    "costSek": 220
   },
   {
     "id": "keillers",
@@ -533,9 +533,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "free",
     "lat": 57.715,
-    "lng": 11.955
+    "lng": 11.955,
+    "costSek": 0
   },
   {
     "id": "skatehallen",
@@ -562,9 +562,9 @@
       "publicTransit",
       "car"
     ],
-    "cost": "low",
     "lat": 57.755,
-    "lng": 12.035
+    "lng": 12.035,
+    "costSek": 60
   },
   {
     "id": "jarntorget",
@@ -591,9 +591,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "low",
     "lat": 57.6975,
-    "lng": 11.953
+    "lng": 11.953,
+    "costSek": 60
   },
   {
     "id": "ostraskogen",
@@ -623,9 +623,9 @@
       "bike",
       "car"
     ],
-    "cost": "free",
     "lat": 57.73,
-    "lng": 12.03
+    "lng": 12.03,
+    "costSek": 0
   },
   {
     "id": "gothenburg-opera-kids",
@@ -655,9 +655,9 @@
       "walk",
       "publicTransit"
     ],
-    "cost": "high",
     "lat": 57.7057,
-    "lng": 11.9746
+    "lng": 11.9746,
+    "costSek": 200
   },
   {
     "id": "kuddefort",
@@ -684,8 +684,8 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "free",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 0
   },
   {
     "id": "koksdisco",
@@ -712,8 +712,8 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "free",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 0
   },
   {
     "id": "skattjakt-hemma",
@@ -738,8 +738,8 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "free",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 0
   },
   {
     "id": "bakdag",
@@ -764,8 +764,8 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "low",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 50
   },
   {
     "id": "spelkvall",
@@ -789,8 +789,8 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "free",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 0
   },
   {
     "id": "hemmabio",
@@ -814,8 +814,8 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "low",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 50
   },
   {
     "id": "kokskemi",
@@ -840,8 +840,8 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "low",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 50
   },
   {
     "id": "pysselverkstad",
@@ -866,8 +866,8 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "free",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 0
   },
   {
     "id": "hinderbana-hemma",
@@ -893,7 +893,543 @@
     "location": "Hemma",
     "distanceKm": 0.0,
     "transportModes": [],
-    "cost": "free",
-    "homeOnly": true
+    "homeOnly": true,
+    "costSek": 0
+  },
+  {
+    "id": "world-of-volvo",
+    "name": "World of Volvo",
+    "description": "Interaktivt upplevelsecenter om Volvos historia, design och framtid, med bilar att klättra i och prova-på-stationer för barn.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "fordon",
+      "vetenskap"
+    ],
+    "parentInterest": [
+      "historia",
+      "vetenskap"
+    ],
+    "social": true,
+    "benefits": [
+      "cognitive"
+    ],
+    "benefitNote": "Att utforska bilar och teknik konkret väcker tidigt intresse för hur saker fungerar och stärker nyfikenhetsdrivet lärande.",
+    "openingHours": "10:00–17:00 (kontrollera worldofvolvo.com för aktuella tider)",
+    "location": "Lyckholms Torg 1, Göteborg",
+    "distanceKm": 1.0,
+    "transportModes": [
+      "walk",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.6975,
+    "lng": 11.9968,
+    "costSek": 245
+  },
+  {
+    "id": "aeroseum",
+    "name": "Aeroseum",
+    "description": "Ett bergrumsmuseum om flygets historia inne i en gammal bergshangar, med flygplan, rymdutställningar och rundvandringar.",
+    "minAge": 4,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "fordon",
+      "historia",
+      "vetenskap"
+    ],
+    "parentInterest": [
+      "historia"
+    ],
+    "social": false,
+    "benefits": [
+      "cognitive"
+    ],
+    "benefitNote": "Att se riktiga flygplan och militärhistoria på nära håll gör historia och teknik konkret och lättare att ta till sig.",
+    "openingHours": "Se aeroseum.se för säsongsöppettider",
+    "location": "Säve flygplats, Göteborg",
+    "distanceKm": 12.0,
+    "transportModes": [
+      "car"
+    ],
+    "lat": 57.7742,
+    "lng": 11.8858,
+    "costSek": 400
+  },
+  {
+    "id": "leos-lekland",
+    "name": "Leos Lekland Bäckebol",
+    "description": "Stor inomhuslekland med klätterställningar, rutschkanor, bollhav och studsmattor för de mindre barnen.",
+    "minAge": 1,
+    "maxAge": 10,
+    "indoor": true,
+    "interests": [
+      "lek"
+    ],
+    "parentInterest": [
+      "fika"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "socialEmotional"
+    ],
+    "benefitNote": "Fri lek i klätterställningar tränar grovmotorik och ger möjlighet att öva socialt samspel med andra barn.",
+    "openingHours": "09:00–19:00 (kontrollera leolekland.se)",
+    "location": "Bäckebol, Göteborg",
+    "distanceKm": 6.0,
+    "transportModes": [
+      "car",
+      "publicTransit"
+    ],
+    "lat": 57.7423,
+    "lng": 11.9613,
+    "costSek": 130
+  },
+  {
+    "id": "fiska-krabba",
+    "name": "Fiska krabba vid bryggan",
+    "description": "Fiska krabba med ett snöre, lite skinka som bete och en hink vid en brygga i Långedrag eller Fiskebäck — se vem som får störst krabba.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "vatten",
+      "djur",
+      "natur"
+    ],
+    "parentInterest": [
+      "natur"
+    ],
+    "social": true,
+    "benefits": [
+      "cognitive",
+      "socialEmotional"
+    ],
+    "benefitNote": "Tålmodigt väntande och att hantera fångsten varsamt tränar finmotorik och respekt för djur och natur.",
+    "openingHours": "Alltid (dagsljus)",
+    "location": "Långedrags brygga, Göteborg",
+    "distanceKm": 8.0,
+    "transportModes": [
+      "car",
+      "publicTransit",
+      "bike"
+    ],
+    "lat": 57.6688,
+    "lng": 11.8622,
+    "costSek": 20
+  },
+  {
+    "id": "fiska-leksaker-magnet",
+    "name": "Fiska leksaker inomhus med magnet",
+    "description": "Bygg fiskespön av pinnar, snöre och magneter, fäst gem på leksaker eller papperskort och \"fiska\" upp dem från golvet eller ett fat med vatten.",
+    "minAge": 2,
+    "maxAge": 7,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "skapande"
+    ],
+    "parentInterest": [
+      "kultur"
+    ],
+    "social": false,
+    "benefits": [
+      "motorSkills",
+      "cognitive"
+    ],
+    "benefitNote": "Att styra fiskespöet mot ett rörligt mål tränar hand-öga-koordination och finmotorik hos de yngsta.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "homeOnly": true,
+    "costSek": 0
+  },
+  {
+    "id": "inomhus-fotboll-basket",
+    "name": "Inomhus fotboll/basket",
+    "description": "Spela fotboll eller basket inomhus — saknas mål och korg funkar en tvättkorg som korg och hoprullade strumpor som boll.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "motion"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Att kasta, skjuta och springa efter bollen ger naturlig rörelse och tränar grovmotorik, även utan riktig utrustning.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "homeOnly": true,
+    "costSek": 0
+  },
+  {
+    "id": "bok-domino",
+    "name": "Bokdomino",
+    "description": "Stapla böcker på högkant i en lång rad och knuffa den första — bygg om och gör banan svårare för varje omgång.",
+    "minAge": 3,
+    "maxAge": 9,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "skapande"
+    ],
+    "parentInterest": [
+      "läsning"
+    ],
+    "social": false,
+    "benefits": [
+      "motorSkills",
+      "problemSolving"
+    ],
+    "benefitNote": "Att placera varje bok exakt rätt tränar finmotorik och tålamod, och att felsöka varför dominobanan stannar tränar problemlösning.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "homeOnly": true,
+    "costSek": 0
+  },
+  {
+    "id": "jumpy-hovas",
+    "name": "Jumpy Hovås",
+    "description": "Studsmattepark inomhus med hopparea, foamgrop och basketkorgar att dunka i.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "äventyr"
+    ],
+    "parentInterest": [
+      "motion"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity"
+    ],
+    "benefitNote": "Studsande ger intensiv men skonsam träning av balans, kroppskontroll och kondition.",
+    "openingHours": "Se jumpy.se för aktuella tider",
+    "location": "Hovås, Göteborg",
+    "distanceKm": 9.0,
+    "transportModes": [
+      "car",
+      "publicTransit"
+    ],
+    "lat": 57.6089,
+    "lng": 11.9312,
+    "costSek": 150
+  },
+  {
+    "id": "klattercenter-partille",
+    "name": "Klättercentret i Partille",
+    "description": "Inomhusklättring på lead- och boulderväggar med utrustning och instruktörer på plats, även för nybörjare.",
+    "minAge": 4,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "äventyr",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "motion"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Klättring bygger grepp-, arm- och benstyrka samtidigt som barnet lär sig bedöma risk och lösa problem för att ta sig upp.",
+    "openingHours": "Se klättercentrets hemsida för öppettider",
+    "location": "Partille",
+    "distanceKm": 11.0,
+    "transportModes": [
+      "car",
+      "publicTransit"
+    ],
+    "lat": 57.7392,
+    "lng": 12.1069,
+    "costSek": 180
+  },
+  {
+    "id": "oceanbus",
+    "name": "Oceanbus",
+    "description": "Amfibiebuss som kör genom centrala Göteborg och sedan rakt ut i Göta älv för en guidad rundtur både på land och vatten.",
+    "minAge": 2,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "fordon",
+      "vatten",
+      "äventyr"
+    ],
+    "parentInterest": [
+      "sjöfart"
+    ],
+    "social": true,
+    "benefits": [
+      "cognitive"
+    ],
+    "benefitNote": "Att uppleva samma fordon köra på både gata och vatten väcker konkret nyfikenhet kring hur saker fungerar.",
+    "openingHours": "Säsong (vår–höst), se stromma.se för avgångar",
+    "location": "Lilla Bommen, Göteborg",
+    "distanceKm": 1.0,
+    "transportModes": [
+      "walk",
+      "publicTransit"
+    ],
+    "lat": 57.7075,
+    "lng": 11.967,
+    "costSek": 250
+  },
+  {
+    "id": "regnig-dag-hemma",
+    "name": "Regnig dag: kuddkoja och lek inomhus",
+    "description": "Bygg en koja av kuddar, filtar och stolar i vardagsrummet och fyll den med ficklampor, böcker och gosedjur — perfekt när det regnar ute.",
+    "minAge": 2,
+    "maxAge": 9,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "skapande"
+    ],
+    "parentInterest": [
+      "lugn"
+    ],
+    "social": false,
+    "benefits": [
+      "socialEmotional",
+      "motorSkills"
+    ],
+    "benefitNote": "Att bygga och inreda ett eget litet utrymme ger barnet kontroll och trygghet, och stärker kreativ lek på regniga dagar.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "homeOnly": true,
+    "costSek": 0
+  },
+  {
+    "id": "badminton",
+    "name": "Badminton, t.ex. Åby Racket Center eller Fjäderborgen",
+    "description": "Boka en badmintonbana för en timmes spel — bra motion för hela familjen oavsett väder.",
+    "minAge": 5,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "motion"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Att slå, springa och reagera på fjäderbollen tränar reaktionsförmåga, koordination och kondition.",
+    "openingHours": "Bokningsbart, se respektive hall",
+    "location": "Åby Racket Center, Mölndal (eller Fjäderborgen, Göteborg)",
+    "distanceKm": 7.0,
+    "transportModes": [
+      "car",
+      "publicTransit"
+    ],
+    "lat": 57.6559,
+    "lng": 12.0135,
+    "costSek": 160
+  },
+  {
+    "id": "plocka-bar-svamp",
+    "name": "Plocka säsongsbär eller svamp",
+    "description": "Gå ut i skogen kring Delsjön eller Änggårdsbergen och plocka blåbär, hallon eller svamp beroende på säsong.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "natur",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "natur"
+    ],
+    "social": false,
+    "benefits": [
+      "physicalActivity",
+      "cognitive"
+    ],
+    "benefitNote": "Att gå i terräng och lära känna växter och svamp stärker både motorik och tidig naturkunskap.",
+    "openingHours": "Säsongsberoende (sommar–höst)",
+    "location": "Delsjön/Änggårdsbergen, Göteborg",
+    "distanceKm": 6.0,
+    "transportModes": [
+      "car",
+      "bike",
+      "publicTransit"
+    ],
+    "lat": 57.6802,
+    "lng": 12.0182,
+    "costSek": 0
+  },
+  {
+    "id": "aby-badet",
+    "name": "Åbybadet",
+    "description": "Inomhusbad med både simbassäng, barnbassäng och vattenrutschkana.",
+    "minAge": 1,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "vatten",
+      "lek"
+    ],
+    "parentInterest": [
+      "motion"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity"
+    ],
+    "benefitNote": "Simning och lek i vatten är skonsam helkroppsträning och ett viktigt steg mot simkunnighet.",
+    "openingHours": "Se mölndal.se/abybadet för öppettider",
+    "location": "Åbybadet, Mölndal",
+    "distanceKm": 7.0,
+    "transportModes": [
+      "car",
+      "publicTransit"
+    ],
+    "lat": 57.6559,
+    "lng": 12.0135,
+    "costSek": 100
+  },
+  {
+    "id": "kviberg-skidome",
+    "name": "Kviberg SkiDome",
+    "description": "Åk skidor eller snowboard inomhus i konstsnö året runt, med anpassade backar för nybörjare.",
+    "minAge": 4,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "äventyr",
+      "friluftsliv"
+    ],
+    "parentInterest": [
+      "motion"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Att åka skidor tränar balans och benstyrka, och en inomhusbacke gör det möjligt året runt oavsett väder.",
+    "openingHours": "Se kvibergsskidome.se för öppettider",
+    "location": "Kviberg, Göteborg",
+    "distanceKm": 5.0,
+    "transportModes": [
+      "car",
+      "publicTransit"
+    ],
+    "lat": 57.7396,
+    "lng": 12.0286,
+    "costSek": 300
+  },
+  {
+    "id": "skargarden",
+    "name": "Besök skärgården, norra eller södra",
+    "description": "Ta båten från Saltholmen eller Lilla Varholmen ut till någon av öarna i Göteborgs södra eller norra skärgård för en dag med klippbad, lek och picknick.",
+    "minAge": 2,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "vatten",
+      "natur",
+      "äventyr"
+    ],
+    "parentInterest": [
+      "natur",
+      "sjöfart"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "cognitive"
+    ],
+    "benefitNote": "En heldag i skärgården med båtresa, klippklättring och bad ger rejäl utomhusvistelse och naturupplevelse.",
+    "openingHours": "Båtar enligt Västtrafiks tidtabell",
+    "location": "Saltholmen (södra skärgården) eller Lilla Varholmen (norra skärgården), Göteborg",
+    "distanceKm": 9.0,
+    "transportModes": [
+      "publicTransit"
+    ],
+    "lat": 57.6472,
+    "lng": 11.8534,
+    "costSek": 100
+  },
+  {
+    "id": "oppna-forskolan",
+    "name": "Öppna förskolan",
+    "description": "Kostnadsfri, drop-in-verksamhet för barn 0–5 år tillsammans med en vuxen, med lek, sång och möjlighet att träffa andra familjer.",
+    "minAge": 0,
+    "maxAge": 5,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "musik"
+    ],
+    "parentInterest": [
+      "fika"
+    ],
+    "social": true,
+    "benefits": [
+      "socialEmotional"
+    ],
+    "benefitNote": "Regelbunden lek med andra barn i trygg miljö stödjer tidig social utveckling för både barn och förälder.",
+    "openingHours": "Varierar per förskola, se goteborg.se",
+    "location": "Flera öppna förskolor runt om i Göteborg",
+    "distanceKm": 2.0,
+    "transportModes": [
+      "walk",
+      "publicTransit",
+      "bike"
+    ],
+    "costSek": 0
+  },
+  {
+    "id": "fritidsbanken",
+    "name": "Fritidsbanken Göteborg",
+    "description": "Låna sport- och friluftsutrustning gratis i upp till 14 dagar — skridskor, skidor, cyklar, klätterutrustning och mer.",
+    "minAge": 0,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "friluftsliv",
+      "lek"
+    ],
+    "parentInterest": [
+      "natur"
+    ],
+    "social": false,
+    "benefits": [],
+    "benefitNote": "Att låna prova-på-utrustning gratis sänker tröskeln till att testa nya fritidsaktiviteter utan att behöva köpa dyr utrustning.",
+    "openingHours": "Se fritidsbanken.se/goteborg för öppettider per hämtställe",
+    "location": "Flera hämtställen i Göteborg (bl.a. Angered, Frölunda)",
+    "distanceKm": 8.0,
+    "transportModes": [
+      "publicTransit",
+      "car"
+    ],
+    "costSek": 0
   }
 ]
