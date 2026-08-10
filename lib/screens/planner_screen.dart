@@ -298,9 +298,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text('Görabra'),
+                  const Text('Hittepå'),
                   Text(
-                    'Vad hittar vi på idag?',
+                    'Tips på aktiviteter med barnen',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 ],
