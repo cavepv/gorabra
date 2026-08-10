@@ -22,6 +22,7 @@ class HourlyPoint {
   final double apparentTemperatureC;
   final double precipitationMm;
   final int weatherCode;
+  final double windSpeedMs;
 
   const HourlyPoint({
     required this.time,
@@ -29,6 +30,7 @@ class HourlyPoint {
     required this.apparentTemperatureC,
     required this.precipitationMm,
     required this.weatherCode,
+    required this.windSpeedMs,
   });
 
   WeatherCondition get condition => conditionForWeatherCode(weatherCode);
@@ -145,7 +147,8 @@ class WeatherLookup {
     final uri = Uri.parse(
       'https://api.open-meteo.com/v1/forecast'
       '?latitude=$_gothenburgLat&longitude=$_gothenburgLon'
-      '&hourly=temperature_2m,apparent_temperature,precipitation,weather_code'
+      '&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m'
+      '&wind_speed_unit=ms'
       '&forecast_days=2&timezone=Europe%2FStockholm',
     );
     try {
@@ -158,6 +161,7 @@ class WeatherLookup {
       final apparentTemps = hourly['apparent_temperature'] as List;
       final precipitations = hourly['precipitation'] as List;
       final weatherCodes = hourly['weather_code'] as List;
+      final windSpeeds = hourly['wind_speed_10m'] as List;
 
       // Derive both date labels from the response itself (Stockholm-local,
       // since `timezone=Europe/Stockholm` was requested) rather than the
@@ -181,7 +185,14 @@ class WeatherLookup {
         final dateLabel = times[i].substring(0, 10);
         final bucket = points[dateLabel];
         if (bucket == null) continue; // outside today/tomorrow, ignore
-        final point = _hourlyPoint(times[i], temps[i], apparentTemps[i], precipitations[i], weatherCodes[i]);
+        final point = _hourlyPoint(
+          times[i],
+          temps[i],
+          apparentTemps[i],
+          precipitations[i],
+          weatherCodes[i],
+          windSpeeds[i],
+        );
         if (point != null) bucket.add(point);
       }
 
@@ -205,11 +216,14 @@ class WeatherLookup {
     dynamic rawApparent,
     dynamic rawPrecipitation,
     dynamic rawWeatherCode,
+    dynamic rawWindSpeed,
   ) {
     // A gap in Open-Meteo's hourly series (null value) for this specific
     // entry only drops this one hour — it must not throw and take down
     // the rest of the day's otherwise-good entries via the outer catch.
-    if (rawTemp == null || rawPrecipitation == null || rawWeatherCode == null) return null;
+    if (rawTemp == null || rawPrecipitation == null || rawWeatherCode == null || rawWindSpeed == null) {
+      return null;
+    }
     final temp = (rawTemp as num).toDouble();
     // Fall back to raw temperature if Open-Meteo omits apparent_temperature
     // for this entry.
@@ -220,6 +234,7 @@ class WeatherLookup {
       apparentTemperatureC: apparentTemp,
       precipitationMm: (rawPrecipitation as num).toDouble(),
       weatherCode: (rawWeatherCode as num).toInt(),
+      windSpeedMs: (rawWindSpeed as num).toDouble(),
     );
   }
 

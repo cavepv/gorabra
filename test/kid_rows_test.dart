@@ -14,16 +14,18 @@ void main() {
     await tester.pumpAndSettle();
 
     // Starts with exactly one kid row — no remove control shown.
-    expect(find.text('Barn 1: 4 år'), findsOneWidget);
+    expect(find.text('4 år'), findsOneWidget);
     expect(find.byIcon(Icons.close), findsNothing);
 
     final addButton = find.text('Lägg till barn');
 
-    // Add up to the cap of 4 kids.
+    // Add up to the cap of 4 kids — every row defaults to the same age,
+    // so assert by count rather than a per-row label (rows no longer
+    // carry a "Barn N" prefix to distinguish them by text).
     for (var i = 2; i <= 4; i++) {
       await tester.tap(addButton);
       await tester.pumpAndSettle();
-      expect(find.text('Barn $i: 4 år'), findsOneWidget);
+      expect(find.text('4 år'), findsNWidgets(i));
     }
 
     // "+" is disabled at the cap.
@@ -38,7 +40,7 @@ void main() {
       await tester.tap(find.byIcon(Icons.close).first);
       await tester.pumpAndSettle();
     }
-    expect(find.text('Barn 1: 4 år'), findsOneWidget);
+    expect(find.text('4 år'), findsOneWidget);
     expect(find.byIcon(Icons.close), findsNothing);
   });
 }

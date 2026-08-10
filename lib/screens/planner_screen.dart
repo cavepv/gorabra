@@ -524,7 +524,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Barn ${index + 1}: $age år'),
+              Text('$age år'),
               Slider(
                 value: age.toDouble(),
                 min: 0,
@@ -662,6 +662,21 @@ class _PlannerScreenState extends State<PlannerScreen> {
               ),
             ),
           ),
+          // Wind: small and muted, like the hour label — Gothenburg's
+          // coastal wind varies enough hour-to-hour that a single daily
+          // number would hide real swings, so this shows per-hour m/s.
+          Expanded(
+            child: Center(
+              child: Text(
+                '${point.windSpeedMs.round()} m/s',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: isCurrentHour
+                      ? colorScheme.onPrimaryContainer
+                      : colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -672,7 +687,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
   /// needing to infer it from the scrolled-away header.
   ///
   /// Each marker is centered in an Expanded third of the shared row height
-  /// (matching the three Expanded bands in each hourly column) rather than
+  /// (matching the four Expanded bands in each hourly column) rather than
   /// given a fixed pixel size, so the legend stays aligned with the hourly
   /// rows even when text-scale accessibility settings grow the hourly
   /// column's text but not these icons.
@@ -692,6 +707,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           Expanded(
             child: Center(child: Icon(Icons.thermostat, size: 16, color: mutedStyle?.color)),
           ),
+          Expanded(child: Center(child: Icon(Icons.air, size: 16, color: mutedStyle?.color))),
         ],
       ),
     );

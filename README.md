@@ -49,10 +49,11 @@ weather, age-appropriateness, budget, or transport.
   hand-maintained (no live places/maps API).
 - `lib/services/weather_lookup.dart` — Open-Meteo client fetching a full
   24-hour forecast (temperature, feels-like/apparent temperature — wind
-  matters for Gothenburg's perceived temperature — precipitation, and
-  weather condition code) for today and tomorrow, mapped to display icons,
-  with a midday-derived indoor/outdoor signal for the recommender and a
-  null-safe per-day/per-hour fallback if a fetch or entry is unavailable.
+  matters for Gothenburg's perceived temperature — precipitation, wind
+  speed, and weather condition code) for today and tomorrow, mapped to
+  display icons, with a midday-derived indoor/outdoor signal for the
+  recommender and a null-safe per-day/per-hour fallback if a fetch or
+  entry is unavailable.
 - `lib/services/recommender.dart` — the filter/relaxation/scoring logic;
   the one piece of real branching logic in the app, covered by
   `test/recommender_test.dart`.

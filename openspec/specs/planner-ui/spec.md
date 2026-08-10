@@ -142,16 +142,16 @@ the results are not a perfect match.
 The system SHALL provide a Today/Tomorrow toggle that selects which day's
 weather forecast drives the weather filter tier for the next spin, and
 SHALL display a scrollable hourly weather graph (24 hours, each showing an
-hour label, a condition icon, and the temperature) for the currently
-selected day next to the spin results, so the user can see how weather
-changes across the day and the reasoning behind indoor/outdoor
+hour label, a condition icon, the temperature, and the wind speed) for the
+currently selected day next to the spin results, so the user can see how
+weather changes across the day and the reasoning behind indoor/outdoor
 suggestions.
 
 #### Scenario: Viewing today's hourly graph by default
 - **WHEN** the user opens the planner and the input form loads
 - **THEN** the "Today" option is selected by default and its 24-hour
-  hourly graph (icon, temperature, hour label per hour) is shown,
-  horizontally scrollable
+  hourly graph (icon, temperature, wind speed, hour label per hour) is
+  shown, horizontally scrollable
 
 #### Scenario: Switching to tomorrow
 - **WHEN** the user selects "Tomorrow" on the day toggle

@@ -3,14 +3,15 @@
 ### Requirement: Fetch today's Gothenburg weather
 The system SHALL fetch a full 24-hour forecast series for Gothenburg from
 the Open-Meteo API (no API key required) covering both today and tomorrow,
-including temperature, apparent temperature, precipitation, and weather
-condition code (`weather_code`) for each hour, in a single request.
+including temperature, apparent temperature, precipitation, wind speed
+(m/s), and weather condition code (`weather_code`) for each hour, in a
+single request.
 
 #### Scenario: Successful hourly fetch for both days
 - **WHEN** the user opens the planner and network access is available
 - **THEN** the system retrieves 24 hourly entries (temperature, apparent
-  temperature, precipitation, weather code) for Gothenburg for both today
-  and tomorrow from Open-Meteo, in a single request
+  temperature, precipitation, wind speed, weather code) for Gothenburg for
+  both today and tomorrow from Open-Meteo, in a single request
 
 #### Scenario: One day succeeds, the other is unavailable
 - **WHEN** the Open-Meteo response is missing hourly entries for one of
