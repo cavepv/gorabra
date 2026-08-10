@@ -127,16 +127,18 @@ SHALL clear this history along with the current result.
 - **THEN** any newer history entries beyond that point are discarded, and
   the freshly computed result becomes the newest history entry
 
-### Requirement: Closest-matches labeling
-The system SHALL visibly label results as "closest matches" when the
-recommender had to fall back to a relaxed or cost/transport-only filtered
-pool (per the activity-recommender capability), so the user understands
-the results are not a perfect match.
+### Requirement: Closest-matches results (unlabeled)
+The system SHALL show results even when the recommender had to fall back
+to a relaxed or cost/transport-only filtered pool (per the
+activity-recommender capability), without a visible "closest matches"
+label — the relaxation is internal to the recommender and not surfaced in
+the UI.
 
 #### Scenario: Displaying relaxed results
 - **WHEN** the recommender returns results only after relaxing one or more
   filters
-- **THEN** the UI shows a "closest matches" label alongside the results
+- **THEN** the UI shows those results the same way as a full match, with
+  no "closest matches" label
 
 ### Requirement: Today/Tomorrow weather day toggle
 The system SHALL provide a Today/Tomorrow toggle that selects which day's
@@ -162,8 +164,8 @@ suggestions.
 #### Scenario: Toggling the day clears stale results
 - **WHEN** the user changes the day toggle after already viewing spin
   results
-- **THEN** the previously shown results (including any "closest matches"
-  label) are cleared, consistent with changing any other filter input
+- **THEN** the previously shown results are cleared, consistent with
+  changing any other filter input
 
 #### Scenario: Selected day's weather is unavailable
 - **WHEN** the weather fetch failed or returned no hourly data for the

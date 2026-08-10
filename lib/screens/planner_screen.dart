@@ -26,7 +26,7 @@ const kidInterestTags = [
 ];
 
 /// Single screen: input form (5.1), spin/result display (5.2), re-spin
-/// (5.3), and closest-matches labeling (5.4).
+/// (5.3), and closest-matches fallback results shown unlabeled (5.4).
 class PlannerScreen extends StatefulWidget {
   /// Injectable position fetcher — defaults to real GPS via
   /// [LocationLookup], overridable in tests (mirrors the `Random? random`
@@ -724,11 +724,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (result.isClosestMatch)
-          const Padding(
-            padding: EdgeInsets.only(bottom: 8),
-            child: Chip(label: Text('Närmaste matchningar')),
-          ),
         for (final activity in result.activities)
           Card(
             margin: const EdgeInsets.only(bottom: 12),
