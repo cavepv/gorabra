@@ -341,13 +341,17 @@ class _PlannerScreenState extends State<PlannerScreen> {
                     FilledButton.icon(
                       key: _spinButtonKey,
                       onPressed: _loading ? null : _spin,
+                      style: FilledButton.styleFrom(
+                        textStyle: Theme.of(context).textTheme.headlineSmall,
+                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                      ),
                       icon: _loading
                           ? const SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(strokeWidth: 2),
+                              width: 32,
+                              height: 32,
+                              child: CircularProgressIndicator(strokeWidth: 3),
                             )
-                          : const Icon(Icons.casino),
+                          : const Icon(Icons.casino, size: 32),
                       label: Text(_result == null ? 'Föreslå' : 'Föreslå igen'),
                     ),
                     IconButton(
