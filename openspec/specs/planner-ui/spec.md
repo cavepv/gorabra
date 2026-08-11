@@ -123,7 +123,7 @@ SHALL clear this history along with the current result.
 
 #### Scenario: Spinning again after stepping back
 - **WHEN** the user has stepped back to an older result and taps
-  "Föreslå igen"
+  "Nya förslag"
 - **THEN** any newer history entries beyond that point are discarded, and
   the freshly computed result becomes the newest history entry
 

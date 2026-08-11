@@ -33,13 +33,13 @@ void main() {
     expect(forwardEnabled(), isFalse);
 
     // First spin: one history entry, still nothing to go back/forward to.
-    await tester.tap(find.text('Föreslå'));
+    await tester.tap(find.text('Ge mig tips!'));
     await tester.pumpAndSettle();
     expect(backEnabled(), isFalse);
     expect(forwardEnabled(), isFalse);
 
     // Second spin: two entries, sitting on the newest — back enabled.
-    await tester.tap(find.text('Föreslå igen'));
+    await tester.tap(find.text('Nya förslag'));
     await tester.pumpAndSettle();
     expect(backEnabled(), isTrue);
     expect(forwardEnabled(), isFalse);
@@ -61,6 +61,6 @@ void main() {
     await tester.pumpAndSettle();
     expect(backEnabled(), isFalse);
     expect(forwardEnabled(), isFalse);
-    expect(find.text('Föreslå'), findsOneWidget);
+    expect(find.text('Ge mig tips!'), findsOneWidget);
   });
 }

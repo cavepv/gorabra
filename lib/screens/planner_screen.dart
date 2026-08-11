@@ -343,21 +343,24 @@ class _PlannerScreenState extends State<PlannerScreen> {
                       icon: const Icon(Icons.arrow_back),
                       tooltip: 'Föregående förslag',
                     ),
-                    FilledButton.icon(
-                      key: _spinButtonKey,
-                      onPressed: _loading ? null : _spin,
-                      style: FilledButton.styleFrom(
-                        textStyle: Theme.of(context).textTheme.headlineSmall,
-                        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                    Transform.scale(
+                      scale: 0.75,
+                      child: FilledButton.icon(
+                        key: _spinButtonKey,
+                        onPressed: _loading ? null : _spin,
+                        style: FilledButton.styleFrom(
+                          textStyle: Theme.of(context).textTheme.headlineSmall,
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                        ),
+                        icon: _loading
+                            ? const SizedBox(
+                                width: 32,
+                                height: 32,
+                                child: CircularProgressIndicator(strokeWidth: 3),
+                              )
+                            : const Icon(Icons.casino, size: 32),
+                        label: Text(_result == null ? 'Ge mig tips!' : 'Nya förslag'),
                       ),
-                      icon: _loading
-                          ? const SizedBox(
-                              width: 32,
-                              height: 32,
-                              child: CircularProgressIndicator(strokeWidth: 3),
-                            )
-                          : const Icon(Icons.casino, size: 32),
-                      label: Text(_result == null ? 'Föreslå' : 'Föreslå igen'),
                     ),
                     IconButton(
                       onPressed: _historyIndex < _history.length - 1 ? _goForward : null,
@@ -729,43 +732,86 @@ class _PlannerScreenState extends State<PlannerScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (final activity in result.activities)
-          Card(
-            margin: const EdgeInsets.only(bottom: 12),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        for (final (index, activity) in result.activities.indexed)
+          _FadeInCard(
+            // Key ties identity to this spin + slot so the fade replays
+            // every time _spin() produces a new result (rung 2: stdlib
+            // TweenAnimationBuilder, no AnimationController needed).
+            key: ValueKey('$_historyIndex-${activity.id}'),
+            delay: Duration(milliseconds: index * 120),
+            child: _buildActivityCard(activity),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildActivityCard(Activity activity) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(activity.name, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 4),
+            Text(activity.description),
+            const SizedBox(height: 8),
+            if (!activity.homeOnly)
+              Row(
                 children: [
-                  Text(activity.name, style: Theme.of(context).textTheme.titleLarge),
-                  const SizedBox(height: 4),
-                  Text(activity.description),
-                  const SizedBox(height: 8),
-                  if (!activity.homeOnly)
-                    Row(
-                      children: [
-                        Icon(Icons.schedule, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
-                        const SizedBox(width: 4),
-                        Expanded(
-                          child: Text(
-                            '${activity.location} · ${activity.openingHours}',
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ),
-                      ],
+                  Icon(Icons.schedule, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  const SizedBox(width: 4),
+                  Expanded(
+                    child: Text(
+                      '${activity.location} · ${activity.openingHours}',
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
-                  const SizedBox(height: 8),
-                  Text(
-                    activity.benefitNote,
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontStyle: FontStyle.italic,
-                        ),
                   ),
                 ],
               ),
+            const SizedBox(height: 8),
+            Text(
+              activity.benefitNote,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    fontStyle: FontStyle.italic,
+                  ),
             ),
-          ),
-      ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Fades and slides [child] in after [delay]. New instances (distinguished
+/// by widget `key`) replay the animation — used to stagger result cards
+/// 1, 2, 3 on each spin.
+class _FadeInCard extends StatelessWidget {
+  const _FadeInCard({super.key, required this.delay, required this.child});
+
+  final Duration delay;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 300) + delay,
+      curve: Curves.linear,
+      builder: (context, t, child) {
+        // t is linear in real time here (curve applied below, after the
+        // delay subtraction) — hold at 0 during the per-card delay, then
+        // ease in over the remaining time. Avoids needing a Future/Timer.
+        final delayFraction = delay.inMilliseconds / (300 + delay.inMilliseconds);
+        final linearProgress = ((t - delayFraction) / (1 - delayFraction)).clamp(0.0, 1.0);
+        final progress = Curves.easeOut.transform(linearProgress);
+        return Opacity(
+          opacity: progress,
+          child: Transform.translate(offset: Offset(0, (1 - progress) * 16), child: child),
+        );
+      },
+      child: child,
     );
   }
 }

@@ -10,7 +10,7 @@ void main() {
   ) async {
     // The form (age slider, interest chips, budget, car switch, spin
     // button) is taller than the default 800x600 test surface, so it
-    // scrolls the "Föreslå" button below the fold. A ListView's offstage
+    // scrolls the "Ge mig tips!" button below the fold. A ListView's offstage
     // children exist in the widget tree but are excluded by finders'
     // default skipOffstage behavior, so grow the surface to fit everything.
     await tester.binding.setSurfaceSize(const Size(800, 2400));
@@ -25,13 +25,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Hittepå'), findsOneWidget);
-    expect(find.text('Föreslå'), findsOneWidget);
+    expect(find.text('Ge mig tips!'), findsOneWidget);
     // Flutter's test HTTP binding always returns 400 for any request, so
     // the weather fetch fails deterministically — the hourly graph's
     // unavailable-fallback message is what should render here.
     expect(find.text('Väder ej tillgängligt just nu.'), findsOneWidget);
 
-    await tester.tap(find.text('Föreslå'));
+    await tester.tap(find.text('Ge mig tips!'));
     await tester.pumpAndSettle();
 
     // Either a result card or the "no matches" message should appear.
@@ -48,9 +48,11 @@ void main() {
     await tester.tap(find.text('Stanna hemma'));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Föreslå'));
+    // Toggling "Stanna hemma" clears the previous result, so the button
+    // reverts to its initial label.
+    await tester.ensureVisible(find.text('Ge mig tips!'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Föreslå'));
+    await tester.tap(find.text('Ge mig tips!'));
     await tester.pumpAndSettle();
 
     final hasResultAfterToggle = find.byType(Card).evaluate().isNotEmpty;

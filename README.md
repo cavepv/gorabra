@@ -36,8 +36,8 @@ weather, age-appropriateness, budget, or transport.
 4. Activities that match your own interests, are good for meeting other
    families, or are tagged as good physical activity get better odds — but
    never override the hard filters.
-5. Tap "Föreslå" for 1-3 random suggestions from the matching pool;
-   "Föreslå igen" re-rolls without re-entering your inputs.
+5. Tap "Ge mig tips!" for 1-3 random suggestions from the matching pool;
+   "Nya förslag" re-rolls without re-entering your inputs.
 
 ## Project structure
 
