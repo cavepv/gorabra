@@ -738,7 +738,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
             // every time _spin() produces a new result (rung 2: stdlib
             // TweenAnimationBuilder, no AnimationController needed).
             key: ValueKey('$_historyIndex-${activity.id}'),
-            delay: Duration(milliseconds: index * 120),
+            delay: Duration(milliseconds: index * 200),
             child: _buildActivityCard(activity),
           ),
       ],
