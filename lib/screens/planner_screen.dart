@@ -26,20 +26,24 @@ const kidInterestTags = [
 ];
 
 /// Swedish weekday abbreviations, `DateTime.weekday`-indexed (1 = Monday).
-const _swedishWeekdays = ['Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör', 'Sön'];
+const _swedishWeekdays = [
+  'Måndag',
+  'Tisdag',
+  'Onsdag',
+  'Torsdag',
+  'Fredag',
+  'Lördag',
+  'Söndag',
+];
 
-/// "Idag Tis 11/8" / "Imorgon Ons 12/8" — device-clock based since this is
-/// just a label, unlike the weather fetch's Stockholm-local day matching.
+/// "Idag Tisdag 11/8" for today; plain "Imorgon" for tomorrow — device-clock
+/// based since this is just a label, unlike the weather fetch's
+/// Stockholm-local day matching.
 String _dayLabel(Day day) {
-  final base = day == Day.today ? 'Idag' : 'Imorgon';
+  if (day == Day.tomorrow) return 'Imorgon';
   final now = DateTime.now();
-  // Calendar-day arithmetic (not `add(Duration(days: 1))`) avoids the
-  // same DST-day edge case called out in weather_lookup.dart.
-  final date = day == Day.today
-      ? now
-      : DateTime(now.year, now.month, now.day + 1);
-  final weekday = _swedishWeekdays[date.weekday - 1];
-  return '$base $weekday ${date.day}/${date.month}';
+  final weekday = _swedishWeekdays[now.weekday - 1];
+  return 'Idag $weekday ${now.day}/${now.month}';
 }
 
 /// Single screen: input form (5.1), spin/result display (5.2), re-spin
