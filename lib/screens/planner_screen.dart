@@ -35,7 +35,9 @@ String _dayLabel(Day day) {
   final now = DateTime.now();
   // Calendar-day arithmetic (not `add(Duration(days: 1))`) avoids the
   // same DST-day edge case called out in weather_lookup.dart.
-  final date = day == Day.today ? now : DateTime(now.year, now.month, now.day + 1);
+  final date = day == Day.today
+      ? now
+      : DateTime(now.year, now.month, now.day + 1);
   final weekday = _swedishWeekdays[date.weekday - 1];
   return '$base $weekday ${date.day}/${date.month}';
 }
@@ -48,8 +50,10 @@ class PlannerScreen extends StatefulWidget {
   /// seam already used in [ActivityRecommender]).
   final Future<UserPosition?> Function() positionFetcher;
 
-  const PlannerScreen({super.key, Future<UserPosition?> Function()? positionFetcher})
-    : positionFetcher = positionFetcher ?? LocationLookup.getCurrentPosition;
+  const PlannerScreen({
+    super.key,
+    Future<UserPosition?> Function()? positionFetcher,
+  }) : positionFetcher = positionFetcher ?? LocationLookup.getCurrentPosition;
 
   @override
   State<PlannerScreen> createState() => _PlannerScreenState();
@@ -66,7 +70,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
   final Set<String> _selectedInterests = {};
   static const _budgetCeilingSek = 3000;
   int _budgetSek = 300;
-  final TextEditingController _budgetController = TextEditingController(text: '300');
+  final TextEditingController _budgetController = TextEditingController(
+    text: '300',
+  );
   final FocusNode _budgetFocusNode = FocusNode();
   bool _hasCar = true;
   bool _stayHome = false;
@@ -85,8 +91,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
   // fight a user who has manually scrolled the strip elsewhere.
   bool _scrolledToCurrentHour = false;
 
-  WeatherResult? get _selectedWeather =>
-      _forecast.middayResult(_selectedDay == Day.today ? _forecast.today : _forecast.tomorrow);
+  WeatherResult? get _selectedWeather => _forecast.middayResult(
+    _selectedDay == Day.today ? _forecast.today : _forecast.tomorrow,
+  );
 
   List<HourlyPoint> get _selectedHourly =>
       _selectedDay == Day.today ? _forecast.today : _forecast.tomorrow;
@@ -237,7 +244,8 @@ class _PlannerScreenState extends State<PlannerScreen> {
       // clearing it here shrinks the list and clamps scroll to top, which
       // fights the scroll-to-results animation once the new result lands.
     });
-    final useDistanceFilter = _useMyPosition && _userPosition != null && !_stayHome;
+    final useDistanceFilter =
+        _useMyPosition && _userPosition != null && !_stayHome;
     final prefs = UserPreferences(
       kidAges: _kidAges,
       kidInterests: _selectedInterests.toList(),
@@ -251,7 +259,8 @@ class _PlannerScreenState extends State<PlannerScreen> {
     // Snapshot before the delay below — history navigation (back/forward)
     // isn't gated by `_loading` and could otherwise mutate `_result` while
     // this spin is "in flight", excluding the wrong activities.
-    final excludeIds = _result?.activities.map((a) => a.id).toSet() ?? const <String>{};
+    final excludeIds =
+        _result?.activities.map((a) => a.id).toSet() ?? const <String>{};
     // recommend() is synchronous (no network/IO) — a short artificial delay
     // gives the loading spinner below something to actually show.
     await Future.delayed(const Duration(milliseconds: 300));
@@ -329,65 +338,90 @@ class _PlannerScreenState extends State<PlannerScreen> {
           ),
         ),
       ),
-      body: _loadError != null
-          ? Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(_loadError!),
-                  const SizedBox(height: 8),
-                  FilledButton(
-                    onPressed: _loadCatalog,
-                    child: const Text('Försök igen'),
-                  ),
-                ],
-              ),
-            )
-          : _catalog == null
-          ? const Center(child: CircularProgressIndicator())
-          : ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                _buildForm(),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: _historyIndex > 0 ? _goBack : null,
-                      icon: const Icon(Icons.arrow_back),
-                      tooltip: 'Föregående förslag',
-                    ),
-                    Transform.scale(
-                      scale: 0.75,
-                      child: FilledButton.icon(
-                        key: _spinButtonKey,
-                        onPressed: _loading ? null : _spin,
-                        style: FilledButton.styleFrom(
-                          textStyle: Theme.of(context).textTheme.headlineSmall,
-                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+      // Weather strip pinned outside the scrollable body — same widget as
+      // before, just relocated so it stays visible while browsing results
+      // further down, instead of scrolling away with the rest of the form.
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+            child: _buildWeatherSummary(),
+          ),
+          Expanded(
+            child: _loadError != null
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(_loadError!),
+                        const SizedBox(height: 8),
+                        FilledButton(
+                          onPressed: _loadCatalog,
+                          child: const Text('Försök igen'),
                         ),
-                        icon: _loading
-                            ? const SizedBox(
-                                width: 32,
-                                height: 32,
-                                child: CircularProgressIndicator(strokeWidth: 3),
-                              )
-                            : const Icon(Icons.casino, size: 32),
-                        label: Text(_result == null ? 'Ge mig tips!' : 'Nya förslag'),
+                      ],
+                    ),
+                  )
+                : _catalog == null
+                ? const Center(child: CircularProgressIndicator())
+                : ListView(
+                    children: [
+                      _buildForm(),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: _historyIndex > 0 ? _goBack : null,
+                            icon: const Icon(Icons.arrow_back),
+                            tooltip: 'Föregående förslag',
+                          ),
+                          Transform.scale(
+                            scale: 0.75,
+                            child: FilledButton.icon(
+                              key: _spinButtonKey,
+                              onPressed: _loading ? null : _spin,
+                              style: FilledButton.styleFrom(
+                                textStyle: Theme.of(
+                                  context,
+                                ).textTheme.headlineSmall,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 32,
+                                  vertical: 20,
+                                ),
+                              ),
+                              icon: _loading
+                                  ? const SizedBox(
+                                      width: 32,
+                                      height: 32,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 3,
+                                      ),
+                                    )
+                                  : const Icon(Icons.casino, size: 32),
+                              label: Text(
+                                _result == null
+                                    ? 'Ge mig tips!'
+                                    : 'Nya förslag',
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: _historyIndex < _history.length - 1
+                                ? _goForward
+                                : null,
+                            icon: const Icon(Icons.arrow_forward),
+                            tooltip: 'Nästa förslag',
+                          ),
+                        ],
                       ),
-                    ),
-                    IconButton(
-                      onPressed: _historyIndex < _history.length - 1 ? _goForward : null,
-                      icon: const Icon(Icons.arrow_forward),
-                      tooltip: 'Nästa förslag',
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 24),
-                if (_result != null) _buildResults(_result!),
-              ],
-            ),
+                      const SizedBox(height: 24),
+                      if (_result != null) _buildResults(_result!),
+                    ],
+                  ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -398,7 +432,10 @@ class _PlannerScreenState extends State<PlannerScreen> {
         SegmentedButton<Day>(
           segments: [
             ButtonSegment(value: Day.today, label: Text(_dayLabel(Day.today))),
-            ButtonSegment(value: Day.tomorrow, label: Text(_dayLabel(Day.tomorrow))),
+            ButtonSegment(
+              value: Day.tomorrow,
+              label: Text(_dayLabel(Day.tomorrow)),
+            ),
           ],
           selected: {_selectedDay},
           onSelectionChanged: (s) => setState(() {
@@ -407,8 +444,6 @@ class _PlannerScreenState extends State<PlannerScreen> {
             _scrolledToCurrentHour = false;
           }),
         ),
-        const SizedBox(height: 8),
-        _buildWeatherSummary(),
         const SizedBox(height: 16),
         Text('Barnens åldrar', style: Theme.of(context).textTheme.titleMedium),
         for (var i = 0; i < _kidAges.length; i++) _buildKidAgeRow(i),
@@ -419,7 +454,10 @@ class _PlannerScreenState extends State<PlannerScreen> {
         ),
         const SizedBox(height: 8),
         ExpansionTile(
-          title: Text('Intressen', style: Theme.of(context).textTheme.titleMedium),
+          title: Text(
+            'Intressen',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           tilePadding: EdgeInsets.zero,
           childrenPadding: const EdgeInsets.only(bottom: 8),
           children: [
@@ -502,7 +540,10 @@ class _PlannerScreenState extends State<PlannerScreen> {
         ),
         const SizedBox(height: 8),
         ExpansionTile(
-          title: Text('Avstånd', style: Theme.of(context).textTheme.titleMedium),
+          title: Text(
+            'Avstånd',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
           subtitle: _stayHome
               ? const Text('Gäller inte när ni stannar hemma')
               : null,
@@ -596,9 +637,13 @@ class _PlannerScreenState extends State<PlannerScreen> {
       // each column is a fixed 56px wide (see _buildHourlyColumn).
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (!_hourlyScrollController.hasClients) return;
-        final viewportWidth = _hourlyScrollController.position.viewportDimension;
-        final target = (currentIndex * _hourlyColumnWidth - viewportWidth / 2 + _hourlyColumnWidth / 2)
-            .clamp(0.0, _hourlyScrollController.position.maxScrollExtent);
+        final viewportWidth =
+            _hourlyScrollController.position.viewportDimension;
+        final target =
+            (currentIndex * _hourlyColumnWidth -
+                    viewportWidth / 2 +
+                    _hourlyColumnWidth / 2)
+                .clamp(0.0, _hourlyScrollController.position.maxScrollExtent);
         _hourlyScrollController.animateTo(
           target,
           duration: const Duration(milliseconds: 300),
@@ -727,14 +772,30 @@ class _PlannerScreenState extends State<PlannerScreen> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          Expanded(child: Center(child: Icon(Icons.schedule, size: 16, color: mutedStyle?.color))),
+          Expanded(
+            child: Center(
+              child: Icon(Icons.schedule, size: 16, color: mutedStyle?.color),
+            ),
+          ),
           const Expanded(
-            child: Center(child: Icon(Icons.cloud_outlined, size: 24, color: Colors.transparent)),
+            child: Center(
+              child: Icon(
+                Icons.cloud_outlined,
+                size: 24,
+                color: Colors.transparent,
+              ),
+            ),
           ),
           Expanded(
-            child: Center(child: Icon(Icons.thermostat, size: 16, color: mutedStyle?.color)),
+            child: Center(
+              child: Icon(Icons.thermostat, size: 16, color: mutedStyle?.color),
+            ),
           ),
-          Expanded(child: Center(child: Icon(Icons.air, size: 16, color: mutedStyle?.color))),
+          Expanded(
+            child: Center(
+              child: Icon(Icons.air, size: 16, color: mutedStyle?.color),
+            ),
+          ),
         ],
       ),
     );
@@ -775,7 +836,11 @@ class _PlannerScreenState extends State<PlannerScreen> {
             if (!activity.homeOnly)
               Row(
                 children: [
-                  Icon(Icons.schedule, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  Icon(
+                    Icons.schedule,
+                    size: 14,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
@@ -788,9 +853,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
             const SizedBox(height: 8),
             Text(
               activity.benefitNote,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    fontStyle: FontStyle.italic,
-                  ),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
             ),
           ],
         ),
@@ -818,12 +883,17 @@ class _FadeInCard extends StatelessWidget {
         // t is linear in real time here (curve applied below, after the
         // delay subtraction) — hold at 0 during the per-card delay, then
         // ease in over the remaining time. Avoids needing a Future/Timer.
-        final delayFraction = delay.inMilliseconds / (300 + delay.inMilliseconds);
-        final linearProgress = ((t - delayFraction) / (1 - delayFraction)).clamp(0.0, 1.0);
+        final delayFraction =
+            delay.inMilliseconds / (300 + delay.inMilliseconds);
+        final linearProgress = ((t - delayFraction) / (1 - delayFraction))
+            .clamp(0.0, 1.0);
         final progress = Curves.easeOut.transform(linearProgress);
         return Opacity(
           opacity: progress,
-          child: Transform.translate(offset: Offset(0, (1 - progress) * 16), child: child),
+          child: Transform.translate(
+            offset: Offset(0, (1 - progress) * 16),
+            child: child,
+          ),
         );
       },
       child: child,
