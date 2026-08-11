@@ -365,6 +365,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                 : _catalog == null
                 ? const Center(child: CircularProgressIndicator())
                 : ListView(
+                    padding: const EdgeInsets.all(16),
                     children: [
                       _buildForm(),
                       const SizedBox(height: 16),
