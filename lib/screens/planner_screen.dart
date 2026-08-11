@@ -537,6 +537,11 @@ class _PlannerScreenState extends State<PlannerScreen> {
         SwitchListTile(
           contentPadding: EdgeInsets.zero,
           title: const Text('Tillgång till bil?'),
+          subtitle: _hasCar
+              ? null
+              // ponytail: passive hint only — no auto-enabling location,
+              // granting GPS access is the user's call via Avstånd below.
+              : const Text('Tips: sätt ett avstånd nedan om ni inte har bil'),
           value: _hasCar,
           onChanged: (v) => setState(() {
             _hasCar = v;
