@@ -25,6 +25,21 @@ const kidInterestTags = [
   'äventyr',
 ];
 
+/// Swedish weekday abbreviations, `DateTime.weekday`-indexed (1 = Monday).
+const _swedishWeekdays = ['Mån', 'Tis', 'Ons', 'Tor', 'Fre', 'Lör', 'Sön'];
+
+/// "Idag Tis 11/8" / "Imorgon Ons 12/8" — device-clock based since this is
+/// just a label, unlike the weather fetch's Stockholm-local day matching.
+String _dayLabel(Day day) {
+  final base = day == Day.today ? 'Idag' : 'Imorgon';
+  final now = DateTime.now();
+  // Calendar-day arithmetic (not `add(Duration(days: 1))`) avoids the
+  // same DST-day edge case called out in weather_lookup.dart.
+  final date = day == Day.today ? now : DateTime(now.year, now.month, now.day + 1);
+  final weekday = _swedishWeekdays[date.weekday - 1];
+  return '$base $weekday ${date.day}/${date.month}';
+}
+
 /// Single screen: input form (5.1), spin/result display (5.2), re-spin
 /// (5.3), and closest-matches fallback results shown unlabeled (5.4).
 class PlannerScreen extends StatefulWidget {
@@ -381,9 +396,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SegmentedButton<Day>(
-          segments: const [
-            ButtonSegment(value: Day.today, label: Text('Idag')),
-            ButtonSegment(value: Day.tomorrow, label: Text('Imorgon')),
+          segments: [
+            ButtonSegment(value: Day.today, label: Text(_dayLabel(Day.today))),
+            ButtonSegment(value: Day.tomorrow, label: Text(_dayLabel(Day.tomorrow))),
           ],
           selected: {_selectedDay},
           onSelectionChanged: (s) => setState(() {
