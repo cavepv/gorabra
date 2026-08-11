@@ -86,3 +86,21 @@ displayed visually rather than as a bare number.
   ranges
 - **THEN** the system resolves it to a defensive default icon rather than
   throwing or crashing
+
+### Requirement: Night-time icon for clear conditions
+The system SHALL fetch Open-Meteo's `is_day` flag alongside the other
+hourly fields and use it to show a moon icon instead of a sun icon for
+clear-sky hours after dark. Other condition categories (cloudy, fog,
+rain, snow, thunderstorm) SHALL use the same icon regardless of time of
+day, since they already read correctly at any hour.
+
+#### Scenario: Clear night hour shows a moon
+- **WHEN** an hourly entry's condition is clear and Open-Meteo's `is_day`
+  flag is 0 (night)
+- **THEN** the system shows a moon icon instead of the sun icon
+
+#### Scenario: `is_day` missing from response
+- **WHEN** an hourly entry is otherwise valid but Open-Meteo omits
+  `is_day` for it
+- **THEN** the system defaults that entry to daytime (sun icon) rather
+  than dropping the hour, since `is_day` only affects icon choice

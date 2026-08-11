@@ -657,7 +657,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
           Expanded(
             child: Center(
               child: Icon(
-                iconForCondition(point.condition),
+                iconForCondition(point.condition, isDay: point.isDay),
                 size: 24,
                 color: colorForCondition(point.condition),
               ),

@@ -23,6 +23,7 @@ class HourlyPoint {
   final double precipitationMm;
   final int weatherCode;
   final double windSpeedMs;
+  final bool isDay;
 
   const HourlyPoint({
     required this.time,
@@ -31,6 +32,7 @@ class HourlyPoint {
     required this.precipitationMm,
     required this.weatherCode,
     required this.windSpeedMs,
+    this.isDay = true,
   });
 
   WeatherCondition get condition => conditionForWeatherCode(weatherCode);
@@ -54,10 +56,12 @@ WeatherCondition conditionForWeatherCode(int code) {
 }
 
 /// Icon representing a broad weather condition, for hourly graph display.
-IconData iconForCondition(WeatherCondition condition) {
+/// [isDay] swaps the sun for a moon on clear nights — every other
+/// condition (cloudy/fog/rain/snow/thunderstorm) reads fine at any hour.
+IconData iconForCondition(WeatherCondition condition, {bool isDay = true}) {
   switch (condition) {
     case WeatherCondition.clear:
-      return Icons.wb_sunny;
+      return isDay ? Icons.wb_sunny : Icons.nightlight_round;
     case WeatherCondition.cloudy:
       return Icons.wb_cloudy;
     case WeatherCondition.fog:
@@ -147,7 +151,7 @@ class WeatherLookup {
     final uri = Uri.parse(
       'https://api.open-meteo.com/v1/forecast'
       '?latitude=$_gothenburgLat&longitude=$_gothenburgLon'
-      '&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m'
+      '&hourly=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,is_day'
       '&wind_speed_unit=ms'
       '&forecast_days=2&timezone=Europe%2FStockholm',
     );
@@ -162,6 +166,7 @@ class WeatherLookup {
       final precipitations = hourly['precipitation'] as List;
       final weatherCodes = hourly['weather_code'] as List;
       final windSpeeds = hourly['wind_speed_10m'] as List;
+      final isDayFlags = hourly['is_day'] as List?;
 
       // Derive both date labels from the response itself (Stockholm-local,
       // since `timezone=Europe/Stockholm` was requested) rather than the
@@ -192,6 +197,7 @@ class WeatherLookup {
           precipitations[i],
           weatherCodes[i],
           windSpeeds[i],
+          isDayFlags == null ? null : isDayFlags[i],
         );
         if (point != null) bucket.add(point);
       }
@@ -217,6 +223,7 @@ class WeatherLookup {
     dynamic rawPrecipitation,
     dynamic rawWeatherCode,
     dynamic rawWindSpeed,
+    dynamic rawIsDay,
   ) {
     // A gap in Open-Meteo's hourly series (null value) for this specific
     // entry only drops this one hour — it must not throw and take down
@@ -235,6 +242,10 @@ class WeatherLookup {
       precipitationMm: (rawPrecipitation as num).toDouble(),
       weatherCode: (rawWeatherCode as num).toInt(),
       windSpeedMs: (rawWindSpeed as num).toDouble(),
+      // `is_day` is decorative (icon choice only) — unlike the fields
+      // above, a missing value defaults to day rather than dropping the
+      // hour.
+      isDay: rawIsDay == null ? true : (rawIsDay as num) != 0,
     );
   }
 
