@@ -381,33 +381,35 @@ class _PlannerScreenState extends State<PlannerScreen> {
                             icon: const Icon(Icons.arrow_back),
                             tooltip: 'Föregående förslag',
                           ),
-                          Transform.scale(
-                            scale: 0.75,
-                            child: FilledButton.icon(
-                              key: _spinButtonKey,
-                              onPressed: _loading ? null : _spin,
-                              style: FilledButton.styleFrom(
-                                textStyle: Theme.of(
-                                  context,
-                                ).textTheme.headlineSmall,
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 32,
-                                  vertical: 20,
+                          Flexible(
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: FilledButton.icon(
+                                key: _spinButtonKey,
+                                onPressed: _loading ? null : _spin,
+                                style: FilledButton.styleFrom(
+                                  textStyle: Theme.of(
+                                    context,
+                                  ).textTheme.titleMedium,
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 15,
+                                  ),
                                 ),
-                              ),
-                              icon: _loading
-                                  ? const SizedBox(
-                                      width: 32,
-                                      height: 32,
-                                      child: CircularProgressIndicator(
-                                        strokeWidth: 3,
-                                      ),
-                                    )
-                                  : const Icon(Icons.casino, size: 32),
-                              label: Text(
-                                _result == null
-                                    ? 'Ge mig tips!'
-                                    : 'Nya förslag',
+                                icon: _loading
+                                    ? const SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: CircularProgressIndicator(
+                                          strokeWidth: 3,
+                                        ),
+                                      )
+                                    : const Icon(Icons.casino, size: 24),
+                                label: Text(
+                                  _result == null
+                                      ? 'Ge mig tips!'
+                                      : 'Nya förslag',
+                                ),
                               ),
                             ),
                           ),

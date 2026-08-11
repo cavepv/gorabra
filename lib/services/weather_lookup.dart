@@ -132,7 +132,10 @@ class WeatherForecast {
         return WeatherResult(
           temperatureC: point.temperatureC,
           apparentTemperatureC: point.apparentTemperatureC,
-          indoorReason: WeatherLookup._classify(point.apparentTemperatureC, point.precipitationMm),
+          indoorReason: WeatherLookup._classify(
+            point.apparentTemperatureC,
+            point.precipitationMm,
+          ),
         );
       }
     }
@@ -184,8 +187,14 @@ class WeatherLookup {
         DateTime(firstDate.year, firstDate.month, firstDate.day + 1),
       );
 
-      final points = <String, List<HourlyPoint>>{todayLabel: [], tomorrowLabel: []};
-      assert(todayLabel != tomorrowLabel, 'today/tomorrow date labels must never collide');
+      final points = <String, List<HourlyPoint>>{
+        todayLabel: [],
+        tomorrowLabel: [],
+      };
+      assert(
+        todayLabel != tomorrowLabel,
+        'today/tomorrow date labels must never collide',
+      );
       for (var i = 0; i < times.length; i++) {
         final dateLabel = times[i].substring(0, 10);
         final bucket = points[dateLabel];
@@ -197,7 +206,7 @@ class WeatherLookup {
           precipitations[i],
           weatherCodes[i],
           windSpeeds[i],
-          isDayFlags == null ? null : isDayFlags[i],
+          isDayFlags == null || i >= isDayFlags.length ? null : isDayFlags[i],
         );
         if (point != null) bucket.add(point);
       }
@@ -228,13 +237,18 @@ class WeatherLookup {
     // A gap in Open-Meteo's hourly series (null value) for this specific
     // entry only drops this one hour — it must not throw and take down
     // the rest of the day's otherwise-good entries via the outer catch.
-    if (rawTemp == null || rawPrecipitation == null || rawWeatherCode == null || rawWindSpeed == null) {
+    if (rawTemp == null ||
+        rawPrecipitation == null ||
+        rawWeatherCode == null ||
+        rawWindSpeed == null) {
       return null;
     }
     final temp = (rawTemp as num).toDouble();
     // Fall back to raw temperature if Open-Meteo omits apparent_temperature
     // for this entry.
-    final apparentTemp = rawApparent == null ? temp : (rawApparent as num).toDouble();
+    final apparentTemp = rawApparent == null
+        ? temp
+        : (rawApparent as num).toDouble();
     return HourlyPoint(
       time: DateTime.parse(time),
       temperatureC: temp,
@@ -243,9 +257,10 @@ class WeatherLookup {
       weatherCode: (rawWeatherCode as num).toInt(),
       windSpeedMs: (rawWindSpeed as num).toDouble(),
       // `is_day` is decorative (icon choice only) — unlike the fields
-      // above, a missing value defaults to day rather than dropping the
-      // hour.
-      isDay: rawIsDay == null ? true : (rawIsDay as num) != 0,
+      // above, a missing or unexpected-type value defaults to day rather
+      // than dropping the hour (or the whole forecast, via the outer
+      // catch, if a bad type were allowed to throw here).
+      isDay: rawIsDay is num ? rawIsDay != 0 : true,
     );
   }
 
@@ -255,7 +270,10 @@ class WeatherLookup {
   /// instead of raw air temperature matters in Gothenburg, where wind is a
   /// significant factor. Thresholds are a simple, defensible heuristic —
   /// not a full meteorological model.
-  static IndoorReason _classify(double apparentTemperatureC, double precipitationMm) {
+  static IndoorReason _classify(
+    double apparentTemperatureC,
+    double precipitationMm,
+  ) {
     if (precipitationMm > 0.2) return IndoorReason.rain;
     if (apparentTemperatureC < 2) return IndoorReason.cold;
     if (apparentTemperatureC > 28) return IndoorReason.heat;

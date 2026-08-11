@@ -15,13 +15,16 @@ weather, age-appropriateness, budget, or transport.
    level, whether you have a car, whether you want to stay home today
    ("Stanna hemma"), and optionally an "Avstånd" (distance) filter based
    on your current position and a 1-50km radius slider.
-2. Toggle between "Idag" (today) and "Imorgon" (tomorrow) — Görabra fetches
-   Gothenburg's full 24-hour forecast for both days in one call (via
+2. Toggle between "Idag" (today, shown with the weekday and date) and
+   "Imorgon" (tomorrow) — Görabra fetches Gothenburg's full 24-hour
+   forecast for both days in one call (via
    [Open-Meteo](https://open-meteo.com/), free, no API key), and shows the
-   selected day as a scrollable hourly graph: a color-coded icon, bold
-   temperature, and muted hour label for every hour, with the current hour
-   highlighted and auto-scrolled into view, so you can see how the day's
-   weather changes at a glance.
+   selected day as a scrollable hourly graph, pinned above the form so it
+   stays visible while browsing results: a color-coded icon (a moon
+   instead of a sun for clear nights), bold temperature, and muted hour
+   label for every hour, with the current hour highlighted and
+   auto-scrolled into view, so you can see how the day's weather changes
+   at a glance.
 3. The recommender hard-filters a curated ~50-activity Gothenburg catalog by
    age (must suit every kid in the group), weather (indoor/outdoor, derived
    from the selected day's midday forecast), cost vs. budget, transport
