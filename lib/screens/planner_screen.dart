@@ -111,10 +111,33 @@ class _PlannerScreenState extends State<PlannerScreen> {
   final List<RecommendationResult> _history = [];
   int _historyIndex = -1;
 
+  // All activity ids shown so far under the current filters — fed to the
+  // recommender as excludeIds so it cycles through the whole eligible pool
+  // before repeating, instead of only avoiding the immediately previous
+  // spin (see recommender.dart's top-up fallback, which naturally resets
+  // once every id has been shown once). Cleared alongside _clearResult()
+  // whenever a filter changes, since the eligible pool itself changes.
+  final Set<String> _shownIds = {};
+
+  // Bumped on every filter change; a spin captures the generation before
+  // its artificial delay and discards its result if the generation moved
+  // on in the meantime (filters changed mid-flight) — otherwise a stale
+  // spin would commit a result/history entry computed against prefs the
+  // user has since changed, and would corrupt `_shownIds` bookkeeping for
+  // the new filter's pool.
+  int _spinGeneration = 0;
+
   void _clearResult() {
     _result = null;
     _history.clear();
     _historyIndex = -1;
+    _shownIds.clear();
+    _spinGeneration++;
+    // A spin in flight when this fires will be discarded once its delay
+    // ends (see `_spin()`'s generation check) — reset the spinner now
+    // rather than leaving it stuck forever waiting for a result that will
+    // never be committed.
+    _loading = false;
   }
 
   @override
@@ -261,10 +284,11 @@ class _PlannerScreenState extends State<PlannerScreen> {
       userLng: useDistanceFilter ? _userPosition!.lng : null,
     );
     // Snapshot before the delay below — history navigation (back/forward)
-    // isn't gated by `_loading` and could otherwise mutate `_result` while
-    // this spin is "in flight", excluding the wrong activities.
-    final excludeIds =
-        _result?.activities.map((a) => a.id).toSet() ?? const <String>{};
+    // isn't gated by `_loading`, but only mutates `_result`/`_historyIndex`,
+    // never `_shownIds`; a filter change (which does mutate `_shownIds`) is
+    // guarded separately below via `_spinGeneration`.
+    final excludeIds = Set<String>.from(_shownIds);
+    final generation = _spinGeneration;
     // recommend() is synchronous (no network/IO) — a short artificial delay
     // gives the loading spinner below something to actually show.
     await Future.delayed(const Duration(milliseconds: 300));
@@ -274,7 +298,11 @@ class _PlannerScreenState extends State<PlannerScreen> {
       weather: _selectedWeather,
       excludeIds: excludeIds,
     );
-    if (!mounted) return;
+    // A filter changed while this spin was in flight — its result was
+    // computed against now-stale prefs/excludeIds, so discard it rather
+    // than committing a result/history entry or `_shownIds` update for the
+    // wrong pool.
+    if (!mounted || generation != _spinGeneration) return;
     setState(() {
       // New spin from any history position drops abandoned forward entries.
       _history.removeRange(_historyIndex + 1, _history.length);
@@ -282,6 +310,20 @@ class _PlannerScreenState extends State<PlannerScreen> {
       _historyIndex = _history.length - 1;
       _result = result;
       _loading = false;
+      // Once every eligible activity has been shown at least once, start a
+      // fresh cycle — otherwise the exclude set would keep growing until
+      // it covers the whole pool and stays that way forever, making every
+      // future spin fall straight to the top-up fallback instead of
+      // actually cycling through activities. Seed the new cycle with just
+      // this spin's ids (rather than clearing to empty) so the activities
+      // shown right now can't immediately repeat on the very next spin.
+      final newIds = result.activities.map((a) => a.id);
+      _shownIds.addAll(newIds);
+      if (_shownIds.length >= result.eligiblePoolSize) {
+        _shownIds
+          ..clear()
+          ..addAll(newIds);
+      }
     });
     // Scroll button to top of viewport so it stays reachable for re-spin
     // while the fresh suggestions below it come into view — avoids users

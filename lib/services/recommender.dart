@@ -46,9 +46,17 @@ class RecommendationResult {
   final List<Activity> activities;
   final bool isClosestMatch;
 
+  /// Size of the eligible pool this pick was drawn from (after whichever
+  /// relaxation tier matched). Callers can compare their cumulative
+  /// "shown so far" count against this to know when every eligible
+  /// activity has been shown at least once and it's time to start a new
+  /// cycle (see planner_screen.dart's `_shownIds`).
+  final int eligiblePoolSize;
+
   const RecommendationResult({
     required this.activities,
     required this.isClosestMatch,
+    required this.eligiblePoolSize,
   });
 }
 
@@ -110,13 +118,21 @@ class ActivityRecommender {
         return RecommendationResult(
           activities: _weightedPick(pool, excludeIds: excludeIds),
           isClosestMatch: i > 0,
+          // Unique ids, not raw entry count — a caller's cumulative
+          // excludeIds set is id-based, so a hypothetical duplicate-id
+          // catalog entry must not make full coverage unreachable.
+          eligiblePoolSize: pool.map((a) => a.id).toSet().length,
         );
       }
     }
 
     // Even the cost/transport-only base pool is empty (e.g. no activities
     // fit the budget/car constraints at all) — nothing to suggest.
-    return const RecommendationResult(activities: [], isClosestMatch: true);
+    return const RecommendationResult(
+      activities: [],
+      isClosestMatch: true,
+      eligiblePoolSize: 0,
+    );
   }
 
   /// `homeOnly` activities are always exempt (no fixed place to measure
