@@ -73,9 +73,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
   final List<int> _kidAges = [4];
   final Set<String> _selectedInterests = {};
   static const _budgetCeilingSek = 3000;
-  int _budgetSek = 300;
+  int _budgetSek = 0;
   final TextEditingController _budgetController = TextEditingController(
-    text: '300',
+    text: 'Gratis',
   );
   final FocusNode _budgetFocusNode = FocusNode();
   bool _hasCar = true;
@@ -461,132 +461,148 @@ class _PlannerScreenState extends State<PlannerScreen> {
         ),
         const SizedBox(height: 8),
         ExpansionTile(
+          key: const Key('moreFiltersTile'),
           title: Text(
-            'Intressen',
+            'Fler filter',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           tilePadding: EdgeInsets.zero,
           childrenPadding: const EdgeInsets.only(bottom: 8),
           children: [
-            Wrap(
-              spacing: 8,
-              children: kidInterestTags.map((tag) {
-                final selected = _selectedInterests.contains(tag);
-                return FilterChip(
-                  label: Text(tag),
-                  selected: selected,
-                  onSelected: (v) => setState(() {
-                    if (v) {
-                      _selectedInterests.add(tag);
-                    } else {
-                      _selectedInterests.remove(tag);
-                    }
-                    _clearResult();
-                  }),
-                );
-              }).toList(),
-            ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('Stanna hemma'),
-          subtitle: const Text('Visa bara aktiviteter man kan göra hemma'),
-          value: _stayHome,
-          onChanged: (v) => setState(() {
-            _stayHome = v;
-            _clearResult();
-          }),
-        ),
-        const SizedBox(height: 8),
-        Text('Budget', style: Theme.of(context).textTheme.titleMedium),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Slider(
-                key: const Key('budgetSlider'),
-                min: 0,
-                max: _budgetCeilingSek.toDouble(),
-                divisions: _budgetCeilingSek ~/ 50,
-                value: _budgetSek.toDouble(),
-                label: _budgetSek == 0 ? 'Gratis' : '$_budgetSek kr',
-                onChanged: (v) => _setBudgetFromSlider(v.round()),
+            ExpansionTile(
+              title: Text(
+                'Intressen',
+                style: Theme.of(context).textTheme.titleMedium,
               ),
-            ),
-            SizedBox(
-              width: 90,
-              child: TextField(
-                key: const Key('budgetField'),
-                controller: _budgetController,
-                focusNode: _budgetFocusNode,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                textAlign: TextAlign.end,
-                decoration: InputDecoration(
-                  suffixText: _budgetSek == 0 ? null : 'kr',
-                  isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                  border: const OutlineInputBorder(),
+              tilePadding: EdgeInsets.zero,
+              childrenPadding: const EdgeInsets.only(bottom: 8),
+              children: [
+                Wrap(
+                  spacing: 8,
+                  children: kidInterestTags.map((tag) {
+                    final selected = _selectedInterests.contains(tag);
+                    return FilterChip(
+                      label: Text(tag),
+                      selected: selected,
+                      onSelected: (v) => setState(() {
+                        if (v) {
+                          _selectedInterests.add(tag);
+                        } else {
+                          _selectedInterests.remove(tag);
+                        }
+                        _clearResult();
+                      }),
+                    );
+                  }).toList(),
                 ),
-                onChanged: _setBudgetFromField,
-              ),
+              ],
             ),
-          ],
-        ),
-        const SizedBox(height: 8),
-        SwitchListTile(
-          contentPadding: EdgeInsets.zero,
-          title: const Text('Tillgång till bil?'),
-          subtitle: _hasCar
-              ? null
-              // ponytail: passive hint only — no auto-enabling location,
-              // granting GPS access is the user's call via Avstånd below.
-              : const Text('Tips: sätt ett avstånd nedan om ni inte har bil'),
-          value: _hasCar,
-          onChanged: (v) => setState(() {
-            _hasCar = v;
-            _clearResult();
-          }),
-        ),
-        const SizedBox(height: 8),
-        ExpansionTile(
-          title: Text(
-            'Avstånd',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          subtitle: _stayHome
-              ? const Text('Gäller inte när ni stannar hemma')
-              : null,
-          tilePadding: EdgeInsets.zero,
-          childrenPadding: const EdgeInsets.only(bottom: 8),
-          children: [
+            const SizedBox(height: 8),
+            Text('Budget', style: Theme.of(context).textTheme.titleMedium),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Slider(
+                    key: const Key('budgetSlider'),
+                    min: 0,
+                    max: _budgetCeilingSek.toDouble(),
+                    divisions: _budgetCeilingSek ~/ 50,
+                    value: _budgetSek.toDouble(),
+                    label: _budgetSek == 0 ? 'Gratis' : '$_budgetSek kr',
+                    onChanged: (v) => _setBudgetFromSlider(v.round()),
+                  ),
+                ),
+                SizedBox(
+                  width: 90,
+                  child: TextField(
+                    key: const Key('budgetField'),
+                    controller: _budgetController,
+                    focusNode: _budgetFocusNode,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    textAlign: TextAlign.end,
+                    decoration: InputDecoration(
+                      suffixText: _budgetSek == 0 ? null : 'kr',
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                      ),
+                      border: const OutlineInputBorder(),
+                    ),
+                    onChanged: _setBudgetFromField,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
             SwitchListTile(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Använd min position'),
-              subtitle: _locatingPosition
-                  ? const Text('Hämtar position…')
-                  : _locationError != null
-                  ? Text(_locationError!)
-                  : null,
-              value: _useMyPosition,
-              onChanged: _stayHome ? null : (v) => _toggleUseMyPosition(v),
-            ),
-            Slider(
-              value: _maxDistanceKm,
-              min: 1,
-              max: 50,
-              divisions: 49,
-              label: '${_maxDistanceKm.round()} km',
-              onChanged: (_stayHome || !_useMyPosition || _userPosition == null)
+              title: const Text('Tillgång till bil?'),
+              subtitle: _hasCar
                   ? null
-                  : (v) => setState(() {
-                      _maxDistanceKm = v;
-                      _clearResult();
-                    }),
+                  // ponytail: passive hint only — no auto-enabling location,
+                  // granting GPS access is the user's call via Avstånd below.
+                  : const Text(
+                      'Tips: sätt ett avstånd nedan om ni inte har bil',
+                    ),
+              value: _hasCar,
+              onChanged: (v) => setState(() {
+                _hasCar = v;
+                _clearResult();
+              }),
             ),
-            Text('Max ${_maxDistanceKm.round()} km bort'),
+            const SizedBox(height: 8),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Stanna hemma'),
+              subtitle: const Text('Visa bara aktiviteter man kan göra hemma'),
+              value: _stayHome,
+              onChanged: (v) => setState(() {
+                _stayHome = v;
+                _clearResult();
+              }),
+            ),
+            const SizedBox(height: 8),
+            ExpansionTile(
+              title: Text(
+                'Avstånd',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              subtitle: _stayHome
+                  ? const Text('Gäller inte när ni stannar hemma')
+                  : null,
+              tilePadding: EdgeInsets.zero,
+              childrenPadding: const EdgeInsets.only(bottom: 8),
+              children: [
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text('Använd min position'),
+                  subtitle: _locatingPosition
+                      ? const Text('Hämtar position…')
+                      : _locationError != null
+                      ? Text(_locationError!)
+                      : null,
+                  value: _useMyPosition,
+                  onChanged: _stayHome ? null : (v) => _toggleUseMyPosition(v),
+                ),
+                Slider(
+                  value: _maxDistanceKm,
+                  min: 1,
+                  max: 50,
+                  divisions: 49,
+                  label: '${_maxDistanceKm.round()} km',
+                  onChanged:
+                      (_stayHome || !_useMyPosition || _userPosition == null)
+                      ? null
+                      : (v) => setState(() {
+                          _maxDistanceKm = v;
+                          _clearResult();
+                        }),
+                ),
+                Text('Max ${_maxDistanceKm.round()} km bort'),
+              ],
+            ),
           ],
         ),
       ],

@@ -18,6 +18,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // Budget lives behind the collapsed "Fler filter" section.
+    await tester.tap(find.byKey(const Key('moreFiltersTile')));
+    await tester.pumpAndSettle();
+
     final fieldFinder = find.byKey(const Key('budgetField'));
     expect(fieldFinder, findsOneWidget);
 

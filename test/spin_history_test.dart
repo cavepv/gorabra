@@ -19,6 +19,10 @@ void main() {
     );
     await tester.pumpAndSettle();
 
+    // "Stanna hemma" lives behind the collapsed "Fler filter" section.
+    await tester.tap(find.byKey(const Key('moreFiltersTile')));
+    await tester.pumpAndSettle();
+
     bool backEnabled() =>
         tester.widget<IconButton>(find.widgetWithIcon(IconButton, Icons.arrow_back)).onPressed !=
         null;

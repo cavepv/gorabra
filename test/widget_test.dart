@@ -40,6 +40,12 @@ void main() {
         find.text('Inga aktiviteter matchar dina val just nu.').evaluate().isNotEmpty;
     expect(hasResult || hasNoMatchMessage, isTrue);
 
+    // Grouped controls (Intressen, Budget, car, Stanna hemma, Avstånd) live
+    // behind the collapsed "Fler filter" section — expand it once before
+    // interacting with any of them.
+    await tester.tap(find.byKey(const Key('moreFiltersTile')));
+    await tester.pumpAndSettle();
+
     // Toggle "Stanna hemma" and re-spin in the same app instance — pumping
     // a second full GorabraApp tree in this test file hangs on the second
     // pumpAndSettle (pre-existing issue unrelated to this toggle), so this
@@ -78,7 +84,12 @@ void main() {
 
     expect(find.text('Kunde inte hämta din position.'), findsNothing);
     final sliderFinder = find.descendant(
-      of: find.byType(ExpansionTile),
+      of: find
+          .ancestor(
+            of: find.text('Använd min position'),
+            matching: find.byType(ExpansionTile),
+          )
+          .first,
       matching: find.byType(Slider),
     );
     final slider = tester.widget<Slider>(sliderFinder);
