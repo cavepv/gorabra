@@ -73,9 +73,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
   final List<int> _kidAges = [4];
   final Set<String> _selectedInterests = {};
   static const _budgetCeilingSek = 3000;
-  int _budgetSek = 0;
+  // Starts at the ceiling (no filtering) so a fresh spin shows all
+  // activities regardless of cost — 0 means "free only" and is a real
+  // user-selectable filter, not the default/unset state.
+  int _budgetSek = _budgetCeilingSek;
   final TextEditingController _budgetController = TextEditingController(
-    text: 'Gratis',
+    text: '$_budgetCeilingSek',
   );
   final FocusNode _budgetFocusNode = FocusNode();
   bool _hasCar = true;
@@ -361,24 +364,19 @@ class _PlannerScreenState extends State<PlannerScreen> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        toolbarHeight: 80,
+        toolbarHeight: 140,
         title: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 24, 8, 8),
-          child: Row(
+          padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.lightbulb_rounded, color: Colors.amber),
-              const SizedBox(width: 8),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text('Hittepå'),
-                  Text(
-                    'Tips på aktiviteter med barnen',
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
+              Image.asset('assets/logo_proposals/logo.png', height: 80),
+              const SizedBox(height: 4),
+              const Text(
+                'Tips på aktiviteter i Götet med barnen',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 11),
+                maxLines: 2,
               ),
             ],
           ),
@@ -505,7 +503,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
         ExpansionTile(
           key: const Key('moreFiltersTile'),
           title: Text(
-            'Fler filter',
+            'Filter',
             style: Theme.of(context).textTheme.titleMedium,
           ),
           tilePadding: EdgeInsets.zero,

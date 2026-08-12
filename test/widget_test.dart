@@ -24,7 +24,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Hittepå'), findsOneWidget);
+    expect(find.text('Tips på aktiviteter i Götet med barnen'), findsOneWidget);
     expect(find.text('Ge mig tips!'), findsOneWidget);
     // Flutter's test HTTP binding always returns 400 for any request, so
     // the weather fetch fails deterministically — the hourly graph's
