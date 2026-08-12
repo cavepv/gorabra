@@ -3,13 +3,12 @@
 ### Requirement: Activity data schema
 The system SHALL define each activity entry with the following fields: `id`,
 `name`, `description`, `minAge`, `maxAge`, `indoor` (bool), `interests`
-(list of tags), `parentInterest` (list of tags), `social` (bool), `benefits`
-(list of tags), `benefitNote` (string), `openingHours` (string), `location`
-(string), `distanceKm` (number), `transportModes` (list of tags: `walk`,
-`bike`, `publicTransit`, `car`), `costSek` (integer, flat SEK cost for the
-whole outing, `0` for free), `homeOnly` (bool, optional, defaults to
-`false` when absent), and `lat`/`lng` (numbers, optional, absent/null for
-`homeOnly` activities).
+(list of tags), `social` (bool), `benefits` (list of tags), `benefitNote`
+(string), `openingHours` (string), `location` (string), `distanceKm`
+(number), `transportModes` (list of tags: `walk`, `bike`, `publicTransit`,
+`car`), `costSek` (integer, flat SEK cost for the whole outing, `0` for
+free), `homeOnly` (bool, optional, defaults to `false` when absent), and
+`lat`/`lng` (numbers, optional, absent/null for `homeOnly` activities).
 
 #### Scenario: Loading the catalog
 - **WHEN** the app starts

@@ -18,9 +18,6 @@ class Activity {
   /// Kid interest tags — hard filter, relaxed first if the pool is empty.
   final List<String> interests;
 
-  /// Parent interest tags — scoring boost only, never excludes.
-  final List<String> parentInterest;
-
   /// Good for meeting other parents/kids — scoring boost only.
   final bool social;
 
@@ -67,7 +64,6 @@ class Activity {
     required this.maxAge,
     required this.indoor,
     required this.interests,
-    required this.parentInterest,
     required this.social,
     required this.benefits,
     required this.benefitNote,
@@ -90,7 +86,6 @@ class Activity {
       maxAge: json['maxAge'] as int,
       indoor: json['indoor'] as bool,
       interests: List<String>.from(json['interests'] as List),
-      parentInterest: List<String>.from(json['parentInterest'] as List),
       social: json['social'] as bool,
       benefits: List<String>.from(json['benefits'] as List),
       benefitNote: json['benefitNote'] as String,
