@@ -11,9 +11,6 @@
       "djur",
       "lek"
     ],
-    "parentInterest": [
-      "nostalgi"
-    ],
     "social": true,
     "benefits": [
       "physicalActivity",
@@ -43,9 +40,6 @@
       "djur",
       "natur",
       "lek"
-    ],
-    "parentInterest": [
-      "natur"
     ],
     "social": true,
     "benefits": [
@@ -78,9 +72,6 @@
       "vetenskap",
       "äventyr"
     ],
-    "parentInterest": [
-      "vetenskap"
-    ],
     "social": false,
     "benefits": [
       "cognitive"
@@ -110,10 +101,6 @@
       "vatten",
       "friluftsliv"
     ],
-    "parentInterest": [
-      "natur",
-      "motion"
-    ],
     "social": false,
     "benefits": [
       "physicalActivity"
@@ -141,10 +128,6 @@
     "interests": [
       "natur",
       "lek"
-    ],
-    "parentInterest": [
-      "natur",
-      "trädgård"
     ],
     "social": false,
     "benefits": [
@@ -176,10 +159,6 @@
       "äventyr",
       "fordon"
     ],
-    "parentInterest": [
-      "historia",
-      "sjöfart"
-    ],
     "social": false,
     "benefits": [
       "physicalActivity",
@@ -208,7 +187,6 @@
       "vatten",
       "lek"
     ],
-    "parentInterest": [],
     "social": true,
     "benefits": [
       "physicalActivity",
@@ -239,9 +217,6 @@
       "konst",
       "skapande"
     ],
-    "parentInterest": [
-      "konst"
-    ],
     "social": false,
     "benefits": [
       "cognitive",
@@ -270,7 +245,6 @@
       "lek",
       "vatten"
     ],
-    "parentInterest": [],
     "social": true,
     "benefits": [
       "physicalActivity",
@@ -301,9 +275,6 @@
       "djur",
       "vetenskap"
     ],
-    "parentInterest": [
-      "natur"
-    ],
     "social": false,
     "benefits": [
       "cognitive"
@@ -330,9 +301,6 @@
     "interests": [
       "fordon",
       "friluftsliv"
-    ],
-    "parentInterest": [
-      "motion"
     ],
     "social": false,
     "benefits": [
@@ -361,7 +329,6 @@
       "lek",
       "äventyr"
     ],
-    "parentInterest": [],
     "social": true,
     "benefits": [
       "physicalActivity",
@@ -390,9 +357,6 @@
       "läsning",
       "lugn"
     ],
-    "parentInterest": [
-      "läsning"
-    ],
     "social": true,
     "benefits": [
       "cognitive",
@@ -419,9 +383,6 @@
     "indoor": false,
     "interests": [
       "djur",
-      "natur"
-    ],
-    "parentInterest": [
       "natur"
     ],
     "social": false,
@@ -453,10 +414,6 @@
       "natur",
       "historia"
     ],
-    "parentInterest": [
-      "historia",
-      "trädgård"
-    ],
     "social": false,
     "benefits": [
       "physicalActivity"
@@ -482,9 +439,6 @@
     "interests": [
       "vatten",
       "äventyr"
-    ],
-    "parentInterest": [
-      "sjöfart"
     ],
     "social": false,
     "benefits": [
@@ -515,10 +469,6 @@
       "äventyr",
       "friluftsliv"
     ],
-    "parentInterest": [
-      "natur",
-      "motion"
-    ],
     "social": false,
     "benefits": [
       "physicalActivity",
@@ -548,7 +498,6 @@
       "fordon",
       "äventyr"
     ],
-    "parentInterest": [],
     "social": true,
     "benefits": [
       "physicalActivity",
@@ -575,9 +524,6 @@
     "indoor": false,
     "interests": [
       "lek"
-    ],
-    "parentInterest": [
-      "fika"
     ],
     "social": true,
     "benefits": [
@@ -606,10 +552,6 @@
       "natur",
       "äventyr"
     ],
-    "parentInterest": [
-      "natur",
-      "lugn"
-    ],
     "social": false,
     "benefits": [
       "physicalActivity",
@@ -637,10 +579,6 @@
     "interests": [
       "musik",
       "skapande"
-    ],
-    "parentInterest": [
-      "kultur",
-      "musik"
     ],
     "social": false,
     "benefits": [
@@ -671,10 +609,6 @@
       "skapande",
       "äventyr"
     ],
-    "parentInterest": [
-      "lugn",
-      "nostalgi"
-    ],
     "social": false,
     "benefits": [
       "socialEmotional"
@@ -697,10 +631,6 @@
     "interests": [
       "musik",
       "lek"
-    ],
-    "parentInterest": [
-      "musik",
-      "nostalgi"
     ],
     "social": false,
     "benefits": [
@@ -726,9 +656,6 @@
       "äventyr",
       "lek"
     ],
-    "parentInterest": [
-      "kultur"
-    ],
     "social": false,
     "benefits": [
       "problemSolving"
@@ -752,9 +679,6 @@
       "skapande",
       "lek"
     ],
-    "parentInterest": [
-      "fika"
-    ],
     "social": false,
     "benefits": [
       "motorSkills"
@@ -776,9 +700,6 @@
     "indoor": true,
     "interests": [
       "lek"
-    ],
-    "parentInterest": [
-      "lugn"
     ],
     "social": true,
     "benefits": [
@@ -803,10 +724,6 @@
       "skapande",
       "lugn"
     ],
-    "parentInterest": [
-      "lugn",
-      "kultur"
-    ],
     "social": false,
     "benefits": [],
     "benefitNote": "Ett strukturerat filmavbrott med pyssel ger omväxling till stillasittandet och håller kvar uppmärksamheten.",
@@ -827,9 +744,6 @@
     "interests": [
       "vetenskap",
       "skapande"
-    ],
-    "parentInterest": [
-      "kultur"
     ],
     "social": false,
     "benefits": [
@@ -852,9 +766,6 @@
     "indoor": true,
     "interests": [
       "skapande",
-      "konst"
-    ],
-    "parentInterest": [
       "konst"
     ],
     "social": false,
@@ -880,9 +791,6 @@
       "lek",
       "friluftsliv"
     ],
-    "parentInterest": [
-      "motion"
-    ],
     "social": false,
     "benefits": [
       "physicalActivity",
@@ -905,10 +813,6 @@
     "indoor": true,
     "interests": [
       "fordon",
-      "vetenskap"
-    ],
-    "parentInterest": [
-      "historia",
       "vetenskap"
     ],
     "social": true,
@@ -940,9 +844,6 @@
       "historia",
       "vetenskap"
     ],
-    "parentInterest": [
-      "historia"
-    ],
     "social": false,
     "benefits": [
       "cognitive"
@@ -967,9 +868,6 @@
     "indoor": true,
     "interests": [
       "lek"
-    ],
-    "parentInterest": [
-      "fika"
     ],
     "social": true,
     "benefits": [
@@ -998,9 +896,6 @@
     "interests": [
       "vatten",
       "djur",
-      "natur"
-    ],
-    "parentInterest": [
       "natur"
     ],
     "social": true,
@@ -1032,9 +927,6 @@
       "lek",
       "skapande"
     ],
-    "parentInterest": [
-      "kultur"
-    ],
     "social": false,
     "benefits": [
       "motorSkills",
@@ -1058,9 +950,6 @@
     "interests": [
       "lek",
       "friluftsliv"
-    ],
-    "parentInterest": [
-      "motion"
     ],
     "social": true,
     "benefits": [
@@ -1086,9 +975,6 @@
       "lek",
       "skapande"
     ],
-    "parentInterest": [
-      "läsning"
-    ],
     "social": false,
     "benefits": [
       "motorSkills",
@@ -1112,9 +998,6 @@
     "interests": [
       "lek",
       "äventyr"
-    ],
-    "parentInterest": [
-      "motion"
     ],
     "social": true,
     "benefits": [
@@ -1142,9 +1025,6 @@
     "interests": [
       "äventyr",
       "friluftsliv"
-    ],
-    "parentInterest": [
-      "motion"
     ],
     "social": true,
     "benefits": [
@@ -1175,9 +1055,6 @@
       "vatten",
       "äventyr"
     ],
-    "parentInterest": [
-      "sjöfart"
-    ],
     "social": true,
     "benefits": [
       "cognitive"
@@ -1205,9 +1082,6 @@
       "lek",
       "skapande"
     ],
-    "parentInterest": [
-      "lugn"
-    ],
     "social": false,
     "benefits": [
       "socialEmotional",
@@ -1231,9 +1105,6 @@
     "interests": [
       "lek",
       "friluftsliv"
-    ],
-    "parentInterest": [
-      "motion"
     ],
     "social": true,
     "benefits": [
@@ -1262,9 +1133,6 @@
     "interests": [
       "natur",
       "friluftsliv"
-    ],
-    "parentInterest": [
-      "natur"
     ],
     "social": false,
     "benefits": [
@@ -1295,9 +1163,6 @@
       "vatten",
       "lek"
     ],
-    "parentInterest": [
-      "motion"
-    ],
     "social": true,
     "benefits": [
       "physicalActivity"
@@ -1324,9 +1189,6 @@
     "interests": [
       "äventyr",
       "friluftsliv"
-    ],
-    "parentInterest": [
-      "motion"
     ],
     "social": true,
     "benefits": [
@@ -1357,10 +1219,6 @@
       "natur",
       "äventyr"
     ],
-    "parentInterest": [
-      "natur",
-      "sjöfart"
-    ],
     "social": true,
     "benefits": [
       "physicalActivity",
@@ -1388,9 +1246,6 @@
       "lek",
       "musik"
     ],
-    "parentInterest": [
-      "fika"
-    ],
     "social": true,
     "benefits": [
       "socialEmotional"
@@ -1416,9 +1271,6 @@
     "interests": [
       "friluftsliv",
       "lek"
-    ],
-    "parentInterest": [
-      "natur"
     ],
     "social": false,
     "benefits": [],
