@@ -260,6 +260,55 @@ void main() {
       expect(resultWithCar.activities.first.id, 'homeActivity');
     });
 
+    test('indoorOnly true: hard-filters to indoor pool, never relaxed', () {
+      final catalog = [
+        _activity(id: 'outdoorActivity', indoor: false, interests: ['lek']),
+        _activity(id: 'indoorActivity', indoor: true),
+      ];
+      final prefs = UserPreferences(
+        kidAges: [5],
+        // Matches the outdoor activity's interest — without the indoorOnly
+        // hard filter, 'outdoorActivity' would win on interest match alone.
+        kidInterests: ['lek'],
+        maxBudgetSek: 100,
+        hasCar: true,
+        indoorOnly: true,
+      );
+      final result = ActivityRecommender(random: null).recommend(
+        catalog: catalog,
+        prefs: prefs,
+        weather: null,
+      );
+
+      expect(result.activities, hasLength(1));
+      expect(result.activities.first.id, 'indoorActivity');
+    });
+
+    test(
+      'indoorOnly true + stayHome true: homeOnly (always indoor) activities still match',
+      () {
+        final catalog = [
+          _activity(id: 'homeActivity', homeOnly: true, indoor: true),
+        ];
+        final prefs = UserPreferences(
+          kidAges: [5],
+          kidInterests: [],
+          maxBudgetSek: 100,
+          hasCar: true,
+          stayHome: true,
+          indoorOnly: true,
+        );
+        final result = ActivityRecommender(random: null).recommend(
+          catalog: catalog,
+          prefs: prefs,
+          weather: null,
+        );
+
+        expect(result.activities, hasLength(1));
+        expect(result.activities.first.id, 'homeActivity');
+      },
+    );
+
     test('distance filter: excludes activities outside the radius', () {
       final catalog = [
         _activity(id: 'near', lat: 57.71, lng: 11.98), // ~0.3km from user

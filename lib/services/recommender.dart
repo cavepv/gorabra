@@ -20,6 +20,11 @@ class UserPreferences {
   /// `homeOnly` activities from normal "go somewhere" suggestions.
   final bool stayHome;
 
+  /// When true, hard-filters to `indoor` activities only (never relaxed,
+  /// same tier as cost/transport/stayHome). No-op when `stayHome` is also
+  /// true since every `homeOnly` activity is already indoor.
+  final bool indoorOnly;
+
   /// Optional distance-radius filter: when non-null, hard-filters (never
   /// relaxed) to activities within `maxDistanceKm` of `userLat`/`userLng`.
   /// `homeOnly` activities are always exempt, same as the `hasCar` filter.
@@ -33,6 +38,7 @@ class UserPreferences {
     required this.maxBudgetSek,
     required this.hasCar,
     this.stayHome = false,
+    this.indoorOnly = false,
     this.maxDistanceKm,
     this.userLat,
     this.userLng,
@@ -63,11 +69,11 @@ class RecommendationResult {
 /// Filters the activity catalog and randomly picks 1-3 suggestions.
 ///
 /// Filter tiers (see design.md): interests → cost/budget → transport/car →
-/// stayHome/homeOnly → distance radius → weather → age. Cost, transport,
-/// stayHome, and distance radius are hard filters that are never relaxed;
-/// interests, weather, and age are relaxed in that order if the pool is
-/// empty. social/physicalActivity only affect the odds of
-/// being picked, never exclude an activity. transport/hasCar and the
+/// stayHome/homeOnly → indoorOnly → distance radius → weather → age. Cost,
+/// transport, stayHome, indoorOnly, and distance radius are hard filters
+/// that are never relaxed; interests, weather, and age are relaxed in that
+/// order if the pool is empty. social/physicalActivity only affect the odds
+/// of being picked, never exclude an activity. transport/hasCar and the
 /// distance radius never exclude a `homeOnly` activity — there's nowhere
 /// to drive to (or measure distance to) when staying home.
 class ActivityRecommender {
@@ -81,7 +87,8 @@ class ActivityRecommender {
     required WeatherResult? weather,
     Set<String> excludeIds = const {},
   }) {
-    // Cost, transport, stayHome, and distance radius are never relaxed —
+    // Cost, transport, stayHome, indoorOnly, and distance radius are never
+    // relaxed —
     // this is the floor every candidate pool must satisfy.
     final base = catalog.where((a) {
       final withinBudget = a.costSek <= prefs.maxBudgetSek;
@@ -89,8 +96,11 @@ class ActivityRecommender {
       final reachable =
           a.homeOnly || prefs.hasCar || a.transportModes.any((m) => m != TransportMode.car);
       final homeMatch = prefs.stayHome ? a.homeOnly : !a.homeOnly;
+      // homeOnly activities are always indoor, so this is a no-op when
+      // stayHome is also on — nothing to hard-filter out there.
+      final indoorMatch = prefs.indoorOnly ? a.indoor : true;
       final withinDistance = _matchesDistance(a, prefs);
-      return withinBudget && reachable && homeMatch && withinDistance;
+      return withinBudget && reachable && homeMatch && indoorMatch && withinDistance;
     }).toList();
 
     bool matchesInterests(Activity a) =>

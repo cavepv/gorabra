@@ -10,13 +10,14 @@ to free-only activities, step 50 kr) with an accompanying optional
 textfield for entering an exact amount directly (both controls stay in
 sync and clamp to the 0-3000 kr range), whether they have a car
 (`hasCar`, default on), whether to stay home (`stayHome`, default off),
-and an optional distance filter based on their current position and a
+whether to show only indoor activities (`indoorOnly`, default off,
+disabled and moot while `stayHome` is active since every `homeOnly`
+activity is already indoor), and an optional distance filter based on
+their current position and a
 radius slider — SHALL be grouped together under a single collapsible
 "Filter" section that is collapsed by default on every fresh
 session, so the form shows only the kid age input and the collapsed
-section header until the user chooses to expand it.
-
-#### Scenario: Completing the input form with one kid
+section header until the user chooses to expand it.#### Scenario: Completing the input form with one kid
 - **WHEN** the user opens the app for a new session
 - **THEN** a single kid-age row (age slider defaulting to 4) is shown
   always visible, the "Filter" section is collapsed, and the user
@@ -25,8 +26,8 @@ section header until the user chooses to expand it.
 #### Scenario: Expanding "Filter"
 - **WHEN** the user taps the collapsed "Filter" section
 - **THEN** it expands in place to reveal Intressen, Budget, Tillgång till
-  bil, Stanna hemma, and Avstånd, in that order, without navigating away
-  from the planner screen
+  bil, Stanna hemma, Inomhusaktiviteter, and Avstånd, in that order,
+  without navigating away from the planner screen
 
 #### Scenario: Setting budget via the textfield
 - **WHEN** the user types a number directly into the budget textfield
@@ -66,6 +67,17 @@ section header until the user chooses to expand it.
 - **THEN** subsequent spins only suggest `homeOnly` activities,
   independent of the Idag/Imorgon day selection, and any existing result
   is cleared until the user spins again
+
+#### Scenario: Toggling "Inomhusaktiviteter"
+- **WHEN** the user enables the "Inomhusaktiviteter" switch
+- **THEN** subsequent spins only suggest `indoor: true` activities, and
+  any existing result is cleared until the user spins again
+
+#### Scenario: "Inomhusaktiviteter" disabled while staying home
+- **WHEN** "Stanna hemma" is active
+- **THEN** the "Inomhusaktiviteter" switch is disabled, since every
+  `homeOnly` activity is already indoor and the toggle would have no
+  effect
 
 #### Scenario: Expanding the distance section
 - **WHEN** the user expands the "Avstånd" section and enables "Använd min

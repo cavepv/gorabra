@@ -72,14 +72,24 @@ or radius.
   through to the progressive relaxation behavior (age is relaxed last,
   unchanged from the single-kid case)
 
+#### Scenario: indoorOnly excludes outdoor activities
+- **WHEN** the user sets `indoorOnly: true`
+- **THEN** the candidate pool contains only activities with `indoor: true`,
+  regardless of interests, weather, or age relaxation
+
+#### Scenario: indoorOnly combined with stayHome is a no-op
+- **WHEN** the user sets both `stayHome: true` and `indoorOnly: true`
+- **THEN** the candidate pool is unchanged from `stayHome: true` alone,
+  since every `homeOnly` activity is already `indoor: true`
+
 ### Requirement: Progressive relaxation on empty pool
 The system SHALL relax hard filters in this order if the candidate pool is
 empty: first drop the kid-interests filter, then drop the weather filter,
 then drop the age filter (i.e. the multi-kid age-intersection check from
 the age hard filter) — in that order, stopping as soon as the pool is
 non-empty. The `costSek`/`maxBudgetSek`, `transportModes`/`hasCar`,
-`homeOnly`/`stayHome`, and distance-radius filters SHALL NOT be relaxed
-under any circumstance.
+`homeOnly`/`stayHome`, `indoor`/`indoorOnly`, and distance-radius filters
+SHALL NOT be relaxed under any circumstance.
 
 #### Scenario: stayHome never relaxed
 - **WHEN** the `stayHome`-filtered pool would be empty even after

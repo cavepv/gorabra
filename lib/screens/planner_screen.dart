@@ -111,6 +111,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
   final FocusNode _budgetFocusNode = FocusNode();
   bool _hasCar = true;
   bool _stayHome = false;
+  bool _indoorOnly = false;
 
   bool _useMyPosition = false;
   double _maxDistanceKm = 5;
@@ -310,6 +311,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
       maxBudgetSek: _budgetSek,
       hasCar: _hasCar,
       stayHome: _stayHome,
+      indoorOnly: _indoorOnly,
       maxDistanceKm: useDistanceFilter ? _maxDistanceKm : null,
       userLat: useDistanceFilter ? _userPosition!.lat : null,
       userLng: useDistanceFilter ? _userPosition!.lng : null,
@@ -637,6 +639,24 @@ class _PlannerScreenState extends State<PlannerScreen> {
                 _stayHome = v;
                 _clearResult();
               }),
+            ),
+            const SizedBox(height: 8),
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: const Text('Inomhusaktiviteter'),
+              // ponytail: no-op when stayHome is on (every homeOnly activity
+              // is already indoor) — disable instead of letting the user
+              // toggle something with no effect.
+              subtitle: _stayHome
+                  ? const Text('Alla hemmaaktiviteter är inomhus')
+                  : const Text('Visa bara inomhusaktiviteter'),
+              value: _indoorOnly,
+              onChanged: _stayHome
+                  ? null
+                  : (v) => setState(() {
+                      _indoorOnly = v;
+                      _clearResult();
+                    }),
             ),
             const SizedBox(height: 8),
             ExpansionTile(
