@@ -365,6 +365,13 @@ class _PlannerScreenState extends State<PlannerScreen> {
       appBar: AppBar(
         centerTitle: true,
         toolbarHeight: 140,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'Om appen',
+            onPressed: () => _showAboutSheet(context),
+          ),
+        ],
         title: Padding(
           padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
           child: Column(
@@ -885,7 +892,49 @@ class _PlannerScreenState extends State<PlannerScreen> {
             delay: Duration(milliseconds: index * 200),
             child: _buildActivityCard(activity),
           ),
+        const SizedBox(height: 4),
+        Text(
+          'Dubbelkolla alltid aktuella öppettider och priser',
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
+        ),
       ],
+    );
+  }
+
+  void _showAboutSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      useSafeArea: true,
+      builder: (context) => SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 0, 20, 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Om Görabra',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Görabra hjälper familjer i Göteborg att snabbt hitta en '
+                'aktivitet för barnen utifrån ålder, väder, budget och om ni '
+                'har bil. Ingen inloggning krävs; positionen (om du väljer '
+                'att dela den) används bara lokalt på telefonen.',
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Dubbelkolla alltid aktuella öppettider och priser innan ni '
+                'åker, eftersom dessa kan ändras utan att appen uppdateras.',
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
