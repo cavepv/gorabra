@@ -539,10 +539,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
         const SizedBox(height: 8),
         ExpansionTile(
           key: const Key('moreFiltersTile'),
-          title: Text(
-            'Filter',
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
+          title: Text('Filter', style: Theme.of(context).textTheme.titleMedium),
           tilePadding: EdgeInsets.zero,
           childrenPadding: const EdgeInsets.only(bottom: 8),
           children: [
@@ -576,6 +573,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
             ),
             const SizedBox(height: 8),
             Text('Budget', style: Theme.of(context).textTheme.titleMedium),
+            Text(
+              'Totalt för hela utflykten, inte per person',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -602,9 +605,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                     decoration: InputDecoration(
                       suffixText: _budgetSek == 0 ? null : 'kr',
                       isDense: true,
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 10,
-                      ),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
                       border: const OutlineInputBorder(),
                     ),
                     onChanged: _setBudgetFromField,
@@ -777,33 +778,45 @@ class _PlannerScreenState extends State<PlannerScreen> {
     // No fixed height: IntrinsicHeight lets the Row (and this scroll view)
     // size to its content, so larger text-scale settings grow the row
     // instead of overflowing a hard-coded box.
-    return IntrinsicHeight(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildHourlyLegendColumn(),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: _hourlyScrollController,
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  for (final point in hourly)
-                    _buildHourlyColumn(
-                      point,
-                      isCurrentHour:
-                          _selectedDay == Day.today &&
-                          point.time.year == now.year &&
-                          point.time.month == now.month &&
-                          point.time.day == now.day &&
-                          point.time.hour == now.hour,
-                    ),
-                ],
-              ),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Väder i Göteborg',
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
           ),
-        ],
-      ),
+        ),
+        const SizedBox(height: 2),
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _buildHourlyLegendColumn(),
+              Expanded(
+                child: SingleChildScrollView(
+                  controller: _hourlyScrollController,
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      for (final point in hourly)
+                        _buildHourlyColumn(
+                          point,
+                          isCurrentHour:
+                              _selectedDay == Day.today &&
+                              point.time.year == now.year &&
+                              point.time.month == now.month &&
+                              point.time.day == now.day &&
+                              point.time.hour == now.hour,
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -963,10 +976,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Om Hittepå',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+              Text('Om Hittepå', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
               const Text(
                 'Hittepå finns för att ibland vill man bara enkelt ha '
