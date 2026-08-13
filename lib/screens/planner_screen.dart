@@ -393,8 +393,11 @@ class _PlannerScreenState extends State<PlannerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        toolbarHeight: 140,
+        // Left-aligned (not centered) — with an icon-left/text-right title
+        // Row, centerTitle would visually skew left of true-center because
+        // of the trailing info-icon action throwing off the leading/actions
+        // symmetry NavigationToolbar uses to center it.
+        toolbarHeight: 90,
         actions: [
           IconButton(
             icon: const Icon(Icons.info_outline),
@@ -403,17 +406,20 @@ class _PlannerScreenState extends State<PlannerScreen> {
           ),
         ],
         title: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-          child: Column(
+          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+          child: Row(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Image.asset('assets/logo_proposals/logo.png', height: 80),
-              const SizedBox(height: 4),
-              const Text(
-                'Tips på aktiviteter i Götet med barnen',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 11),
-                maxLines: 2,
+              Image.asset('assets/logo_proposals/logo.png', height: 70),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  'Tips på aktiviteter i Götet med barnen',
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 11),
+                  maxLines: 2,
+                ),
               ),
             ],
           ),
@@ -954,11 +960,14 @@ class _PlannerScreenState extends State<PlannerScreen> {
             child: _buildActivityCard(activity),
           ),
         const SizedBox(height: 4),
-        Text(
-          'Dubbelkolla alltid aktuella öppettider och priser',
-          style: Theme.of(
-            context,
-          ).textTheme.bodySmall?.copyWith(color: Colors.red.shade900),
+        Center(
+          child: Text(
+            'Dubbelkolla alltid aktuella öppettider och priser',
+            textAlign: TextAlign.center,
+            style: Theme.of(
+              context,
+            ).textTheme.bodySmall?.copyWith(color: Colors.red.shade900),
+          ),
         ),
       ],
     );
