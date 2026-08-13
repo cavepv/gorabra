@@ -895,9 +895,9 @@ class _PlannerScreenState extends State<PlannerScreen> {
         const SizedBox(height: 4),
         Text(
           'Dubbelkolla alltid aktuella öppettider och priser',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: Colors.red.shade900),
         ),
       ],
     );
@@ -916,20 +916,27 @@ class _PlannerScreenState extends State<PlannerScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Om Görabra',
+                'Om Hittepå',
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 12),
               const Text(
-                'Görabra hjälper familjer i Göteborg att snabbt hitta en '
-                'aktivitet för barnen utifrån ålder, väder, budget och om ni '
-                'har bil. Ingen inloggning krävs; positionen (om du väljer '
-                'att dela den) används bara lokalt på telefonen.',
+                'Hittepå finns för att ibland vill man bara enkelt ha '
+                'några snabba tips på vad man kan hitta på med barnen i '
+                'Göteborg. Utan att behöva installera appar, gå igenom '
+                'Facebook grupper, Instagram konton eller event kalendrar.',
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Vill du vara mer precis går det att filtrera aktiviteter '
+                'utifrån intressen, ålder, budget, tillgång till bil, '
+                'närhet - position (om du väljer att dela den) används '
+                'bara lokalt på telefonen.',
               ),
               const SizedBox(height: 12),
               const Text(
                 'Dubbelkolla alltid aktuella öppettider och priser innan ni '
-                'åker, eftersom dessa kan ändras utan att appen uppdateras.',
+                'åker, eftersom dessa kan ändras utan att appen hunnit uppdaterats.',
               ),
             ],
           ),
