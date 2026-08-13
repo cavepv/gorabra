@@ -7,6 +7,34 @@ import '../services/location_lookup.dart';
 import '../services/recommender.dart';
 import '../services/weather_lookup.dart';
 
+// ponytail: only strict "HH:MM–HH:MM" (no trailing qualifier like
+// "(vardagar)") is parsed; anything else (free text, seasonal, day
+// qualifiers) returns null rather than guessing. Upgrade path: add
+// day-qualifier parsing if the dataset gains many such entries.
+final _hoursPattern = RegExp(
+  r'^([01]\d|2[0-3]):([0-5]\d)[–-]([01]\d|2[0-3]):([0-5]\d)$',
+);
+
+/// Returns whether [openingHours] indicates the activity is open at [now]
+/// (defaults to the current wall-clock time), or `null` if the text isn't a
+/// strict "HH:MM–HH:MM" range and open/closed can't be reliably computed.
+bool? isOpenNow(String openingHours, {DateTime? now}) {
+  final match = _hoursPattern.firstMatch(openingHours.trim());
+  if (match == null) return null;
+
+  final openMinutes =
+      int.parse(match.group(1)!) * 60 + int.parse(match.group(2)!);
+  final closeMinutes =
+      int.parse(match.group(3)!) * 60 + int.parse(match.group(4)!);
+  // ponytail: overnight ranges (close <= open, e.g. "22:00–02:00") aren't
+  // handled — return null rather than silently reporting "closed" all
+  // night. Upgrade path: wrap-around comparison if the dataset gains one.
+  if (closeMinutes <= openMinutes) return null;
+  final clock = now ?? DateTime.now();
+  final nowMinutes = clock.hour * 60 + clock.minute;
+  return nowMinutes >= openMinutes && nowMinutes < closeMinutes;
+}
+
 /// Kid-interest tags present in the curated dataset.
 const kidInterestTags = [
   'djur',
@@ -945,6 +973,32 @@ class _PlannerScreenState extends State<PlannerScreen> {
     );
   }
 
+  Widget _buildOpenNowRow(String openingHours) {
+    final isOpen = isOpenNow(openingHours);
+    if (isOpen == null) return const SizedBox.shrink();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 4),
+      child: Row(
+        children: [
+          Icon(
+            isOpen ? Icons.check_circle : Icons.cancel,
+            size: 14,
+            color: isOpen ? Colors.green.shade700 : Colors.red.shade700,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            isOpen ? 'Öppet nu' : 'Stängt nu',
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+              color: isOpen ? Colors.green.shade700 : Colors.red.shade700,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildActivityCard(Activity activity) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -974,6 +1028,8 @@ class _PlannerScreenState extends State<PlannerScreen> {
                   ),
                 ],
               ),
+            if (!activity.homeOnly && _selectedDay == Day.today)
+              _buildOpenNowRow(activity.openingHours),
             const SizedBox(height: 8),
             Text(
               activity.benefitNote,
