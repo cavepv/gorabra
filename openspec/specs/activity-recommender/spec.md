@@ -5,7 +5,7 @@ The system SHALL filter the activity catalog down to a candidate pool using
 these hard filters: every kid's age (from the user's list of one to four
 kid ages) within the activity's `[minAge, maxAge]` range; `indoor` matching
 today's weather classification (when known); `costSek` at or below the
-user's stated `maxBudgetSek` (0-3000 kr); at least one of the activity's `transportModes` being
+user's stated `maxBudgetSek` (0-10000 kr); at least one of the activity's `transportModes` being
 reachable given the user's `hasCar` input (if `hasCar` is false, activities
 whose only `transportModes` entry is `car` are excluded — this check does
 not apply to `homeOnly` activities, which are always reachable regardless

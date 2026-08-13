@@ -5,10 +5,10 @@ The system SHALL provide a form where the user enters one or more kid ages
 (one to four kids, defaulting to a single kid aged 4), always visible
 outside any collapsible section since it's required before spinning. The
 remaining inputs — kid interest tags, a maximum budget in SEK via a slider
-(0-3000 kr, default 3000 kr/unlimited so a fresh spin isn't hard-filtered
+(0-10000 kr, default 10000 kr/unlimited so a fresh spin isn't hard-filtered
 to free-only activities, step 50 kr) with an accompanying optional
 textfield for entering an exact amount directly (both controls stay in
-sync and clamp to the 0-3000 kr range), whether they have a car
+sync and clamp to the 0-10000 kr range), whether they have a car
 (`hasCar`, default on), whether to stay home (`stayHome`, default off),
 whether to show only indoor activities (`indoorOnly`, default off,
 disabled and moot while `stayHome` is active since every `homeOnly`
@@ -32,7 +32,7 @@ section header until the user chooses to expand it.#### Scenario: Completing the
 #### Scenario: Setting budget via the textfield
 - **WHEN** the user types a number directly into the budget textfield
 - **THEN** the slider moves to reflect that value, and any amount typed
-  outside the 0-3000 kr range is clamped and the textfield updated to show
+  outside the 0-10000 kr range is clamped and the textfield updated to show
   the clamped value
 
 #### Scenario: Budget at the free minimum

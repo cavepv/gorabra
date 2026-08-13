@@ -100,7 +100,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
 
   final List<int> _kidAges = [4];
   final Set<String> _selectedInterests = {};
-  static const _budgetCeilingSek = 3000;
+  static const _budgetCeilingSek = 10000;
   // Starts at the ceiling (no filtering) so a fresh spin shows all
   // activities regardless of cost — 0 means "free only" and is a real
   // user-selectable filter, not the default/unset state.
