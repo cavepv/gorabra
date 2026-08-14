@@ -2,7 +2,7 @@
   {
     "id": "liseberg",
     "name": "Liseberg nöjespark",
-    "description": "Sveriges mest kända nöjespark med åkattraktioner för alla åldrar, en stor lekplats för de minsta och gott om gräsytor att springa av sig på.",
+    "description": "Sveriges mest kända nöjespark med åkattraktioner för alla åldrar, en enda stor lekplats för stora och små.",
     "minAge": 2,
     "maxAge": 99,
     "indoor": false,
@@ -237,13 +237,12 @@
   {
     "id": "kviberg-lekplats",
     "name": "Kviberg parks lekplats",
-    "description": "En ny fräsch och stor lekplats klätterställningar, rutschbanor, gungor och sandlåda.",
+    "description": "En ny fräsch och stor lekplats med bla. klätterställningar, rutschbanor, gungor och sandlåda.",
     "minAge": 1,
     "maxAge": 9,
     "indoor": false,
     "interests": [
       "lek",
-      "vatten",
       "äventyr"
     ],
     "social": true,
@@ -293,9 +292,9 @@
     "costSek": 0
   },
   {
-    "id": "kubik",
-    "name": "Kubik lekland (inomhus)",
-    "description": "Stort inomhus lekland med klätterställningar, studsmattor och bollhav — populärt regndagsalternativ.",
+    "id": "lekstan-sisjon",
+    "name": "Lekstan i Sisjön",
+    "description": "Inomhuslekland med café i Sisjön — klätterlek, studsmattor och lekytor för både stora och små, samt fika på plats.",
     "minAge": 1,
     "maxAge": 10,
     "indoor": true,
@@ -308,17 +307,17 @@
       "physicalActivity",
       "socialEmotional"
     ],
-    "benefitNote": "Studsande och klättrande lek inomhus ger fysisk aktivitet även på dagar då vädret annars skulle hindra rörelse, och bollhavet uppmuntrar socialt samspel.",
-    "openingHours": "10:00–18:00",
-    "location": "Mölndal (strax utanför centrala Göteborg)",
+    "benefitNote": "Klättring och studsande lek inomhus ger fysisk aktivitet oavsett väder, och den öppna lekytan uppmuntrar socialt samspel med andra barn.",
+    "openingHours": "10:00–19:00",
+    "location": "Askims Verkstadsväg, Sisjön (Askim), Göteborg",
     "distanceKm": 8.0,
     "transportModes": [
       "publicTransit",
       "car"
     ],
-    "lat": 57.6554,
-    "lng": 12.0134,
-    "costSek": 150
+    "lat": 57.6424,
+    "lng": 11.9412,
+    "costSek": 120
   },
   {
     "id": "stadsbiblioteket",
@@ -395,13 +394,13 @@
     "benefitNote": "Stora öppna parkmarker uppmuntrar spontan spring- och rörelselek, en enkel men effektiv källa till daglig fysisk aktivitet.",
     "openingHours": "Parken alltid öppen, slottet 11:00–16:00 (säsong)",
     "location": "Mölndal (strax utanför centrala Göteborg)",
-    "distanceKm": 9.0,
+    "distanceKm": 7.5,
     "transportModes": [
       "publicTransit",
       "car"
     ],
-    "lat": 57.6167,
-    "lng": 12.0167,
+    "lat": 57.6579,
+    "lng": 12.0584,
     "costSek": 100
   },
   {
@@ -451,14 +450,14 @@
     "benefitNote": "Klättring på klippig, ojämn terräng bygger balans och riskbedömning mer effektivt än plan lekplatsmark.",
     "openingHours": "Alltid öppet",
     "location": "Keillers park, Göteborg",
-    "distanceKm": 3.5,
+    "distanceKm": 2.5,
     "transportModes": [
       "walk",
       "publicTransit",
       "car"
     ],
-    "lat": 57.715,
-    "lng": 11.955,
+    "lat": 57.7164,
+    "lng": 11.9344,
     "costSek": 0
   },
   {
@@ -490,9 +489,9 @@
     "costSek": 60
   },
   {
-    "id": "jarntorget",
-    "name": "Fika och lek vid Järntorget",
-    "description": "Mysigt torg i Majorna med kaféer, en mindre lekplats och närhet till Långgatorna att strosa längs.",
+    "id": "hagaparken",
+    "name": "Fika och lek vid Hagaparken",
+    "description": "Park i Haga med både lekplats och nära Haga stråket med många kafeer att välja på.",
     "minAge": 1,
     "maxAge": 8,
     "indoor": false,
@@ -501,19 +500,21 @@
     ],
     "social": true,
     "benefits": [
-      "socialEmotional"
+      "physicalActivity",
+      "lek",
+      "äventyr"
     ],
     "benefitNote": "Vardagliga sociala miljöer som kaféer och torg ger barn övning i att vänta, observera och samspela med vuxna utanför familjen.",
-    "openingHours": "Alltid öppet (torget)",
-    "location": "Järntorget, Göteborg",
-    "distanceKm": 1.8,
+    "openingHours": "Alltid öppet",
+    "location": "Haga, Göteborg",
+    "distanceKm": 1.4,
     "transportModes": [
       "walk",
       "publicTransit"
     ],
-    "lat": 57.6975,
-    "lng": 11.953,
-    "costSek": 60
+    "lat": 57.6986,
+    "lng": 11.9619,
+    "costSek": 0
   },
   {
     "id": "ostraskogen",
@@ -1088,13 +1089,13 @@
     "benefitNote": "Att slå, springa och reagera på fjäderbollen tränar reaktionsförmåga, koordination och kondition.",
     "openingHours": "Bokningsbart, se respektive hall",
     "location": "Åby Racket Center, Mölndal (eller Fjäderborgen, Göteborg)",
-    "distanceKm": 7.0,
+    "distanceKm": 1.7,
     "transportModes": [
       "car",
       "publicTransit"
     ],
-    "lat": 57.6559,
-    "lng": 12.0135,
+    "lat": 57.6943,
+    "lng": 11.9678,
     "costSek": 160
   },
   {
@@ -1149,8 +1150,8 @@
       "car",
       "publicTransit"
     ],
-    "lat": 57.6559,
-    "lng": 12.0135,
+    "lat": 57.6466,
+    "lng": 11.9957,
     "costSek": 100
   },
   {
