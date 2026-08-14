@@ -4,7 +4,7 @@
     "name": "Liseberg nöjespark",
     "description": "Sveriges mest kända nöjespark med åkattraktioner för alla åldrar, en stor lekplats för de minsta och gott om gräsytor att springa av sig på.",
     "minAge": 2,
-    "maxAge": 12,
+    "maxAge": 99,
     "indoor": false,
     "interests": [
       "äventyr",
@@ -32,7 +32,7 @@
   {
     "id": "slottsskogen",
     "name": "Slottsskogens djurpark och lekplatser",
-    "description": "Stor gratis park med tama djur (säl, pingviner, get), flera lekplatser och gott om gräsytor för picknick och lek.",
+    "description": "Stor gratis park med tama djur (säl, pingviner, get), flera lekplatser (Pliktan) och gott om gräsytor för picknick och lek.",
     "minAge": 1,
     "maxAge": 10,
     "indoor": false,
@@ -62,17 +62,17 @@
   },
   {
     "id": "universeum",
-    "name": "Universeum science center",
+    "name": "Universeum",
     "description": "Vetenskapscenter med regnskog, akvarium och interaktiva experiment inomhus — perfekt för en regnig dag.",
     "minAge": 3,
-    "maxAge": 12,
+    "maxAge": 15,
     "indoor": true,
     "interests": [
       "djur",
       "vetenskap",
       "äventyr"
     ],
-    "social": false,
+    "social": true,
     "benefits": [
       "cognitive"
     ],
@@ -178,8 +178,8 @@
   },
   {
     "id": "vasterasparken",
-    "name": "Bad och lek vid Näckrosdammen",
-    "description": "Populär mötesplats med lekplats, vattenlek och gräsytor i Slottsskogens närhet.",
+    "name": "Näckrosdammen",
+    "description": "Populär mötesplats med lekplats (Regnlekplatsen), vattenlek och gräsytor mitt i centrala Göteborg.",
     "minAge": 1,
     "maxAge": 8,
     "indoor": false,
@@ -235,15 +235,16 @@
     "costSek": 80
   },
   {
-    "id": "brudarebacken",
-    "name": "Brudarebackens lekplats",
-    "description": "En av Göteborgs mest omtyckta stora lekplatser med klätterställningar, rutschbanor och plask­damm.",
+    "id": "kviberg-lekplats",
+    "name": "Kviberg parks lekplats",
+    "description": "En ny fräsch och stor lekplats klätterställningar, rutschbanor, gungor och sandlåda.",
     "minAge": 1,
     "maxAge": 9,
     "indoor": false,
     "interests": [
       "lek",
-      "vatten"
+      "vatten",
+      "äventyr"
     ],
     "social": true,
     "benefits": [
@@ -252,44 +253,17 @@
     ],
     "benefitNote": "Klättring och balans på lekplatsutrustning i varierande höjd och svårighetsgrad bygger grovmotorik och riskbedömningsförmåga i trygg miljö.",
     "openingHours": "Alltid öppet",
-    "location": "Slottsskogen, Göteborg",
-    "distanceKm": 2.6,
+    "location": "Kviberg Park, Göteborg",
+    "distanceKm": 5.1,
     "transportModes": [
       "walk",
       "bike",
       "publicTransit",
       "car"
     ],
-    "lat": 57.685,
-    "lng": 11.944,
+    "lat": 57.7386,
+    "lng": 12.0405,
     "costSek": 0
-  },
-  {
-    "id": "biosfaren",
-    "name": "Biosfären regnskogsbio och lekplats",
-    "description": "Regnskogsbio med storbildsfilmer om djur och natur, kombinerat med en utomhuslekplats med djurtema.",
-    "minAge": 3,
-    "maxAge": 10,
-    "indoor": true,
-    "interests": [
-      "djur",
-      "vetenskap"
-    ],
-    "social": false,
-    "benefits": [
-      "cognitive"
-    ],
-    "benefitNote": "Storbildsfilmer om natur och djur väcker nyfikenhet på ett sätt som stimulerar tidig naturvetenskaplig förståelse.",
-    "openingHours": "10:00–16:00 (helg)",
-    "location": "Korsvägen, Göteborg",
-    "distanceKm": 2.3,
-    "transportModes": [
-      "walk",
-      "publicTransit"
-    ],
-    "lat": 57.6975,
-    "lng": 11.985,
-    "costSek": 90
   },
   {
     "id": "alvsborgsbron",
@@ -861,7 +835,7 @@
   },
   {
     "id": "leos-lekland",
-    "name": "Leos Lekland Bäckebol",
+    "name": "Leos Lekland Backaplan",
     "description": "Stor inomhuslekland med klätterställningar, rutschkanor, bollhav och studsmattor för de mindre barnen.",
     "minAge": 1,
     "maxAge": 10,
@@ -876,14 +850,14 @@
     ],
     "benefitNote": "Fri lek i klätterställningar tränar grovmotorik och ger möjlighet att öva socialt samspel med andra barn.",
     "openingHours": "09:00–19:00 (kontrollera leolekland.se)",
-    "location": "Bäckebol, Göteborg",
-    "distanceKm": 6.0,
+    "location": "Backaplan, Göteborg",
+    "distanceKm": 1.9,
     "transportModes": [
       "car",
       "publicTransit"
     ],
-    "lat": 57.7423,
-    "lng": 11.9613,
+    "lat": 57.7203,
+    "lng": 11.9496,
     "costSek": 130
   },
   {
@@ -1181,8 +1155,8 @@
   },
   {
     "id": "kviberg-skidome",
-    "name": "Kviberg SkiDome",
-    "description": "Åk skidor eller snowboard inomhus i konstsnö året runt, med anpassade backar för nybörjare.",
+    "name": "Skidome",
+    "description": "Åk längdskidor inomhus i konstsnö året runt, perfekt för nybörjare som vill träna balans och teknik året runt.",
     "minAge": 4,
     "maxAge": 12,
     "indoor": true,
@@ -1195,7 +1169,7 @@
       "physicalActivity",
       "motorSkills"
     ],
-    "benefitNote": "Att åka skidor tränar balans och benstyrka, och en inomhusbacke gör det möjligt året runt oavsett väder.",
+    "benefitNote": "Att åka längdskidor tränar balans, motorik, flås och benstyrka och med denna inomhushall går det att göra året runt!",
     "openingHours": "Se kvibergsskidome.se för öppettider",
     "location": "Kviberg, Göteborg",
     "distanceKm": 5.0,
