@@ -1500,7 +1500,7 @@
   {
     "id": "farjenas-park",
     "name": "Färjenäs park och kafé",
-    "description": "Parkområde på en udde med lekplats, klippor mot vattnet och Färjenäs kafé där man kan fika efter leken.",
+    "description": "Parkområde i västra Eriksberg med rutschbanor, skatepark, basket och fotbollsplan. Besök Flickorna på Färjenäs kafé eller Karl IX restaurang efter leken.",
     "minAge": 1,
     "maxAge": 10,
     "indoor": false,
@@ -1559,7 +1559,7 @@
   {
     "id": "grilla-ute",
     "name": "Ut och grilla",
-    "description": "Packa grillkorv och ta med familjen till en av stadens många grillplatser, till exempel i Slottsskogen, för picknick i det fria.",
+    "description": "Packa grillkorv och ta med familjen till en av stadens många grillplatser för picknick i det fria. Slottsskogen, Hisingsparken och Skatås/Delsjön är några exempel.",
     "minAge": 1,
     "maxAge": 12,
     "indoor": false,
@@ -1614,6 +1614,245 @@
     ],
     "lat": 57.6746,
     "lng": 11.9264,
+    "costSek": 0
+  },
+  {
+    "id": "kurragomma",
+    "name": "Kurragömma",
+    "description": "Klassisk gömlek inomhus — någon räknar medan de andra gömmer sig bakom soffor, dörrar och gardiner.",
+    "minAge": 2,
+    "maxAge": 10,
+    "indoor": true,
+    "interests": [
+      "lek"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "socialEmotional"
+    ],
+    "benefitNote": "Springande och gömmande ger rörelse, och turtagningen (att räkna vs gömma) tränar tålamod och samspel.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "homeOnly": true,
+    "costSek": 0
+  },
+  {
+    "id": "bygg-med-klossar",
+    "name": "Bygg med klossar",
+    "description": "Bygg torn, hus och fordon av klossar — så högt eller detaljerat som fantasin räcker till.",
+    "minAge": 1,
+    "maxAge": 9,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "skapande"
+    ],
+    "social": false,
+    "benefits": [
+      "cognitive",
+      "motorSkills"
+    ],
+    "benefitNote": "Att stapla och balansera klossar tränar finmotorik, rumsuppfattning och tålamod när tornet rasar och byggs om.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "homeOnly": true,
+    "costSek": 0
+  },
+  {
+    "id": "kulbana-bygg-egen",
+    "name": "Kulbana - bygg en egen",
+    "description": "Bygg en egen kulbana av klossar, rör eller kartongbitar och utmana hur långa och svåra hinder kulorna klarar av.",
+    "minAge": 3,
+    "maxAge": 10,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "skapande"
+    ],
+    "social": false,
+    "benefits": [
+      "cognitive",
+      "motorSkills"
+    ],
+    "benefitNote": "Att konstruera och testa banor tränar problemlösning och finmotorik, och att prova om och om igen bygger uthållighet.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "homeOnly": true,
+    "costSek": 0
+  },
+  {
+    "id": "uppblasbar-pool-bakom-duschvagg",
+    "name": "Plaska i uppblåsbar pool bakom duschväggen",
+    "description": "Skaffa en mindre, billig uppblåsbar pool och låt barnen plaska vilt med lite badleksaker bakom duschväggen eller draperiet, alltid under en vuxens uppsikt.",
+    "minAge": 1,
+    "maxAge": 7,
+    "indoor": true,
+    "interests": [
+      "vatten",
+      "lek"
+    ],
+    "social": false,
+    "benefits": [
+      "physicalActivity",
+      "socialEmotional"
+    ],
+    "benefitNote": "Plask och lek med vatten stimulerar sinnena och ger ett skönt utlopp för rörelseglada barn, oavsett väder ute.",
+    "openingHours": "Alltid",
+    "location": "Hemma",
+    "distanceKm": 0.0,
+    "transportModes": [],
+    "homeOnly": true,
+    "costSek": 100
+  },
+  {
+    "id": "bowling",
+    "name": "Star Bowling",
+    "description": "Klassisk bowlinghall med barnvänliga banor (bumpers finns), perfekt för hela familjen oavsett väder.",
+    "minAge": 4,
+    "maxAge": 99,
+    "indoor": true,
+    "interests": [
+      "lek",
+      "äventyr"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills",
+      "socialEmotional"
+    ],
+    "benefitNote": "Att sikta och kasta klotet tränar grovmotorik och hand-öga-koordination, och turordningen mellan spelare ger social träning.",
+    "openingHours": "11:00–23:00 (se starbowling.se för aktuella tider)",
+    "location": "Odinsgatan 8, centrala Göteborg",
+    "distanceKm": 0.3,
+    "transportModes": [
+      "walk",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.709,
+    "lng": 11.9798,
+    "costSek": 250
+  },
+  {
+    "id": "cafe-slatta-damm",
+    "name": "Café Slätta Damm",
+    "description": "Våffelcafé i friluftsmiljö vid en damm med änder och fågelkvitter i Hisingsparken.",
+    "minAge": 1,
+    "maxAge": 99,
+    "indoor": false,
+    "interests": [
+      "djur",
+      "natur",
+      "lugn"
+    ],
+    "social": true,
+    "benefits": [
+      "socialEmotional"
+    ],
+    "benefitNote": "Lugn fikastund vid vatten med änder att titta på ger ett skönt, lågintensivt avbrott i tempot för hela familjen.",
+    "openingHours": "Se cafeslattadamm.se för säsongstider",
+    "location": "Hisingsparken, hållplats Bjurslätts torg, Göteborg",
+    "distanceKm": 3.6,
+    "transportModes": [
+      "walk",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.7334,
+    "lng": 11.9292,
+    "costSek": 60
+  },
+  {
+    "id": "discgolf-skatas",
+    "name": "Discgolf i Skatås",
+    "description": "Gratis discgolfbana utomhus i Skatås — kasta frisbee mot korgarna genom skog och kuperad terräng.",
+    "minAge": 5,
+    "maxAge": 99,
+    "indoor": false,
+    "interests": [
+      "friluftsliv",
+      "natur"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Promenaden mellan korgarna och kastandet ger både kondition och finmotorisk träning i en avslappnad, tävlingsfri form.",
+    "openingHours": "Alltid öppet",
+    "location": "Skatås, Göteborg",
+    "distanceKm": 3.6,
+    "transportModes": [
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.7034,
+    "lng": 12.0347,
+    "costSek": 0
+  },
+  {
+    "id": "discgolf-slottsskogen",
+    "name": "Discgolf i Slottsskogen",
+    "description": "Gratis discgolfbana utomhus i Slottsskogen — kasta frisbee mot korgarna i parkmiljö.",
+    "minAge": 5,
+    "maxAge": 99,
+    "indoor": false,
+    "interests": [
+      "friluftsliv",
+      "natur"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Promenaden mellan korgarna och kastandet ger både kondition och finmotorisk träning i en avslappnad, tävlingsfri form.",
+    "openingHours": "Alltid öppet",
+    "location": "Slottsskogen, Göteborg",
+    "distanceKm": 2.5,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.6863,
+    "lng": 11.9407,
+    "costSek": 0
+  },
+  {
+    "id": "ikea-regnig-dag",
+    "name": "Ikea på en regnig dag",
+    "description": "Utforska möbelvaruhuset, lek en stund i Småland och ät i restaurangen — ett bekvämt inomhusnöje när det öser ner ute.",
+    "minAge": 1,
+    "maxAge": 99,
+    "indoor": true,
+    "interests": [
+      "lek"
+    ],
+    "social": true,
+    "benefits": [
+      "socialEmotional"
+    ],
+    "benefitNote": "Att gå runt och utforska tillsammans, med en lekpaus i Småland, ger en avslappnad utflykt utan krav när vädret inte tillåter uteaktiviteter.",
+    "openingHours": "10:00–20:00 (vardagar), se ikea.se för exakta tider",
+    "location": "IKEA Bäckebol, Göteborg",
+    "distanceKm": 7.5,
+    "transportModes": [
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.7745,
+    "lng": 12.0012,
     "costSek": 0
   }
 ]
