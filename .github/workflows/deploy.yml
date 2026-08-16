@@ -18,7 +18,7 @@ jobs:
           channel: stable
       - run: flutter pub get
       - run: flutter test
-      - run: flutter build web --release --base-href /gorabra/
+      - run: flutter build web --release
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}

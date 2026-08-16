@@ -20,7 +20,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.textContaining('© 2026 Hittpå'), findsOneWidget);
-    expect(find.textContaining('v1.5.0'), findsOneWidget);
+    expect(find.textContaining('© 2026 Hittepå'), findsOneWidget);
+    expect(find.textContaining('v1.6.0'), findsOneWidget);
   });
 }

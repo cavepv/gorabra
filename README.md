@@ -1,7 +1,7 @@
-# Görabra
+# Hittepå
 
 A family activity planner for Gothenburg — enter your kids' ages (1-4 kids),
-interests, budget, and whether you have a car, and Görabra spins up 1-3
+interests, budget, and whether you have a car, and Hittepå spins up 1-3
 weather-aware activity suggestions from a curated local catalog.
 
 Built to solve a real vacation problem: "what do we do today in Gothenburg
@@ -16,7 +16,7 @@ weather, age-appropriateness, budget, or transport.
    ("Stanna hemma"), and optionally an "Avstånd" (distance) filter based
    on your current position and a 1-50km radius slider.
 2. Toggle between "Idag" (today, shown with the weekday and date) and
-   "Imorgon" (tomorrow) — Görabra fetches Gothenburg's full 24-hour
+   "Imorgon" (tomorrow) — Hittepå fetches Gothenburg's full 24-hour
    forecast for both days in one call (via
    [Open-Meteo](https://open-meteo.com/), free, no API key), and shows the
    selected day as a scrollable hourly graph, pinned above the form so it
@@ -25,7 +25,7 @@ weather, age-appropriateness, budget, or transport.
    label for every hour, with the current hour highlighted and
    auto-scrolled into view, so you can see how the day's weather changes
    at a glance.
-3. The recommender hard-filters a curated ~60-activity Gothenburg catalog by
+3. The recommender hard-filters a curated 68-activity Gothenburg catalog by
    age (must suit every kid in the group), cost vs. budget, transport
    reachability, home/away mode ("Stanna hemma" limits results to
    stay-at-home activities), and — if enabled — a real-GPS distance radius
@@ -75,16 +75,16 @@ flutter run -d chrome        # or an emulator/device
 
 ## Deployment (web)
 
-The web build is deployed to GitHub Pages: **https://cavepv.github.io/gorabra/**
+The web app is deployed at **https://www.hittepa.se/**.
 
 ```bash
-flutter build web --release --base-href /gorabra/
+flutter build web --release
 ```
 
 The `build/web` output is then pushed to the `gh-pages` branch (served from
 its root), which triggers GitHub's Pages build/deploy workflow automatically.
-`--base-href /gorabra/` is required since the site is served from a
-project-repo subpath rather than a domain root.
+The custom domain serves the app from `/`, so no `--base-href` override is
+needed.
 
 ## Scope (v1)
 

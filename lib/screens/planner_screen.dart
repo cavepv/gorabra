@@ -107,7 +107,7 @@ enum Day { today, tomorrow }
 // with pubspec.yaml's `version:` on release. Add the package if drift
 // becomes a real problem.
 class AppInfo {
-  static const version = '1.5.0';
+  static const version = '1.6.0';
 }
 
 class _PlannerScreenState extends State<PlannerScreen> {
@@ -572,7 +572,7 @@ class _PlannerScreenState extends State<PlannerScreen> {
                           const SizedBox(height: 24),
                           Center(
                             child: Text(
-                              'v${AppInfo.version}  ·  © 2026 Hittpå',
+                              'v${AppInfo.version}  ·  © 2026 Hittepå',
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: Theme.of(
@@ -1115,7 +1115,12 @@ class _PlannerScreenState extends State<PlannerScreen> {
               const SizedBox(height: 12),
               const Text(
                 'Dubbelkolla alltid aktuella öppettider och priser innan ni '
-                'åker, dessa kan ha ändras utan att appen hunnit uppdaterats.',
+                'åker, eftersom de kan ha ändrats utan att appen hunnit '
+                'uppdateras.',
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                'Kontakta hittepagbg@gmail.com för frågor, tips eller feedback på appen.',
               ),
             ],
           ),
