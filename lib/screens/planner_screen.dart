@@ -257,6 +257,30 @@ class _PlannerScreenState extends State<PlannerScreen> {
   }
 
   /// Used by the slider — keeps the textfield's displayed value in sync.
+  bool get _filtersActive =>
+      _selectedInterests.isNotEmpty ||
+      _budgetSek != _budgetCeilingSek ||
+      !_hasCar ||
+      _stayHome ||
+      _indoorOnly ||
+      _useMyPosition;
+
+  void _resetFilters() {
+    setState(() {
+      _selectedInterests.clear();
+      _budgetSek = _budgetCeilingSek;
+      _hasCar = true;
+      _stayHome = false;
+      _indoorOnly = false;
+      _useMyPosition = false;
+      _userPosition = null;
+      _locationError = null;
+      _maxDistanceKm = 5;
+      _clearResult();
+    });
+    _budgetController.text = '$_budgetCeilingSek';
+  }
+
   void _setBudgetFromSlider(int sek) {
     setState(() {
       _budgetSek = sek;
@@ -589,8 +613,20 @@ class _PlannerScreenState extends State<PlannerScreen> {
               color: Theme.of(context).colorScheme.outlineVariant,
             ),
           ),
-          tilePadding: const EdgeInsets.only(left: 12),
-          title: Text('Filter', style: Theme.of(context).textTheme.titleMedium),
+          tilePadding: const EdgeInsets.only(left: 12, right: 4),
+          title: Row(
+            children: [
+              Text('Filter', style: Theme.of(context).textTheme.titleMedium),
+              const Spacer(),
+              if (_filtersActive)
+                IconButton(
+                  key: const Key('resetFiltersButton'),
+                  icon: const Icon(Icons.filter_alt_off_outlined, size: 20),
+                  tooltip: 'Rensa filter',
+                  onPressed: _resetFilters,
+                ),
+            ],
+          ),
           childrenPadding: const EdgeInsets.only(left: 12, bottom: 8),
           children: [
             ExpansionTile(

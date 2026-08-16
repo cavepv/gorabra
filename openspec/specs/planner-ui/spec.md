@@ -17,7 +17,11 @@ their current position and a
 radius slider — SHALL be grouped together under a single collapsible
 "Filter" section that is collapsed by default on every fresh
 session, so the form shows only the kid age input and the collapsed
-section header until the user chooses to expand it.#### Scenario: Completing the input form with one kid
+section header until the user chooses to expand it. The "Filter" section
+header SHALL show a reset button once any filter differs from its
+default, which restores every filter to its default value in one tap;
+the button is hidden while every filter is already at its default.
+#### Scenario: Completing the input form with one kid
 - **WHEN** the user opens the app for a new session
 - **THEN** a single kid-age row (age slider defaulting to 4) is shown
   always visible, the "Filter" section is collapsed, and the user
@@ -28,6 +32,13 @@ section header until the user chooses to expand it.#### Scenario: Completing the
 - **THEN** it expands in place to reveal Intressen, Budget, Tillgång till
   bil, Stanna hemma, Inomhusaktiviteter, and Avstånd, in that order,
   without navigating away from the planner screen
+
+#### Scenario: Resetting all filters
+- **WHEN** the user has changed at least one filter from its default and
+  taps the reset button in the "Filter" section header
+- **THEN** every filter (interests, budget, car, stay-home, indoor-only,
+  distance/position) returns to its default value and the reset button
+  disappears again
 
 #### Scenario: Setting budget via the textfield
 - **WHEN** the user types a number directly into the budget textfield
