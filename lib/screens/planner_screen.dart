@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -82,10 +83,18 @@ class PlannerScreen extends StatefulWidget {
   /// seam already used in [ActivityRecommender]).
   final Future<UserPosition?> Function() positionFetcher;
 
+  /// Injectable weather fetcher — defaults to the real Open-Meteo call via
+  /// [WeatherLookup], overridable in tests (same seam pattern as
+  /// [positionFetcher]) so widget tests can exercise the hourly strip
+  /// without a real network call.
+  final Future<WeatherForecast> Function() weatherFetcher;
+
   const PlannerScreen({
     super.key,
     Future<UserPosition?> Function()? positionFetcher,
-  }) : positionFetcher = positionFetcher ?? LocationLookup.getCurrentPosition;
+    Future<WeatherForecast> Function()? weatherFetcher,
+  }) : positionFetcher = positionFetcher ?? LocationLookup.getCurrentPosition,
+       weatherFetcher = weatherFetcher ?? WeatherLookup.fetchForecast;
 
   @override
   State<PlannerScreen> createState() => _PlannerScreenState();
@@ -210,13 +219,13 @@ class _PlannerScreenState extends State<PlannerScreen> {
     // Fetched independently of the catalog so a slow/failed network call
     // never blocks the (instantly-available, bundled) catalog from
     // displaying — see weather-lookup spec's no-block-on-failure requirement.
-    final forecast = await WeatherLookup.fetchForecast();
+    final forecast = await widget.weatherFetcher();
     if (!mounted) return;
     setState(() {
       _forecast = forecast;
       // If the user already spun while weather was still loading (or
-      // absent), that result was computed without the weather filter tier
-      // — clear it so a newly-arrived forecast doesn't sit next to a
+      // absent), that result was computed without the weather scoring
+      // boost — clear it so a newly-arrived forecast doesn't sit next to a
       // stale recommendation it wasn't actually used for.
       _clearResult();
       _scrolledToCurrentHour = false;
@@ -405,112 +414,135 @@ class _PlannerScreenState extends State<PlannerScreen> {
             onPressed: () => _showAboutSheet(context),
           ),
         ],
-        title: Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Image.asset('assets/logo_proposals/logo.png', height: 70),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  'Tips på aktiviteter i Götet med barnen',
-                  textAlign: TextAlign.left,
-                  style: const TextStyle(fontSize: 11),
-                  maxLines: 2,
-                ),
+        title: Center(
+          child: ConstrainedBox(
+            // ponytail: same cap as body, keeps title from stretching full-bleed on desktop
+            constraints: const BoxConstraints(maxWidth: 700),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Image.asset('assets/logo_proposals/logo.png', height: 70),
+                  const SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      'Tips på aktiviteter i Götet med barnen',
+                      textAlign: TextAlign.right,
+                      style: const TextStyle(fontSize: 12),
+                      maxLines: 2,
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
       // Weather strip pinned outside the scrollable body — same widget as
       // before, just relocated so it stays visible while browsing results
       // further down, instead of scrolling away with the rest of the form.
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-            child: _buildWeatherSummary(),
-          ),
-          Expanded(
-            child: _loadError != null
-                ? Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(_loadError!),
-                        const SizedBox(height: 8),
-                        FilledButton(
-                          onPressed: _loadCatalog,
-                          child: const Text('Försök igen'),
+      body: Center(
+        child: ConstrainedBox(
+          // ponytail: fixed cap, revisit if a real tablet/desktop layout is requested
+          constraints: const BoxConstraints(maxWidth: 700),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+                child: _buildWeatherSummary(),
+              ),
+              Expanded(
+                child: _loadError != null
+                    ? Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(_loadError!),
+                            const SizedBox(height: 8),
+                            FilledButton(
+                              onPressed: _loadCatalog,
+                              child: const Text('Försök igen'),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                : _catalog == null
-                ? const Center(child: CircularProgressIndicator())
-                : ListView(
-                    padding: const EdgeInsets.all(16),
-                    children: [
-                      _buildForm(),
-                      const SizedBox(height: 16),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      )
+                    : _catalog == null
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView(
+                        padding: const EdgeInsets.all(16),
                         children: [
-                          IconButton(
-                            onPressed: _historyIndex > 0 ? _goBack : null,
-                            icon: const Icon(Icons.arrow_back),
-                            tooltip: 'Föregående förslag',
-                          ),
-                          Flexible(
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: FilledButton.icon(
-                                key: _spinButtonKey,
-                                onPressed: _loading ? null : _spin,
-                                style: FilledButton.styleFrom(
-                                  textStyle: Theme.of(
-                                    context,
-                                  ).textTheme.titleMedium,
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 24,
-                                    vertical: 15,
+                          _buildForm(),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: _historyIndex > 0 ? _goBack : null,
+                                icon: const Icon(Icons.arrow_back),
+                                tooltip: 'Föregående förslag',
+                              ),
+                              Flexible(
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: FilledButton(
+                                    key: _spinButtonKey,
+                                    onPressed: _loading ? null : _spin,
+                                    style: FilledButton.styleFrom(
+                                      textStyle: Theme.of(
+                                        context,
+                                      ).textTheme.titleMedium,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 15,
+                                      ),
+                                    ),
+                                    child: _loading
+                                        ? Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const SizedBox(
+                                                width: 24,
+                                                height: 24,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                      strokeWidth: 3,
+                                                    ),
+                                              ),
+                                              const SizedBox(width: 8),
+                                              Text(
+                                                _result == null
+                                                    ? 'Ge mig tips!'
+                                                    : 'Nya förslag',
+                                              ),
+                                            ],
+                                          )
+                                        : Text(
+                                            _result == null
+                                                ? 'Ge mig tips!'
+                                                : 'Nya förslag',
+                                          ),
                                   ),
                                 ),
-                                icon: _loading
-                                    ? const SizedBox(
-                                        width: 24,
-                                        height: 24,
-                                        child: CircularProgressIndicator(
-                                          strokeWidth: 3,
-                                        ),
-                                      )
-                                    : const Icon(Icons.casino, size: 24),
-                                label: Text(
-                                  _result == null
-                                      ? 'Ge mig tips!'
-                                      : 'Nya förslag',
-                                ),
                               ),
-                            ),
+                              IconButton(
+                                onPressed: _historyIndex < _history.length - 1
+                                    ? _goForward
+                                    : null,
+                                icon: const Icon(Icons.arrow_forward),
+                                tooltip: 'Nästa förslag',
+                              ),
+                            ],
                           ),
-                          IconButton(
-                            onPressed: _historyIndex < _history.length - 1
-                                ? _goForward
-                                : null,
-                            icon: const Icon(Icons.arrow_forward),
-                            tooltip: 'Nästa förslag',
-                          ),
+                          const SizedBox(height: 24),
+                          if (_result != null) _buildResults(_result!),
                         ],
                       ),
-                      const SizedBox(height: 24),
-                      if (_result != null) _buildResults(_result!),
-                    ],
-                  ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -545,9 +577,21 @@ class _PlannerScreenState extends State<PlannerScreen> {
         const SizedBox(height: 8),
         ExpansionTile(
           key: const Key('moreFiltersTile'),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.outlineVariant,
+            ),
+          ),
+          collapsedShape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            side: BorderSide(
+              color: Theme.of(context).colorScheme.outlineVariant,
+            ),
+          ),
+          tilePadding: const EdgeInsets.only(left: 12),
           title: Text('Filter', style: Theme.of(context).textTheme.titleMedium),
-          tilePadding: EdgeInsets.zero,
-          childrenPadding: const EdgeInsets.only(bottom: 8),
+          childrenPadding: const EdgeInsets.only(left: 12, bottom: 8),
           children: [
             ExpansionTile(
               title: Text(
@@ -800,22 +844,34 @@ class _PlannerScreenState extends State<PlannerScreen> {
             children: [
               _buildHourlyLegendColumn(),
               Expanded(
-                child: SingleChildScrollView(
-                  controller: _hourlyScrollController,
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      for (final point in hourly)
-                        _buildHourlyColumn(
-                          point,
-                          isCurrentHour:
-                              _selectedDay == Day.today &&
-                              point.time.year == now.year &&
-                              point.time.month == now.month &&
-                              point.time.day == now.day &&
-                              point.time.hour == now.hour,
-                        ),
-                    ],
+                child: ScrollConfiguration(
+                  // ponytail: default ScrollBehavior excludes
+                  // PointerDeviceKind.mouse from dragDevices, so click-drag
+                  // scrolling this strip silently no-ops on desktop (mouse)
+                  // while working fine on touch/trackpad — add mouse here.
+                  behavior: ScrollConfiguration.of(context).copyWith(
+                    dragDevices: {
+                      ...ScrollConfiguration.of(context).dragDevices,
+                      PointerDeviceKind.mouse,
+                    },
+                  ),
+                  child: SingleChildScrollView(
+                    controller: _hourlyScrollController,
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        for (final point in hourly)
+                          _buildHourlyColumn(
+                            point,
+                            isCurrentHour:
+                                _selectedDay == Day.today &&
+                                point.time.year == now.year &&
+                                point.time.month == now.month &&
+                                point.time.day == now.day &&
+                                point.time.hour == now.hour,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -988,22 +1044,22 @@ class _PlannerScreenState extends State<PlannerScreen> {
               Text('Om Hittepå', style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 12),
               const Text(
-                'Hittepå finns för att ibland vill man bara enkelt ha '
+                'Hittepå finns för de gångerna man bara enkelt vill ha '
                 'några snabba tips på vad man kan hitta på med barnen i '
-                'Göteborg. Utan att behöva installera appar, gå igenom '
+                'Göteborg - utan att behöva installera appar, gå igenom '
                 'Facebook grupper, Instagram konton eller event kalendrar.',
               ),
               const SizedBox(height: 12),
               const Text(
-                'Vill du vara mer precis går det att filtrera aktiviteter '
+                'Går att filtrera aktiviteter '
                 'utifrån intressen, ålder, budget, tillgång till bil, '
-                'närhet - position (om du väljer att dela den) används '
-                'bara lokalt på telefonen.',
+                'närhet/position(om du väljer att dela den, används '
+                'bara lokalt på telefonen).',
               ),
               const SizedBox(height: 12),
               const Text(
                 'Dubbelkolla alltid aktuella öppettider och priser innan ni '
-                'åker, eftersom dessa kan ändras utan att appen hunnit uppdaterats.',
+                'åker, dessa kan ha ändras utan att appen hunnit uppdaterats.',
               ),
             ],
           ),

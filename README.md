@@ -25,20 +25,21 @@ weather, age-appropriateness, budget, or transport.
    label for every hour, with the current hour highlighted and
    auto-scrolled into view, so you can see how the day's weather changes
    at a glance.
-3. The recommender hard-filters a curated ~50-activity Gothenburg catalog by
-   age (must suit every kid in the group), weather (indoor/outdoor, derived
-   from the selected day's midday forecast), cost vs. budget, transport
+3. The recommender hard-filters a curated ~60-activity Gothenburg catalog by
+   age (must suit every kid in the group), cost vs. budget, transport
    reachability, home/away mode ("Stanna hemma" limits results to
    stay-at-home activities), and — if enabled — a real-GPS distance radius
    (via [geolocator](https://pub.dev/packages/geolocator), haversine
    distance against each activity's coordinates) — relaxing filters
-   progressively (interests → weather → age) if the pool is empty, so you
+   progressively (interests → age) if the pool is empty, so you
    never see zero results. Cost, transport, home/away mode, and the
    distance radius are never relaxed. The distance filter (and "har ni
    bil") have no effect while "Stanna hemma" is active.
 4. Activities that match your own interests, are good for meeting other
-   families, or are tagged as good physical activity get better odds — but
-   never override the hard filters.
+   families, are tagged as good physical activity, or suit today's weather
+   (indoor/outdoor, derived from the selected day's midday forecast) get
+   better odds — weather is advisory only, it never excludes an activity,
+   it just nudges the pick.
 5. Tap "Ge mig tips!" for 1-3 random suggestions from the matching pool;
    "Nya förslag" re-rolls without re-entering your inputs.
 

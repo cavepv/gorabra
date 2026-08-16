@@ -189,7 +189,7 @@ the UI.
 
 ### Requirement: Today/Tomorrow weather day toggle
 The system SHALL provide a Today/Tomorrow toggle that selects which day's
-weather forecast drives the weather filter tier for the next spin, and
+weather forecast drives the weather scoring boost for the next spin, and
 SHALL display a scrollable hourly weather graph (24 hours, each showing an
 hour label, a condition icon, the temperature, and the wind speed) for the
 currently selected day next to the spin results, so the user can see how
@@ -206,7 +206,7 @@ suggestions.
 - **WHEN** the user selects "Tomorrow" on the day toggle
 - **THEN** the hourly graph updates to show tomorrow's 24-hour forecast,
   and the next spin uses tomorrow's midday-derived weather signal to drive
-  the indoor/outdoor filter tier instead of today's
+  the indoor/outdoor scoring boost instead of today's
 
 #### Scenario: Toggling the day clears stale results
 - **WHEN** the user changes the day toggle after already viewing spin
@@ -219,4 +219,4 @@ suggestions.
   currently selected day
 - **THEN** the UI shows a "weather unavailable" message in place of the
   hourly graph for that day, and the next spin proceeds without the
-  weather filter tier
+  weather scoring boost

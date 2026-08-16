@@ -1,10 +1,10 @@
 ## ADDED Requirements
 
-### Requirement: Hard filter by kid age, weather, cost, and transport
+### Requirement: Hard filter by kid age, cost, and transport
 The system SHALL filter the activity catalog down to a candidate pool using
 these hard filters: every kid's age (from the user's list of one to four
-kid ages) within the activity's `[minAge, maxAge]` range; `indoor` matching
-today's weather classification (when known); `costSek` at or below the
+kid ages) within the activity's `[minAge, maxAge]` range;
+`costSek` at or below the
 user's stated `maxBudgetSek` (0-10000 kr); at least one of the activity's `transportModes` being
 reachable given the user's `hasCar` input (if `hasCar` is false, activities
 whose only `transportModes` entry is `car` are excluded — this check does
@@ -18,19 +18,19 @@ from that position (computed via the haversine formula against its
 `lat`/`lng`) being within `maxDistanceKm` — this check does not apply to
 `homeOnly` activities, or to activities lacking `lat`/`lng`, and is
 skipped entirely (always passes) when the user hasn't supplied a position
-or radius.
+or radius. Weather is NOT a hard filter — see "Soft scoring boosts" below.
 
 #### Scenario: All hard filters applied for a single kid
 - **WHEN** the user requests suggestions with one kid age, a budget, and a
-  `hasCar` value, and today's weather is known
+  `hasCar` value
 - **THEN** the candidate pool contains only activities matching that kid's
-  age range, weather-appropriate indoor/outdoor status, cost at or below
+  age range, cost at or below
   budget, a reachable transport mode, and the requested home/away mode
 
 #### Scenario: stayHome excludes away activities
 - **WHEN** the user sets `stayHome: true`
 - **THEN** the candidate pool contains only activities with
-  `homeOnly: true`, regardless of weather, interests, or age relaxation
+  `homeOnly: true`, regardless of interests or age relaxation
 
 #### Scenario: hasCar has no effect on home activities
 - **WHEN** the user sets `stayHome: true`
@@ -75,7 +75,7 @@ or radius.
 #### Scenario: indoorOnly excludes outdoor activities
 - **WHEN** the user sets `indoorOnly: true`
 - **THEN** the candidate pool contains only activities with `indoor: true`,
-  regardless of interests, weather, or age relaxation
+  regardless of interests or age relaxation
 
 #### Scenario: indoorOnly combined with stayHome is a no-op
 - **WHEN** the user sets both `stayHome: true` and `indoorOnly: true`
@@ -84,7 +84,7 @@ or radius.
 
 ### Requirement: Progressive relaxation on empty pool
 The system SHALL relax hard filters in this order if the candidate pool is
-empty: first drop the kid-interests filter, then drop the weather filter,
+empty: first drop the kid-interests filter,
 then drop the age filter (i.e. the multi-kid age-intersection check from
 the age hard filter) — in that order, stopping as soon as the pool is
 non-empty. The `costSek`/`maxBudgetSek`, `transportModes`/`hasCar`,
@@ -93,27 +93,27 @@ SHALL NOT be relaxed under any circumstance.
 
 #### Scenario: stayHome never relaxed
 - **WHEN** the `stayHome`-filtered pool would be empty even after
-  relaxing interests, weather, and age
+  relaxing interests and age
 - **THEN** the system shows the best available `homeOnly`-matching
   activities from the cost/transport-filtered set only, rather than
   falling back to activities that don't match `stayHome`
 
 #### Scenario: Distance radius never relaxed
 - **WHEN** the distance-filtered pool would be empty even after relaxing
-  interests, weather, and age
+  interests and age
 - **THEN** the system shows zero results (or the best available
   within-radius activities) rather than falling back to activities
   outside the user's chosen radius
 
 #### Scenario: Empty pool after full hard filtering
-- **WHEN** the fully hard-filtered pool (age, weather, cost, transport) is
+- **WHEN** the fully hard-filtered pool (age, cost, transport) is
   empty
-- **THEN** the system relaxes interests first, then weather, then age (each
+- **THEN** the system relaxes interests first, then age (each
   time re-checking whether the pool is non-empty), while keeping cost and
   transport filters intact
 
 #### Scenario: Still empty after full relaxation
-- **WHEN** the pool remains empty even after relaxing interests, weather,
+- **WHEN** the pool remains empty even after relaxing interests
   and age
 - **THEN** the system shows the best available activities from the
   cost/transport-filtered set only, labeled as "closest matches", rather
@@ -127,9 +127,11 @@ SHALL NOT be relaxed under any circumstance.
 
 ### Requirement: Soft scoring boosts, never exclusion
 The system SHALL boost (not filter) an activity's likelihood of being
-picked when `social` is true, or when its `benefits` include
-`physicalActivity`. These signals SHALL NOT remove any activity from the
-candidate pool.
+picked when `social` is true, when its `benefits` include
+`physicalActivity`, or when its `indoor` value matches today's weather
+classification (when known). These signals SHALL NOT remove any activity
+from the candidate pool — a weather mismatch never excludes an activity,
+it simply doesn't receive the extra weight a matching activity gets.
 
 #### Scenario: Physical activity nudge
 - **WHEN** the candidate pool contains activities tagged with
@@ -137,6 +139,14 @@ candidate pool.
 - **THEN** those activities have a higher probability of being selected in
   the random pick than equally-filtered activities without that tag,
   without excluding any non-tagged activity
+
+#### Scenario: Weather nudge, not a filter
+- **WHEN** today's weather is known and the candidate pool contains both
+  weather-matching (`indoor` equal to the weather's indoor/outdoor
+  classification) and weather-mismatching activities
+- **THEN** the weather-matching activities have a higher probability of
+  being selected in the random pick, but every mismatching activity
+  remains eligible and can still be picked
 
 ### Requirement: Random pick of 1-3 suggestions
 The system SHALL randomly select 1-3 activities from the current candidate

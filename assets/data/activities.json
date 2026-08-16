@@ -517,9 +517,9 @@
     "costSek": 0
   },
   {
-    "id": "ostraskogen",
-    "name": "Skoglig upptäcksfärd i Östra Skogen",
-    "description": "Mindre känd skogsdunge med stigar, pinnkojor och gott om plats för fri lek i naturen utan folksamlingar.",
+    "id": "delsjoomradet",
+    "name": "Upptäcksfärd i Delsjöområdet",
+    "description": "Stort naturreservat med skogsstigar, kuperad terräng och gott om plats för fri lek i naturen, öster om Delsjön.",
     "minAge": 2,
     "maxAge": 10,
     "indoor": false,
@@ -534,14 +534,14 @@
     ],
     "benefitNote": "Ostrukturerad lek i skog, utan färdiga lekredskap, är starkt kopplad till kreativitet och problemlösningsförmåga hos små barn.",
     "openingHours": "Alltid öppet",
-    "location": "Östra Göteborg",
-    "distanceKm": 5.5,
+    "location": "Delsjöområdet, Göteborg",
+    "distanceKm": 6.0,
     "transportModes": [
       "bike",
       "car"
     ],
-    "lat": 57.73,
-    "lng": 12.03,
+    "lat": 57.694,
+    "lng": 12.033,
     "costSek": 0
   },
   {
@@ -1257,6 +1257,363 @@
       "publicTransit",
       "car"
     ],
+    "costSek": 0
+  },
+  {
+    "id": "minigolf-slottsskogen",
+    "name": "Äventyrsgolf i Slottsskogen",
+    "description": "Bansprida äventyrsgolfbana med 18 hål, troll- och sagotema, mitt i Slottsskogen. Säsongsöppet vår till höst.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "lek",
+      "äventyr"
+    ],
+    "social": true,
+    "benefits": [
+      "motorSkills",
+      "physicalActivity"
+    ],
+    "benefitNote": "Att sikta och putta tränar finmotorik och tålamod, samtidigt som banans hinder gör det roligt att öva om och om igen.",
+    "openingHours": "Säsong (april-sept), se slottsskogensaventyrsgolf.se för tider",
+    "location": "Slottsskogen, Göteborg",
+    "distanceKm": 3.0,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.6867,
+    "lng": 11.9515,
+    "costSek": 200
+  },
+  {
+    "id": "naturhistoriska-museet",
+    "name": "Göteborgs Naturhistoriska Museum",
+    "description": "Naturhistoriskt museum i Slottsskogen med bland annat en unik utställd blåval, uppstoppade djur och utställningar om evolution.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "djur",
+      "natur",
+      "vetenskap",
+      "historia"
+    ],
+    "social": false,
+    "benefits": [
+      "cognitive"
+    ],
+    "benefitNote": "Att se riktiga djur och skelett i naturlig storlek gör abstrakta begrepp om natur och evolution konkreta och lättare att förstå för barn.",
+    "openingHours": "Se gnm.se för aktuella öppettider",
+    "location": "Slottsskogen, Göteborg",
+    "distanceKm": 3.2,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.6861,
+    "lng": 11.9498,
+    "costSek": 0
+  },
+  {
+    "id": "pliktan-lekplats",
+    "name": "Plikta aktivitetspark",
+    "description": "Stor bemannad lekplats byggd som ett skepp med klätterrigg, rutschkanor och linbana, i Slottsskogen.",
+    "minAge": 2,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "lek",
+      "äventyr"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills"
+    ],
+    "benefitNote": "Klätterriggar och linbanor i varierande höjd låter barn själva välja utmaningsnivå, vilket bygger både motorik och självförtroende.",
+    "openingHours": "Alltid öppet (bemannad under säsong)",
+    "location": "Slottsskogen, Göteborg",
+    "distanceKm": 3.3,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.6845,
+    "lng": 11.9455,
+    "costSek": 0
+  },
+  {
+    "id": "frihamnen-lekplats",
+    "name": "Lekplats i Frihamnen",
+    "description": "Lekplats vid kajkanten i Frihamnen med lekredskap, sandlåda och utsikt över hamninloppet.",
+    "minAge": 1,
+    "maxAge": 10,
+    "indoor": false,
+    "interests": [
+      "lek",
+      "vatten"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity"
+    ],
+    "benefitNote": "Fri lek utomhus vid vatten stimulerar sinnesintryck och grovmotorik hos de yngsta barnen.",
+    "openingHours": "Alltid öppet",
+    "location": "Frihamnen, Göteborg",
+    "distanceKm": 2.3,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.7115,
+    "lng": 11.9735,
+    "costSek": 0
+  },
+  {
+    "id": "stadsmuseum-barn",
+    "name": "Barnens museum på Göteborgs Stadsmuseum",
+    "description": "Interaktiv barnavdelning på Stadsmuseum med vikingatida och historiska teman att utforska genom lek och pyssel.",
+    "minAge": 3,
+    "maxAge": 10,
+    "indoor": true,
+    "interests": [
+      "historia",
+      "skapande",
+      "lek"
+    ],
+    "social": false,
+    "benefits": [
+      "cognitive",
+      "problemSolving"
+    ],
+    "benefitNote": "Att utforska historia genom lek och skapande, snarare än att bara läsa om den, gör kunskapen mer bestående för yngre barn.",
+    "openingHours": "Se goteborgsstadsmuseum.se för aktuella öppettider",
+    "location": "Göteborgs Stadsmuseum, Norra Hamngatan",
+    "distanceKm": 1.0,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.7075,
+    "lng": 11.9668,
+    "costSek": 100
+  },
+  {
+    "id": "sjofartsmuseet-akvariet",
+    "name": "Sjöfartsmuseet Akvariet",
+    "description": "Sjöfartshistoriskt museum med akvarium, fartygsmodeller och utsikt över älven från Stigbergsliden.",
+    "minAge": 2,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "djur",
+      "vatten",
+      "historia",
+      "vetenskap"
+    ],
+    "social": false,
+    "benefits": [
+      "cognitive"
+    ],
+    "benefitNote": "Levande fiskar och sjöfartshistoria i kombination ger barn ett konkret sammanhang för både naturkunskap och lokalhistoria.",
+    "openingHours": "Se sjofartsmuseetakvariet.se för aktuella öppettider",
+    "location": "Stigbergsliden, Göteborg",
+    "distanceKm": 2.8,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.7003,
+    "lng": 11.9435,
+    "costSek": 200
+  },
+  {
+    "id": "tvatta-bilen",
+    "name": "Tvätta bilen tillsammans",
+    "description": "Gör-det-själv-hallar i Bäckebol och Kållered där hela familjen kan tvätta bilen med högtryckstvätt och skum. Ta med hörselskydd till barnen — annars finns många utomhusstationer utan den bullriga hallmiljön.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "fordon"
+    ],
+    "social": false,
+    "benefits": [
+      "socialEmotional"
+    ],
+    "benefitNote": "Ett litet gemensamt praktiskt projekt där barnet får en tydlig, konkret uppgift stärker känslan av att bidra och vara till nytta.",
+    "openingHours": "Alltid öppet (självbetjäning)",
+    "location": "Gör-det-själv-hallar i Bäckebol & Kållered",
+    "distanceKm": 10.0,
+    "transportModes": [
+      "car"
+    ],
+    "lat": 57.7864,
+    "lng": 11.9744,
+    "costSek": 100
+  },
+  {
+    "id": "flyga-drake",
+    "name": "Flyga drake",
+    "description": "Köp en drake eller bygg en egen hemma, och åk sedan till en öppen gräsyta som Keillers park för att flyga den tillsammans.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "lek",
+      "skapande",
+      "friluftsliv"
+    ],
+    "social": true,
+    "benefits": [
+      "motorSkills",
+      "physicalActivity"
+    ],
+    "benefitNote": "Att styra en drake i vinden tränar hand-öga-koordination, och att bygga en egen ger ett extra lager av skaparglädje innan man ens kommit ut.",
+    "openingHours": "Alltid öppet (väderberoende)",
+    "location": "Keillers park, Göteborg",
+    "distanceKm": 4.5,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.7164,
+    "lng": 11.9344,
+    "costSek": 50
+  },
+  {
+    "id": "farjenas-park",
+    "name": "Färjenäs park och kafé",
+    "description": "Parkområde på en udde med lekplats, klippor mot vattnet och Färjenäs kafé där man kan fika efter leken.",
+    "minAge": 1,
+    "maxAge": 10,
+    "indoor": false,
+    "interests": [
+      "lek",
+      "natur",
+      "vatten"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity"
+    ],
+    "benefitNote": "Naturlig terräng som klippor och gräsytor, i stället för färdiga lekredskap, ger fler tillfällen till självständig balans- och grovmotorisk träning.",
+    "openingHours": "Alltid öppet, kaféet har egna öppettider",
+    "location": "Färjenäs, Göteborg",
+    "distanceKm": 5.0,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.7092,
+    "lng": 11.9295,
+    "costSek": 0
+  },
+  {
+    "id": "backa-boulder",
+    "name": "Bouldring på Backa Boulder",
+    "description": "Klättring på lägre höjd utan rep och sele — bara klätterskor och madrasser. Passar yngre barn som vill prova klättring med lägre tröskel.",
+    "minAge": 4,
+    "maxAge": 12,
+    "indoor": true,
+    "interests": [
+      "äventyr",
+      "friluftsliv"
+    ],
+    "social": true,
+    "benefits": [
+      "physicalActivity",
+      "motorSkills",
+      "problemSolving"
+    ],
+    "benefitNote": "Bouldring utan rep och sele sänker tröskeln för yngre barn att själva bedöma och testa sin egen förmåga i trygg miljö.",
+    "openingHours": "Se respektive hemsida för öppettider",
+    "location": "Backa, Göteborg",
+    "distanceKm": 6.5,
+    "transportModes": [
+      "car",
+      "publicTransit"
+    ],
+    "lat": 57.7423,
+    "lng": 11.9764,
+    "costSek": 150
+  },
+  {
+    "id": "grilla-ute",
+    "name": "Ut och grilla",
+    "description": "Packa grillkorv och ta med familjen till en av stadens många grillplatser, till exempel i Slottsskogen, för picknick i det fria.",
+    "minAge": 1,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "natur",
+      "lek"
+    ],
+    "social": true,
+    "benefits": [
+      "socialEmotional"
+    ],
+    "benefitNote": "Gemensam matlagning utomhus utan skärmar ger avslappnad tid för samtal och samvaro som är svårare att få till hemma.",
+    "openingHours": "Alltid öppet",
+    "location": "Slottsskogens grillplatser, Göteborg",
+    "distanceKm": 3.0,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.688,
+    "lng": 11.945,
+    "costSek": 100
+  },
+  {
+    "id": "anggardsbergens-vandring",
+    "name": "Vandring i Änggårdsbergen",
+    "description": "Naturreservat med skogsstigar, hällmarker och utsiktsplatser direkt söder om Slottsskogen — bra för både kort promenad och längre vandring.",
+    "minAge": 3,
+    "maxAge": 12,
+    "indoor": false,
+    "interests": [
+      "natur",
+      "friluftsliv",
+      "äventyr"
+    ],
+    "social": false,
+    "benefits": [
+      "physicalActivity",
+      "cognitive"
+    ],
+    "benefitNote": "Att gå i kuperad, naturlig terräng ger mer varierad muskelanvändning och balansträning än en plan asfaltsyta.",
+    "openingHours": "Alltid öppet",
+    "location": "Änggårdsbergen, Göteborg",
+    "distanceKm": 4.0,
+    "transportModes": [
+      "walk",
+      "bike",
+      "publicTransit",
+      "car"
+    ],
+    "lat": 57.6746,
+    "lng": 11.9264,
     "costSek": 0
   }
 ]

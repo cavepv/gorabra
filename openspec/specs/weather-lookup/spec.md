@@ -58,14 +58,14 @@ value.
 The system SHALL NOT crash or block suggestions if the weather fetch fails
 (e.g. no network) for one or both days; it SHALL fall back to treating the
 affected day(s) as unknown weather (empty hourly series, no midday signal)
-and skip the weather filter tier entirely for any request using that day's
+and skip the weather scoring boost entirely for any request using that day's
 forecast.
 
 #### Scenario: Weather API unreachable
 - **WHEN** the Open-Meteo request fails or times out
 - **THEN** the system proceeds to generate suggestions without applying the
-  indoor/outdoor weather filter, rather than showing an error that blocks
-  suggestions, for whichever day(s) could not be fetched
+  indoor/outdoor weather scoring boost, rather than showing an error that
+  blocks suggestions, for whichever day(s) could not be fetched
 
 ## ADDED Requirements
 
