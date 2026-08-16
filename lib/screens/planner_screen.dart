@@ -102,6 +102,14 @@ class PlannerScreen extends StatefulWidget {
 
 enum Day { today, tomorrow }
 
+// ponytail: version hardcoded rather than reading pubspec.yaml at runtime
+// (via package_info_plus) — this is a display-only label, keep it in sync
+// with pubspec.yaml's `version:` on release. Add the package if drift
+// becomes a real problem.
+class AppInfo {
+  static const version = '1.5.0';
+}
+
 class _PlannerScreenState extends State<PlannerScreen> {
   List<Activity>? _catalog;
   WeatherForecast _forecast = const WeatherForecast();
@@ -561,6 +569,18 @@ class _PlannerScreenState extends State<PlannerScreen> {
                           ),
                           const SizedBox(height: 24),
                           if (_result != null) _buildResults(_result!),
+                          const SizedBox(height: 24),
+                          Center(
+                            child: Text(
+                              'v${AppInfo.version}  ·  © 2026 Hittpå',
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurfaceVariant,
+                                  ),
+                            ),
+                          ),
                         ],
                       ),
               ),
