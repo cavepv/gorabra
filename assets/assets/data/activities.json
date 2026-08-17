@@ -1353,8 +1353,8 @@
   },
   {
     "id": "frihamnen-lekplats",
-    "name": "Lekplats i Frihamnen",
-    "description": "Lekplats vid kajkanten i Frihamnen med lekredskap, sandlåda och utsikt över hamninloppet.",
+    "name": "Jubileumsparken i Frihamnen",
+    "description": "Ny lekplats med klätterställningar, minigolf, gungor, bad, grillplats, sandlåda vid kajkanten i Frihamnen. Du kan ta del av olika aktiviteter där många har en koppling till vatten och lek, till exempel bad, segling, kanotpaddling, utflyktslekplats och uteklassrum. Gott om parkingsplatser",
     "minAge": 1,
     "maxAge": 10,
     "indoor": false,
