@@ -267,7 +267,7 @@
   {
     "id": "alvsborgsbron",
     "name": "Cykeltur längs Älvsborgsbron och hamnen",
-    "description": "Platt, säker cykelled längs vattnet med utsikt över hamnen och Älvsborgsbron — bra för lite äldre barn på egen cykel.",
+    "description": "Platt, säker cykelled längs vattnet med utsikt över hamnen och mot Älvsborgsbron — bra för lite äldre barn på egen cykel. Börja borta vid Färjenäs ocj cykla bort mot Eriksbergs och avsluta med färja antingen vid Eriksberg eller Lindholmen",
     "minAge": 5,
     "maxAge": 12,
     "indoor": false,
@@ -461,32 +461,33 @@
     "costSek": 0
   },
   {
-    "id": "skatehallen",
-    "name": "Bergsjöns Skatehall (inomhus)",
-    "description": "Inomhus skatehall med ramper anpassade även för nybörjare och mindre barn med balanscykel eller skateboard.",
-    "minAge": 3,
+    "id": "actionpark",
+    "name": "Actionpark",
+    "description": "Stor action- och aktivitetsanläggning med ytor för skate, kickbike, parkour och andra rörelseaktiviteter för barn och unga.",
+    "minAge": 4,
     "maxAge": 12,
     "indoor": true,
     "interests": [
-      "fordon",
-      "äventyr"
+      "äventyr",
+      "lek",
+      "friluftsliv"
     ],
     "social": true,
     "benefits": [
       "physicalActivity",
       "motorSkills"
     ],
-    "benefitNote": "Balansträning på rullande underlag är särskilt effektivt för att bygga kroppskontroll och mod hos barn.",
-    "openingHours": "Enligt öppettider för allmän åkning, se hemsida",
-    "location": "Bergsjön, Göteborg",
-    "distanceKm": 7.0,
+    "benefitNote": "Rull- och hoppaktiviteter tränar balans, koordination och kroppskontroll, samtidigt som barnet bygger mod genom gradvis svårare utmaningar.",
+    "openingHours": "Se goteborg.se/wps/portal/enheter/actionpark för aktuella öppettider",
+    "location": "Actionpark, Göteborg",
+    "distanceKm": 6.0,
     "transportModes": [
       "publicTransit",
       "car"
     ],
-    "lat": 57.755,
-    "lng": 12.035,
-    "costSek": 60
+    "lat": 57.7300,
+    "lng": 12.0200,
+    "costSek": 0
   },
   {
     "id": "hagaparken",
@@ -966,7 +967,7 @@
   {
     "id": "jumpy-hovas",
     "name": "Jumpy Hovås",
-    "description": "Studsmattepark inomhus med hopparea, foamgrop och basketkorgar att dunka i.",
+    "description": "Hos Jumpy är allt anpassat för små barn – från rutschkanorna till lekträdgården. Här får barnen leka, klättra, köra trampbil, krypa och upptäcka i sin egen takt medan du som förälder kan slappna av i en trygg, ren och inspirerande miljö.",
     "minAge": 3,
     "maxAge": 12,
     "indoor": true,
@@ -978,7 +979,7 @@
     "benefits": [
       "physicalActivity"
     ],
-    "benefitNote": "Studsande ger intensiv men skonsam träning av balans, kroppskontroll och kondition.",
+      "benefitNote": "Fri lek i klätterställningar tränar grovmotorik och ger möjlighet att öva socialt samspel med andra barn.",
     "openingHours": "Se jumpy.se för aktuella tider",
     "location": "Hovås, Göteborg",
     "distanceKm": 9.0,
@@ -1157,7 +1158,7 @@
   {
     "id": "kviberg-skidome",
     "name": "Skidome",
-    "description": "Åk längdskidor inomhus i konstsnö året runt, perfekt för nybörjare som vill träna balans och teknik året runt.",
+    "description": "Åk längdskidor inomhus i konstsnö året runt, perfekt för nybörjare som vill träna balans och teknik året runt. Finns shop för att både hyra och köpa utrustning.",
     "minAge": 4,
     "maxAge": 12,
     "indoor": true,
@@ -1292,7 +1293,7 @@
   {
     "id": "naturhistoriska-museet",
     "name": "Göteborgs Naturhistoriska Museum",
-    "description": "Naturhistoriskt museum i Slottsskogen med bland annat en unik utställd blåval, uppstoppade djur och utställningar om evolution.",
+    "description": "Naturhistoriskt museum i Slottsskogen med bland annat en unik utställd blåval, uppstoppade djur och utställningar om evolution. Finns ett lekland för de minsta - bokar tid för barnen för att undvika trängsel",
     "minAge": 3,
     "maxAge": 12,
     "indoor": true,
@@ -1802,7 +1803,7 @@
   {
     "id": "discgolf-slottsskogen",
     "name": "Discgolf i Slottsskogen",
-    "description": "Gratis discgolfbana utomhus i Slottsskogen — kasta frisbee mot korgarna i parkmiljö.",
+    "description": "Discgolfbana utomhus i Slottsskogen — kasta frisbee mot korgarna i parkmiljö. See https://www.slottsskogendiscgolf.se/faq/ för priser",
     "minAge": 5,
     "maxAge": 99,
     "indoor": false,
@@ -1816,7 +1817,7 @@
       "motorSkills"
     ],
     "benefitNote": "Promenaden mellan korgarna och kastandet ger både kondition och finmotorisk träning i en avslappnad, tävlingsfri form.",
-    "openingHours": "Alltid öppet",
+    "openingHours": "Se https://www.slottsskogendiscgolf.se/ för aktuella öppettider",
     "location": "Slottsskogen, Göteborg",
     "distanceKm": 2.5,
     "transportModes": [
@@ -1832,7 +1833,7 @@
   {
     "id": "ikea-regnig-dag",
     "name": "Ikea på en regnig dag",
-    "description": "Utforska möbelvaruhuset, lek en stund i Småland och ät i restaurangen — ett bekvämt inomhusnöje när det öser ner ute.",
+    "description": "Utforska möbelvaruhuset tillsammans och passa på att äta nåt gott i restaurangen — ett bekvämt inomhusnöje när det öser ner ute. Se upp med de allra popläraste tiderna då det kan bli väldigt fullt",
     "minAge": 1,
     "maxAge": 99,
     "indoor": true,
@@ -1843,7 +1844,7 @@
     "benefits": [
       "socialEmotional"
     ],
-    "benefitNote": "Att gå runt och utforska tillsammans, med en lekpaus i Småland, ger en avslappnad utflykt utan krav när vädret inte tillåter uteaktiviteter.",
+    "benefitNote": "Att gå runt och utforska tillsammans och bara byta miljö kan vara guld värt för hela familjen när vädret inte tillåter uteaktiviteter.",
     "openingHours": "10:00–20:00 (vardagar), se ikea.se för exakta tider",
     "location": "IKEA Bäckebol, Göteborg",
     "distanceKm": 7.5,
